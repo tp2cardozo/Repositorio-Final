@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "types.h"
+#include "vector.h"
 
 status_t ADT_Vector_new(ADT_Vector_t ** p) {
 	size_t i;
@@ -145,7 +146,7 @@ status_t print_mp3_to_csv(void * record, FILE * file_out) {
 	return OK;
 }
 
-int compare_artist (const void * record1, const void * record2) {
+int compare_mp3_by_artist (const void * record1, const void * record2) {
 	size_t i;
 	mp3_record_t *r1, *r2;
 
@@ -171,7 +172,7 @@ int compare_artist (const void * record1, const void * record2) {
 	}
 }
 
-int compare_title (const void * record1, const void * record2) {
+int compare_mp3_by_title (const void * record1, const void * record2) {
 	size_t i;
 	mp3_record_t *r1, *r2;
 
@@ -197,7 +198,7 @@ int compare_title (const void * record1, const void * record2) {
 	}
 }
 
-int compare_genre (const void * record1, const void * record2) {
+int compare_mp3_by_genre (const void * record1, const void * record2) {
 	mp3_record_t *r1, *r2;
 
 	r1 = (mp3_record_t *)record1;
