@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	FILE * file_out, * mp3_file;
 	status_t st;
 
-	if((st = validate_arguments(int argc, char * argv[], setup_t * setup)) != OK) {
+	if((st = validate_arguments(argc, argv[], &setup)) != OK) {
    		print_errors(st);
 		return st;
 	}
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 		if((mp3_file = fopen(argv[OUTPUT_FILE_POS + i], "rt")) == NULL)
 			return ERROR_INVALID_MP3_FILE;
 
-		if((st = process_mp3_data(setup, out_file, mp3_file)) != OK) {
+		if((st = process_mp3_data(&setup, out_file, mp3_file)) != OK) {
 			print_errors(st);
 			return st;
 		}
