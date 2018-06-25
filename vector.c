@@ -7,29 +7,29 @@
 
 extern char * errors_dictionary[MAX_ERRORS];
 
-status_t ADT_Vector_new(ADT_Vector_t ** p) {
+status_t ADT_Vector_new(ADT_Vector_t ** v) {
 	size_t i;
 
-	if (p == NULL) return ERROR_NULL_POINTER;
+	if (v == NULL) return ERROR_NULL_POINTER;
 
-	if ((*p =(ADT_Vector_t*)malloc(sizeof(ADT_Vector_t))) == NULL)
+	if ((*v =(ADT_Vector_t*)malloc(sizeof(ADT_Vector_t))) == NULL)
 		return ERROR_OUT_OF_MEMORY;
 
-	if (((*p)->elements = (void**)malloc(INIT_CHOP*sizeof(void*))) == NULL) {
-		free(*p);
-		*p = NULL;
+	if (((*v)->elements = (void**)malloc(INIT_CHOP*sizeof(void*))) == NULL) {
+		free(*v);
+		*v = NULL;
 		return ERROR_OUT_OF_MEMORY;
 	}
 
 	for(i=0; i<INIT_CHOP; i++) {
-		(*p)->elements[i] = NULL;
+		(*v)->elements[i] = NULL;
 	}
-	(*p)->alloc_size = INIT_CHOP;
+	(*v)->alloc_size = INIT_CHOP;
 
-	(*p)->size = 0;
-	(*p)->destructor = NULL;
-	(*p)->comparator = NULL;
-	(*p)->printer = NULL;
+	(*v)->size = 0;
+	(*v)->destructor = NULL;
+	(*v)->comparator = NULL;
+	(*v)->printer = NULL;
 
 	return OK;
 }
@@ -54,7 +54,8 @@ status_t ADT_Vector_delete (ADT_Vector_t ** p) {
 void * ADT_Vector_get_element (const ADT_Vector_t * v, int position) {
 	if (v == NULL) return NULL;
 
-	if(position < 0) return v->elements[v->size + position];
+	if (position < 0) return v->elements[v->size + position];
+	if (position > v->size) return NULL;
 	
 	return v->elements[position];
 }
@@ -114,11 +115,24 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 	if(v==NULL)
 		return ERROR_NULL_POINTER;
 	
-	if(position>(*v)->size)
+	if(position > (*v)->size)
 		return ERROR_OUT_OF_RANGE;
 	
-	(*v)->elements[position]=new_element;
+	if ((*v)->alloc_size == (*v)->size - 1) {
+		(*v)->alloc_size++;
+		if (((*v)->elements = (void**)realloc((*v)->alloc_size*sizeof(void*))) == NULL) {
+			free(*v);
+			*v = NULL;
+			return ERROR_OUT_OF_MEMORY;
+		}
+	}
 
+	if(position < 0) {
+		(*v)->elements[(*v)->size + position] = new_element;
+		return OK;
+	}
+	
+	(*v)->elements[position]=new_element;
 	return OK;
 }
 
