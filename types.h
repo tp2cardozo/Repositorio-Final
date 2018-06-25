@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-typedef enum {
+typedef enum{
 	OK = 0,
 	ERROR_INVALID_OUTPUT_FILE,
 	ERROR_WRITING_TO_FILE,
@@ -14,17 +14,17 @@ typedef enum {
 	ERROR_OUT_OF_MEMORY
 } status_t;
 
-typedef bool {
+typedef enum{
 	TRUE,
 	FALSE
 } bool_t;
 
-typedef enum {
+typedef enum{
 	DOC_TYPE_CSV = 0,
 	DOC_TYPE_XML = 1
 } doc_type_t;
 
-typedef enum {
+typedef enum{
 	SORT_TYPE_NAME = 0,
 	SORT_TYPE_ARTIST = 1,
 	SORT_TYPE_GENRE = 2
@@ -38,6 +38,6 @@ typedef struct{
 	char * year;
 	char * comment;
 	char * genre;
-}mp3_header_t;
+} mp3_header_t;
 
 #endif

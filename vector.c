@@ -3,6 +3,9 @@
 
 #include "types.h"
 #include "vector.h"
+#include "errors.h"
+
+extern char * errors_dictionary[MAX_ERRORS];
 
 status_t ADT_Vector_new(ADT_Vector_t ** p) {
 	size_t i;
@@ -49,8 +52,10 @@ status_t ADT_Vector_delete (ADT_Vector_t ** p) {
 }
 
 void * ADT_Vector_get_element (const ADT_Vector_t * v, int position) {
-	if (v==NULL) return ERROR_NULL_POINTER;
+	if (v == NULL) return NULL;
+
 	if(position < 0) return v->elements[v->size + position];
+	
 	return v->elements[position];
 }
 
@@ -93,6 +98,7 @@ bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
 
 status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
 	size_t i;
+	status_t st;
 
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
@@ -101,6 +107,18 @@ status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
 		if ((st = (v->printer)(v->elements[i], file)) != OK)
 			return st;
 	}
+	return OK;
+}
+
+status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_element) {
+	if(v==NULL)
+		return ERROR_NULL_POINTER;
+	
+	if(position>(*v)->size)
+		return ERROR_OUT_OF_RANGE;
+	
+	(*v)->elements[position]=new_element;
+
 	return OK;
 }
 
@@ -113,32 +131,32 @@ status_t print_mp3_to_csv(void * record, FILE * file_out) {
 	mp3_rec = (mp3_header_t *)record;
 
 	if(fprintf(file_out, "%s", mp3_rec->title) < 0) {
-		st = ERR_WRITING_TO_FILE; 
+		st = ERROR_WRITING_TO_FILE; 
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 	if (fputc(del, file_out) == EOF) {
-		st = ERR_WRITING_TO_FILE; 
+		st = ERROR_WRITING_TO_FILE; 
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 	if(fprintf(file_out, "%s", mp3_rec->artist) < 0) {
-		st = ERR_WRITING_TO_FILE; 
+		st = ERROR_WRITING_TO_FILE; 
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 	if (fputc(del, file_out) == EOF) {
-		st = ERR_WRITING_TO_FILE; 
+		st = ERROR_WRITING_TO_FILE; 
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 	if(fprintf(file_out, "%s", mp3_rec->genre) < 0) {
-		st = ERR_WRITING_TO_FILE; 
+		st = ERROR_WRITING_TO_FILE; 
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 	if (fputc(end_line, file_out) == EOF) {
-		st = ERR_WRITING_TO_FILE; 
+		st = ERROR_WRITING_TO_FILE; 
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
@@ -148,10 +166,10 @@ status_t print_mp3_to_csv(void * record, FILE * file_out) {
 
 int compare_mp3_by_artist (const void * record1, const void * record2) {
 	size_t i;
-	mp3_record_t *r1, *r2;
+	mp3_header_t *r1, *r2;
 
-	r1 = (mp3_record_t *)record1;
-	r2 = (mp3_record_t *)record2;
+	r1 = (mp3_header_t *)record1;
+	r2 = (mp3_header_t *)record2;
 
 	if (record1 == NULL || record2 == NULL)
 		return 0;
@@ -167,17 +185,15 @@ int compare_mp3_by_artist (const void * record1, const void * record2) {
 	if (r1->artist[i] && !r2->artist[i]) {
 		return -1;
 	}
-	if (!r1->artist[i] && !r2->artist[i]) {
-		return 0;
-	}
+	return 0;
 }
 
 int compare_mp3_by_title (const void * record1, const void * record2) {
 	size_t i;
-	mp3_record_t *r1, *r2;
+	mp3_header_t *r1, *r2;
 
-	r1 = (mp3_record_t *)record1;
-	r2 = (mp3_record_t *)record2;
+	r1 = (mp3_header_t *)record1;
+	r2 = (mp3_header_t *)record2;
 
 	if (record1 == NULL || record2 == NULL)
 		return 0;
@@ -193,15 +209,14 @@ int compare_mp3_by_title (const void * record1, const void * record2) {
 	if (r1->title[i] && !r2->title[i]) {
 		return -1;
 	}
-	if (!r1->title[i] && !r2->title[i]) {
-		return 0;
-	}
+	return 0;
 }
-
+/*
 int compare_mp3_by_genre (const void * record1, const void * record2) {
-	mp3_record_t *r1, *r2;
+	mp3_header_t *r1, *r2;
 
-	r1 = (mp3_record_t *)record1;
-	r2 = (mp3_record_t *)record2;
-	
+	r1 = (mp3_header_t *)record1;
+	r2 = (mp3_header_t *)record2;
+	return 0;
 }
+*/
