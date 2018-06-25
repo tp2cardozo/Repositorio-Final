@@ -10,5 +10,3 @@ typedef struct
 	sort_type_t sort_by;
 	
 }setup_t;
-
-#endif
