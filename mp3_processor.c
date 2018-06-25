@@ -1,12 +1,18 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "mp3_processor.h"
 #include "setup.h"
 
+<<<<<<< HEAD
 
 
 
 
 status_t process_mp3_data(setup_t * setup, FILE * fi)
+=======
+status_t process_mp3_data(setup_t * setup, FILE * fo, FILE * fi)
+>>>>>>> 7768641245addd249c2de6397d94e6c18faa0d7a
 {
 	status_t st;
 	ADT_Vector_t * vector;
@@ -22,6 +28,9 @@ status_t process_mp3_data(setup_t * setup, FILE * fi)
 
 	if((st = mp3_reader(fi, header)) != OK)
 		return st;
+
+
+	
 }
 
 status_t get_mp3_header(FILE * fi, char header[])
