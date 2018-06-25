@@ -43,7 +43,7 @@ typedef struct{
 
 status_t ADT_track_new (ADT_track_t ** track);
 status_t ADT_track_delete (void * track);
-status_t ADT_track_set (const char header[], ADT_track_t * track);
+status_t ADT_track_set (char header[], ADT_track_t * track);
 status_t ADT_track_get_tag (ADT_track_t * track, char ** str);
 status_t ADT_track_get_title (ADT_track_t * track, char ** str);
 status_t ADT_track_get_artist (ADT_track_t * track, char ** str);
