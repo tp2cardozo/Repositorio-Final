@@ -42,11 +42,13 @@ int main(int argc, char *argv[])
   		if((mp3_file = fopen(argv[OUTPUT_FILE_POS + i], "rt")) == NULL)
     		return ERROR_INVALID_MP3_FILE;
 
-    	if((st = process_mp3_data()) != OK)
+    	if((st = process_mp3_data(setup, out_file, mp3_file)) != OK)
 	  	{
 	    	print_errors(st);
 	    	return st;
 	  	}
+
+	  	fclose(mp3_file);
   	
   	}
  	
@@ -75,26 +77,16 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	if(!fmt_pos || !sort_pos || !out_pos)
 		return ERROR_INVOCATION;
 
-/*
-	if(strcmp(argv[FORMAT_FLAG_POSITION], FORMAT_FLAG_TOKEN))
-		return ERROR_INVOCATION;
-
-	if(strcmp(argv[SORT_FLAG_POSITION], SORT_FLAG_TOKEN))
-		return ERROR_INVOCATION;
-
-	if(strcmp(argv[OUT_FLAG_POSITION], OUT_FLAG_TOKEN))
-		return ERROR_INVOCATION;
-*/
-	for(i=0 ; i < MAX_FORMATS/*MIN_ARGUMENTS*/ ; i++)/*NO ES MIN_ARGUMENTS, ES MAX_FORMATS*/
+	for(i=0 ; i < MAX_FORMATS; i++)
 	{
-		if (!(strcmp(/*argv[FORMAT_FLAG_POSITION + 1]*/argv[fmt_pos + 1], format_dictionary[i]))) /*Hacer diccionario de formatos*/
+		if (!(strcmp(argv[fmt_pos + 1], format_dictionary[i]))) /*Hacer diccionario de formatos*/
     	{
 	     	setup->doc_type = i;
 	        break;
 		}    
 	}
   
-	if(i == /*MIN_ARGUMENTS*/MAX_FORMATS)
+	if(i == MAX_FORMATS)
 		return ERROR_INVOCATION;
   
 	for(i=0 ; i < MAX_SORTS ; i++)
