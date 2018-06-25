@@ -38,6 +38,6 @@ status_t ADT_list_create_node (list_node_t ** node, const void * data) {
 }
 
 status_t ADT_list_destroy_node (list_node_t ** node, status_t (*pf) (void*)) {
-	if(node == NULL) return ERROR_NULL_POINTER;
-	
+	if(node == NULL)
+		return ERROR_NULL_POINTER;
 }
