@@ -102,3 +102,38 @@ status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
 	}
 	return OK;
 }
+
+status_t print_mp3_to_csv(void * record, FILE * file_out) {
+	char del = CSV_DELIMITER;
+	mp3_header_t * mp3_rec;
+	status_t st;
+
+	mp3_rec = (mp3_header_t *)record;
+
+	if(fprintf(file_out, "%s", mp3_rec->title) < 0) {
+		st = ERR_WRITING_TO_FILE; 
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+	if (fputc(del, file_out) == EOF) {
+		st = ERR_WRITING_TO_FILE; 
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+	if(fprintf(file_out, "%s", mp3_rec->artist) < 0) {
+		st = ERR_WRITING_TO_FILE; 
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+	if (fputc(del, file_out) == EOF) {
+		st = ERR_WRITING_TO_FILE; 
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+	if(fprintf(file_out, "%s", mp3_rec->genre) < 0) {
+		st = ERR_WRITING_TO_FILE; 
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+	return OK;
+}
