@@ -7,32 +7,30 @@
 
 #define SALIDA "salida.csv"
 
-#define MAX_NAME 100
-#define MAX_ARTIST 100
-#define MAX_GENRE 100
+#define INDEX_FIRST_MP3 7
 
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
 
-
 int main(int argc, char *argv[]) {
 	size_t i;
-	FILE * file_out, * mp3_file;
+	size_t out_index;
+	FILE *file_out, *mp3_file;
 	status_t st;
 
-	if((st = validate_arguments(argc, argv[], &setup)) != OK) {
+	if((st = validate_arguments(argc, argv[], &setup, &out_index)) != OK) {
    		print_errors(st);
 		return st;
 	}
 
-	if ((file_out = fopen(argv[OUTPUT_FILE_POS], "wt")) == NULL) {
+	if ((file_out = fopen(argv[out_index], "wt")) == NULL) {
 		st = ERR_INVALID_OUTPUT_FILE;
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 
-	for(i = 1; i < argc - OUTPUT_FILE_POS; i++ ) {
-		if((mp3_file = fopen(argv[OUTPUT_FILE_POS + i], "rt")) == NULL)
+	for(i = 0; i < argc - INDEX_FIRST_MP3; i++ ) {
+		if((mp3_file = fopen(argv[INDEX_FIRST_MP3 + i], "rt")) == NULL)
 			return ERROR_INVALID_MP3_FILE;
 
 		if((st = process_mp3_data(&setup, mp3_file)) != OK) {
@@ -46,8 +44,8 @@ int main(int argc, char *argv[]) {
 	return OK;
 }
 
-status_t validate_arguments(int argc, char * argv[], setup_t * setup) {
-	size_t i, fmt_pos, sort_pos, out_pos;
+status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) {
+	size_t i, fmt_flag, sort_flag, out_flag;
 	
 	if(argv == NULL || setup == NULL)
 		return ERROR_NULL_POINTER;
@@ -57,17 +55,17 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup) {
 
 	for(i=0; i<argc; i++) {
 		if(strcmp(argv[i], FORMAT_FLAG_TOKEN) == 0)
-			fmt_pos = i;
+			fmt_flag = i;
 		if(strcmp(argv[i], SORT_FLAG_TOKEN) == 0)
-			sort_pos = i;
+			sort_flag = i;
 		if(strcmp(argv[i], OUT_FLAG_TOKEN) == 0)
-			out_pos = i;
+			out_flag = i;
 	}
-	if(!fmt_pos || !sort_pos || !out_pos)
+	if(!fmt_flag || !sort_flag || !out_flag)
 		return ERROR_INVOCATION;
 
 	for(i=0 ; i < MAX_FORMATS; i++) {
-		if (!(strcmp(argv[fmt_pos + 1], format_dictionary[i]))) 
+		if (!(strcmp(argv[fmt_flag + 1], format_dictionary[i]))) 
 		{ 														/*Hacer diccionario de formatos*/ 
 			setup->doc_type = i;
 			break;
@@ -78,12 +76,16 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup) {
 		return ERROR_INVOCATION;
 
 	for(i=0 ; i < MAX_SORTS ; i++) {
-		if(!(strcmp(argv[sort_pos + 1], sort_dictionary[i]))) {
+		if(!(strcmp(argv[sort_flag + 1], sort_dictionary[i]))) {
 			setup->sort_by = i;
 			break;
 		}
 	}
 
+	*index_out_file = out_flag + 1;
+
 	if(i == MAX_SORTS)
 		return ERROR_INVOCATION;
+
+	return OK;
 }

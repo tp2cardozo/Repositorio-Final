@@ -21,14 +21,14 @@ typedef enum{
 } bool_t;
 
 typedef enum{
-	DOC_TYPE_CSV = 0,
-	DOC_TYPE_XML = 1
-} doc_type_t;
+	FMT_CSV = 0,
+	FMT_XML = 1
+} format_t;
 
 typedef enum{
-	SORT_TYPE_NAME = 0,
-	SORT_TYPE_ARTIST = 1,
-	SORT_TYPE_GENRE = 2
-} sort_type_t;
+	SORT_BY_NAME = 0,
+	SORT_BY_ARTIST = 1,
+	SORT_BY_GENRE = 2
+} sort_t;
 
 #endif
