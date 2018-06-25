@@ -68,7 +68,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup) {
 
 	for(i=0 ; i < MAX_FORMATS; i++) {
 		if (!(strcmp(argv[fmt_pos + 1], format_dictionary[i]))) 
-		{ /*Hacer diccionario de formatos*/ 
+		{ 														/*Hacer diccionario de formatos*/ 
 			setup->doc_type = i;
 			break;
 		}
