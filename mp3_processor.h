@@ -30,3 +30,5 @@
 
 status_t process_mp3_data(setup_t * setup, FILE * fi);
 status_t get_mp3_header(FILE * fi, char header[]);
+
+#endif

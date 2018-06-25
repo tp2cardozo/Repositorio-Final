@@ -47,4 +47,5 @@ status_t get_mp3_header(FILE * fi, char header[])
     if (fread(header, sizeof(char), MP3_HEADER_SIZE, fi) != MP3_HEADER_SIZE)
         return ERROR_INVALID_MP3_FILE;
 
+    return OK;
 }
