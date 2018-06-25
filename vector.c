@@ -39,7 +39,6 @@ status_t ADT_Vector_delete (ADT_Vector_t ** v) {
 	size_t i;
 	for(i=0; i<(*v)->size; i++) {
 		st = ((*v)->destructor)((*v)->elements[i]);
-		printf("b\n");
 		if (st != OK)
 			return st;
 	}
