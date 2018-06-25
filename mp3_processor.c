@@ -5,6 +5,7 @@
 #include "setup.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -14,11 +15,12 @@ status_t process_mp3_data(setup_t * setup, FILE * fi)
 status_t process_mp3_data(setup_t * setup, FILE * fo, FILE * fi)
 >>>>>>> 7768641245addd249c2de6397d94e6c18faa0d7a
 {
+=======
+status_t process_mp3_data(setup_t * setup, FILE * fo, FILE * fi) {
+>>>>>>> 649a2ee2d6b8616bb0cc6be1d2f4f7638edcda2a
 	status_t st;
 	ADT_Vector_t * vector;
 	char header[MAX_HEADER_SIZE];
-
-
 
 	if(setup == NULL || fo == NULL || fi == NULL)
 		return ERROR_NULL_POINTER;
