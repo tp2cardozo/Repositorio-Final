@@ -9,26 +9,32 @@ status_t process_mp3_data(setup_t * setup, FILE * fi)
 {
 
 	status_t st;
-	ADT_Vector_t * vector;
-	char header[MAX_HEADER_SIZE];
+	const char header[MAX_HEADER_SIZE];
+	ADT_track_t * track;
 
 	if(setup == NULL || fo == NULL || fi == NULL)
 		return ERROR_NULL_POINTER;
 
-	if((st = ADT_Vector_new(&vector)) != OK)
-		return st;
+	if((st = ADT_track_new(&track)) != OK)
+		return ERROR_INVALID_TRACK;
 
 	if((st = get_mp3_header(fi, header)) != OK)
+	{	
+		if((st = ADT_trak_delete(&track)) != OK)
+			return st;
+		
+		return st;
+	}
+
+	if((st = ADT_track_set(header, track)) != OK)
 		return st;
 
-	
 
 
-
-	
+	return OK;	
 }
 
-status_t get_mp3_header(FILE * fi, char header[])
+status_t get_mp3_header(FILE * fi, const char header[])
 {
 	if(fi == NULL)
 		return ERROR_NULL_POINTER;

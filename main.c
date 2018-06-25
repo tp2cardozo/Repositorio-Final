@@ -12,30 +12,44 @@
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
+
 	size_t i;
 	size_t out_index;
 	FILE *file_out, *mp3_file;
 	status_t st;
+	ADT_Vector_t * vector;
 
-	if((st = validate_arguments(argc, argv[], &setup, &out_index)) != OK) {
+	if((st = validate_arguments(argc, argv[], &setup, &out_index)) != OK)
+	{
    		print_errors(st);
 		return st;
 	}
 
-	if ((file_out = fopen(argv[out_index], "wt")) == NULL) {
+	if((st = ADT_Vector_new(&vector)) != OK)
+		return st;
+
+	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
+	{
 		st = ERR_INVALID_OUTPUT_FILE;
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 
-	for(i = 0; i < argc - INDEX_FIRST_MP3; i++ ) {
+	for(i = 0; i < argc - INDEX_FIRST_MP3; i++ ) 
+	{
+
 		if((mp3_file = fopen(argv[INDEX_FIRST_MP3 + i], "rt")) == NULL)
 			return ERROR_INVALID_MP3_FILE;
 
-		if((st = process_mp3_data(&setup, mp3_file)) != OK) {
-			print_errors(st);
-			return st;
+		if((st = process_mp3_data(&setup, mp3_file)) != OK) 
+		{
+			if((ADT_Vector_delete(&vector)) != OK)
+				return st;
+			
+			fclose(mp3_file);
+			break;	
 		}
 
 	  	fclose(mp3_file);
@@ -44,7 +58,8 @@ int main(int argc, char *argv[]) {
 	return OK;
 }
 
-status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) {
+status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) 
+{
 	size_t i, fmt_flag, sort_flag, out_flag;
 	
 	if(argv == NULL || setup == NULL)
@@ -53,7 +68,8 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 	if(argc < MIN_ARGUMENTS)
 		return ERROR_INVOCATION;
 
-	for(i=0; i<argc; i++) {
+	for(i=0; i<argc; i++)
+	{
 		if(strcmp(argv[i], FORMAT_FLAG_TOKEN) == 0)
 			fmt_flag = i;
 		if(strcmp(argv[i], SORT_FLAG_TOKEN) == 0)
@@ -61,10 +77,13 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 		if(strcmp(argv[i], OUT_FLAG_TOKEN) == 0)
 			out_flag = i;
 	}
+
+
 	if(!fmt_flag || !sort_flag || !out_flag)
 		return ERROR_INVOCATION;
 
-	for(i=0 ; i < MAX_FORMATS; i++) {
+	for(i=0 ; i < MAX_FORMATS; i++)
+	{
 		if (!(strcmp(argv[fmt_flag + 1], format_dictionary[i]))) 
 		{ 														/*Hacer diccionario de formatos*/ 
 			setup->doc_type = i;
@@ -75,8 +94,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 	if(i == MAX_FORMATS)
 		return ERROR_INVOCATION;
 
-	for(i=0 ; i < MAX_SORTS ; i++) {
-		if(!(strcmp(argv[sort_flag + 1], sort_dictionary[i]))) {
+	for(i=0 ; i < MAX_SORTS ; i++)
+	{
+		if(!(strcmp(argv[sort_flag + 1], sort_dictionary[i])))
+		{
 			setup->sort_by = i;
 			break;
 		}
