@@ -6,7 +6,8 @@
 
 #include "types.h"
 
-#define INIT_CHOP 0
+#define INIT_CHOP 4
+#define ADT_VECTOR_CHOP_SIZE 4
 
 #define CSV_DELIMITER '|'
 
@@ -33,10 +34,13 @@ status_t ADT_Vector_set_comparator(ADT_Vector_t * v, comparator_t cf);
 status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df);
 bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2);
 status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
+status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (*vector_deleter)(ADT_Vector_t **));
 
-status_t print_mp3_to_csv(void * record, FILE * file_out);
+
+status_t print_mp3_to_csv (void * record, FILE * file_out);
 int compare_mp3_by_artist (const void * record1, const void * record2);
 int compare_mp3_by_title (const void * record1, const void * record2);
 /*int compare_mp3_by_genre (const void * record1, const void * record2);*/
+status_t destroy_mp3_t (void * record);
 
 #endif

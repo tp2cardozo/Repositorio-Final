@@ -10,5 +10,6 @@
 #define MSG_ERROR_INVOCATION "Error de invocación."
 #define MSG_ERROR_NULL_POINTER "Error, puntero nulo."
 #define MSG_ERROR_OUT_OF_MEMORY "Error, memoria insuficiente."
+#define MSG_ERROR_OUT_OF_RANGE "Error, fuera de rango"
 
 #endif

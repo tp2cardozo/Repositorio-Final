@@ -37,9 +37,9 @@ status_t ADT_Vector_new(ADT_Vector_t ** v) {
 status_t ADT_Vector_delete (ADT_Vector_t ** p) {
 	status_t st;
 	size_t i;
-
 	for(i=0; i<(*p)->size; i++) {
 		st = ((*p)->destructor)((*p)->elements[i]);
+		printf("b\n");
 		if (st != OK)
 			return st;
 	}
@@ -117,15 +117,6 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 	
 	if(position > (*v)->size)
 		return ERROR_OUT_OF_RANGE;
-	
-	if ((*v)->alloc_size == (*v)->size - 1) {
-		(*v)->alloc_size++;
-		if (((*v)->elements = (void**)realloc((*v)->alloc_size*sizeof(void*))) == NULL) {
-			free(*v);
-			*v = NULL;
-			return ERROR_OUT_OF_MEMORY;
-		}
-	}
 
 	if(position < 0) {
 		(*v)->elements[(*v)->size + position] = new_element;
@@ -133,6 +124,32 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 	}
 	
 	(*v)->elements[position]=new_element;
+	return OK;
+}
+
+status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (*vector_deleter)(ADT_Vector_t **)) {
+	size_t i;
+	void ** aux;
+	status_t st;
+
+	if(v == NULL || element == NULL || vector_deleter == NULL)
+		return ERROR_NULL_POINTER;
+
+	i=(*v)->size;
+	if(i==(*v)->alloc_size){
+		if((aux=realloc((*v)->elements,((*v)->alloc_size+ADT_VECTOR_CHOP_SIZE)*sizeof(void*)))==NULL){
+			st = vector_deleter(v);
+			if (st!=OK)
+				return st;
+
+			return ERROR_OUT_OF_MEMORY;
+        }
+		(*v)->elements=aux;
+		(*v)->alloc_size+=ADT_VECTOR_CHOP_SIZE;
+    }
+	(*v)->elements[i]=element;
+	((*v)->size)++;
+
 	return OK;
 }
 
@@ -234,3 +251,53 @@ int compare_mp3_by_genre (const void * record1, const void * record2) {
 	return 0;
 }
 */
+
+status_t destroy_mp3_t (void * record) {
+	mp3_header_t * rec;
+	if (record == NULL)
+		return ERROR_NULL_POINTER;
+
+	rec = (mp3_header_t *) record;
+
+	printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n", (*rec).tag, (*rec).title, (*rec).artist, (*rec).album, (*rec).year, (*rec).comment, (*rec).genre);
+	
+	if((*rec).tag != NULL) {
+		free(&((*rec).tag));
+		(*rec).tag = NULL;
+	}
+
+	if((*rec).title != NULL) {
+		free(&((*rec).title));
+		(*rec).title = NULL;
+	}
+	
+	if((*rec).artist != NULL) {
+		free(&((*rec).artist));
+		(*rec).artist = NULL;
+	}
+	
+	if((*rec).album != NULL) {
+		free(&((*rec).album));
+		(*rec).album = NULL;
+	}
+	
+	if((*rec).year != NULL) {
+		free(&((*rec).year));
+		(*rec).year = NULL;
+	}
+	
+	if((*rec).comment != NULL) {
+		free(&((*rec).comment));
+		(*rec).comment = NULL;
+	}
+	
+	if((*rec).genre != NULL) {
+		free(&((*rec).genre));
+		(*rec).genre = NULL;
+	}
+	
+	free(rec);
+	rec = NULL;
+
+	return OK;
+}
