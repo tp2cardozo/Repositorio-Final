@@ -5,9 +5,13 @@
 
 typedef enum {
 	OK = 0,
-	ERR_INVALID_OUTPUT_FILE,
-	ERR_WRITING_TO_FILE,
-	ERR_CLOSING_FILE
+	ERROR_INVALID_OUTPUT_FILE,
+	ERROR_WRITING_TO_FILE,
+	ERROR_CLOSING_FILE,
+	ERROR_INVALID_MP3_FILE,
+	ERROR_INVOCATION,
+	ERROR_NULL_POINTER,
+	ERROR_OUT_OF_MEMORY
 } status_t;
 
 typedef bool {
@@ -25,5 +29,15 @@ typedef enum {
 	SORT_TYPE_ARTIST = 1,
 	SORT_TYPE_GENRE = 2
 } sort_type_t;
+
+typedef struct{
+	char * tag;
+	char * title;
+	char * artist;
+	char * album;
+	char * year;
+	char * comment;
+	char * genre;
+}mp3_header_t;
 
 #endif

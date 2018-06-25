@@ -89,3 +89,16 @@ bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
 	}
 	return TRUE;
 }
+
+status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
+	size_t i;
+
+	if (v == NULL || file == NULL)
+		return ERROR_NULL_POINTER;
+
+	for (i = 0; i < v->size; i++) {
+		if ((st = (v->printer)(v->elements[i], file)) != OK)
+			return st;
+	}
+	return OK;
+}
