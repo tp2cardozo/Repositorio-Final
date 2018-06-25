@@ -1,4 +1,3 @@
-
 #ifndef ERRORS__H
 #define ERRORS__H
 

@@ -105,6 +105,7 @@ status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
 
 status_t print_mp3_to_csv(void * record, FILE * file_out) {
 	char del = CSV_DELIMITER;
+	char end_line = '\n';
 	mp3_header_t * mp3_rec;
 	status_t st;
 
@@ -135,5 +136,71 @@ status_t print_mp3_to_csv(void * record, FILE * file_out) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
+	if (fputc(end_line, file_out) == EOF) {
+		st = ERR_WRITING_TO_FILE; 
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+
 	return OK;
+}
+
+int compare_artist (const void * record1, const void * record2) {
+	size_t i;
+	mp3_record_t *r1, *r2;
+
+	r1 = (mp3_record_t *)record1;
+	r2 = (mp3_record_t *)record2;
+
+	if (record1 == NULL || record2 == NULL)
+		return 0;
+
+	for(i=0; r1->artist[i] && r2->artist[i]; i++) {
+		if (r1->artist[i] != r2->artist[i]) {
+			return (r1->artist[i] - r2->artist[i]);
+		}
+	}
+	if (!r1->artist[i] && r2->artist[i]) {
+		return 1;
+	}
+	if (r1->artist[i] && !r2->artist[i]) {
+		return -1;
+	}
+	if (!r1->artist[i] && !r2->artist[i]) {
+		return 0;
+	}
+}
+
+int compare_title (const void * record1, const void * record2) {
+	size_t i;
+	mp3_record_t *r1, *r2;
+
+	r1 = (mp3_record_t *)record1;
+	r2 = (mp3_record_t *)record2;
+
+	if (record1 == NULL || record2 == NULL)
+		return 0;
+
+	for(i=0; r1->title[i] && r2->title[i]; i++) {
+		if (r1->title[i] != r2->title[i]) {
+			return (r1->title[i] - r2->title[i]);
+		}
+	}
+	if (!r1->title[i] && r2->title[i]) {
+		return 1;
+	}
+	if (r1->title[i] && !r2->title[i]) {
+		return -1;
+	}
+	if (!r1->title[i] && !r2->title[i]) {
+		return 0;
+	}
+}
+
+int compare_genre (const void * record1, const void * record2) {
+	mp3_record_t *r1, *r2;
+
+	r1 = (mp3_record_t *)record1;
+	r2 = (mp3_record_t *)record2;
+	
 }
