@@ -41,4 +41,3 @@ status_t ADT_list_destroy_node (list_node_t ** node, status_t (*pf) (void*)) {
 	if(node == NULL) return ERROR_NULL_POINTER;
 	
 }
-/*test*/
