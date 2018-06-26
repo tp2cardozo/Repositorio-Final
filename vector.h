@@ -36,4 +36,5 @@ bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2);
 status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
 status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (*vector_deleter)(ADT_Vector_t **));
 
+
 #endif

@@ -21,6 +21,8 @@ status_t process_mp3_data(setup_t * setup, FILE * fi)
 	if((st = get_mp3_header(fi, header)) != OK)
 		return st;
 
+	
+
 
 
 	
@@ -47,4 +49,5 @@ status_t get_mp3_header(FILE * fi, char header[])
     if (fread(header, sizeof(char), MP3_HEADER_SIZE, fi) != MP3_HEADER_SIZE)
         return ERROR_INVALID_MP3_FILE;
 
+    return OK;
 }
