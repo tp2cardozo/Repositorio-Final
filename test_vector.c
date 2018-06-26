@@ -135,6 +135,8 @@ int main(int argc, char *argv[]) {
 	printf("comment: %s\n", ((ADT_track_t *)(test->elements[1]))->comment);
 	printf("genre: %s\n", ((ADT_track_t *)(test->elements[1]))->genre);
 
+	printf("--------------------------\n");
+
 	printf("dif: %d\n", (test->comparator)(test->elements[0], test->elements[1]));
 	printf("size: %ld\n", test->size);
 
