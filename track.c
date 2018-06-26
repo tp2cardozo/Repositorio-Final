@@ -267,12 +267,10 @@ int ADT_track_compare_by_title (const void * t1, const void * t2) {
 }
 
 
-/*
-int ADT_track_compare_by_genre (const void * record1, const void * record2) {
-    mp3_header_t *r1, *r2;
+/*int ADT_track_compare_by_genre (const void * t1, const void * t2) {
+    ADT_track_t *track1, *track2;
 
-    r1 = (mp3_header_t *)record1;
-    r2 = (mp3_header_t *)record2;
-    return 0;
-}
-*/
+    track1 = (ADT_track_t *)t1;
+    track2 = (ADT_track_t *)t2;
+    
+}*/
