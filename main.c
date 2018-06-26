@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	FILE * file_out, * mp3_file;
 	status_t st;
 
-	if((st = validate_arguments(int argc, char * argv[], setup_t * setup)) != OK) {
+	if((st = validate_arguments(argc, argv[], &setup)) != OK) {
    		print_errors(st);
 		return st;
 	}
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 		if((mp3_file = fopen(argv[OUTPUT_FILE_POS + i], "rt")) == NULL)
 			return ERROR_INVALID_MP3_FILE;
 
-		if((st = process_mp3_data(setup, out_file, mp3_file)) != OK) {
+		if((st = process_mp3_data(&setup, out_file, mp3_file)) != OK) {
 			print_errors(st);
 			return st;
 		}
@@ -67,7 +67,8 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup) {
 		return ERROR_INVOCATION;
 
 	for(i=0 ; i < MAX_FORMATS; i++) {
-		if (!(strcmp(argv[fmt_pos + 1], format_dictionary[i]))) { /*Hacer diccionario de formatos*/ 
+		if (!(strcmp(argv[fmt_pos + 1], format_dictionary[i]))) 
+		{ /*Hacer diccionario de formatos*/ 
 			setup->doc_type = i;
 			break;
 		}
