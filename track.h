@@ -31,6 +31,7 @@
 #define LEXEM_START_GENRE  127
 #define LEXEM_SPAN_GENRE     1
 
+
 typedef struct{
 	char tag[LEXEM_SPAN_TAG];
 	char title[LEXEM_SPAN_TITLE];
