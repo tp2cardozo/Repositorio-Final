@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "types.h"
 #include "track.h"
+#include "errors.h"
 
+extern char * errors_dictionary[MAX_ERRORS];
 
 status_t ADT_track_new (ADT_track_t ** track) {
     if (track == NULL)
@@ -23,26 +26,29 @@ status_t ADT_track_new (ADT_track_t ** track) {
     return OK;
 }
 
-status_t ADT_track_delete (ADT_track_t ** track) {
+status_t ADT_track_delete (void * t) {
+    ADT_track_t * track;
+
+    track = (ADT_track_t *)t; 
+
     if (track == NULL)
         return ERROR_NULL_POINTER;
 
-    (*track)->tag[0] = '\0';
-    (*track)->title[0] = '\0';
-    (*track)->artist[0] = '\0';
-    (*track)->album[0] = '\0';
-    (*track)->year[0] = '\0';
-    (*track)->comment[0] = '\0';
-    (*track)->genre[0] = '\0';
+    track->tag[0] = '\0';
+    track->title[0] = '\0';
+    track->artist[0] = '\0';
+    track->album[0] = '\0';
+    track->year[0] = '\0';
+    track->comment[0] = '\0';
+    track->genre[0] = '\0';
 
-    free(*track);
-    (*track) = NULL;
+    free(track);
+    track = NULL;
 
     return OK;
 }
 
-status_t ADT_track_set (const char header[], ADT_track_t * track)
-{
+status_t ADT_track_set (const char header[], ADT_track_t * track) {
     char buf[MP3_HEADER_SIZE];
 
     if (header == NULL || track == NULL)
@@ -50,31 +56,31 @@ status_t ADT_track_set (const char header[], ADT_track_t * track)
 
     memcpy(buf,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
     buf[LEXEM_SPAN_TAG] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->tag,"%s", buf);
 
     memcpy(buf,header+LEXEM_START_TITLE,LEXEM_SPAN_TITLE);
     buf[LEXEM_SPAN_TITLE] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->title,"%s", buf);
 
     memcpy(buf,header+LEXEM_START_ARTIST,LEXEM_SPAN_ARTIST);
     buf[LEXEM_SPAN_ARTIST] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->artist,"%s", buf);
 
     memcpy(buf,header+LEXEM_START_ALBUM,LEXEM_SPAN_ALBUM);
     buf[LEXEM_SPAN_ALBUM] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->album,"%s", buf);
 
     memcpy(buf,header+LEXEM_START_YEAR,LEXEM_SPAN_YEAR);
     buf[LEXEM_SPAN_YEAR] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->year,"%s", buf);
 
     memcpy(buf,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
     buf[LEXEM_SPAN_COMMENT] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->comment,"%s", buf);
 
     memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
     buf[LEXEM_SPAN_GENRE] = '\0';
-    sprintf(track,"%s\n", buf);
+    sprintf(track->genre,"%s", buf);
 
     return OK;
 }
@@ -170,10 +176,13 @@ status_t ADT_track_get_genre (ADT_track_t * track, char ** str) {
     return OK;
 }
 
-status_t ADT_track_export_to_csv (ADT_track_t * track, FILE * file_out) {
+status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
     char del = CSV_DELIMITER;
     char end_line = '\n';
     status_t st;
+    ADT_track_t * track;
+
+    track = (ADT_track_t *)t;
 
     if(fprintf(file_out, "%s", track->title) < 0) {
         st = ERROR_WRITING_TO_FILE; 
@@ -209,8 +218,12 @@ status_t ADT_track_export_to_csv (ADT_track_t * track, FILE * file_out) {
     return OK;
 }
 
-int ADT_track_compare_by_artist (const ADT_track_t * track1, const ADT_track_t * track2) {
+int ADT_track_compare_by_artist (const void * t1, const void * t2) {
     size_t i;
+    ADT_track_t *track1, *track2;
+
+    track1 = (ADT_track_t *)t1;
+    track2 = (ADT_track_t *)t2;
 
     if (track1 == NULL || track2 == NULL)
         return 0;
@@ -229,8 +242,12 @@ int ADT_track_compare_by_artist (const ADT_track_t * track1, const ADT_track_t *
     return 0;
 }
 
-int ADT_track_compare_by_title (const ADT_track_t * track1, const ADT_track_t * track2) {
+int ADT_track_compare_by_title (const void * t1, const void * t2) {
     size_t i;
+    ADT_track_t *track1, *track2;
+
+    track1 = (ADT_track_t *)t1;
+    track2 = (ADT_track_t *)t2;
 
     if (track1 == NULL || track2 == NULL)
         return 0;

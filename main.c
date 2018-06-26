@@ -6,7 +6,7 @@
 #include "setup.h"
 
 #define SALIDA "salida.csv"
-#define DELIMITER ','
+
 #define MAX_NAME 100
 #define MAX_ARTIST 100
 #define MAX_GENRE 100
