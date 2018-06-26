@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 		if((mp3_file = fopen(argv[INDEX_FIRST_MP3 + i], "rt")) == NULL)
 			return ERROR_INVALID_MP3_FILE;
 
-		if((st = process_mp3_data(&setup, out_file, mp3_file)) != OK) {
+		if((st = process_mp3_data(&setup, mp3_file)) != OK) {
 			print_errors(st);
 			return st;
 		}
