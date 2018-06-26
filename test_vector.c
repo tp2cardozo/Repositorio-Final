@@ -135,7 +135,10 @@ int main(int argc, char *argv[]) {
 	printf("comment: %s\n", ((ADT_track_t *)(test->elements[1]))->comment);
 	printf("genre: %s\n", ((ADT_track_t *)(test->elements[1]))->genre);
 
-	qsort(test->elements[0], test->size, sizeof(ADT_track_t *), test->comparator);
+	printf("%d\n", (test->comparator)(test->elements[0], test->elements[1]));
+	printf("size: %ld\n", test->size);
+
+	qsort(&(test->elements[0]), test->size, sizeof(ADT_track_t *), test->comparator);
 
 	printf("nuevo orden\n");
 	printf("artist: %s\n", ((ADT_track_t *)(test->elements[0]))->artist);

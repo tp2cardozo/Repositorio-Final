@@ -228,6 +228,24 @@ int ADT_track_compare_by_artist (const void * t1, const void * t2) {
     if (track1 == NULL || track2 == NULL)
         return 0;
 
+    printf("-------------------\n");
+    printf("tag: %s\n", track1->tag);
+    printf("title: %s\n", track1->title);
+    printf("artist: %s\n", track1->artist);
+    printf("album: %s\n", track1->album);
+    printf("year: %s\n", track1->year);
+    printf("comment: %s\n", track1->comment);
+    printf("genre: %s\n", track1->genre);
+    printf("-------------------\n");
+    printf("tag: %s\n", track2->tag);
+    printf("title: %s\n", track2->title);
+    printf("artist: %s\n", track2->artist);
+    printf("album: %s\n", track2->album);
+    printf("year: %s\n", track2->year);
+    printf("comment: %s\n", track2->comment);
+    printf("genre: %s\n", track2->genre);
+    printf("-------------------\n");
+
     for(i=0; track1->artist[i] && track2->artist[i]; i++) {
         if (track1->artist[i] != track2->artist[i]) {
             return (track1->artist[i] - track2->artist[i]);
