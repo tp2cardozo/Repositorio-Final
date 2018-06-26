@@ -31,14 +31,4 @@ typedef enum{
 	SORT_TYPE_GENRE = 2
 } sort_type_t;
 
-typedef struct{
-	char * tag;
-	char * title;
-	char * artist;
-	char * album;
-	char * year;
-	char * comment;
-	char * genre;
-} mp3_header_t;
-
 #endif
