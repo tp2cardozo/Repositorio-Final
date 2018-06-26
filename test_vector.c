@@ -13,28 +13,7 @@ int main(int argc, char *argv[]) {
 	bool_t vacio;
 	mp3_header_t *mp3_ptr, mp3_uno;
 
-	mp3_ptr = &mp3_uno;
-	mp3_ptr->tag = (char*)malloc(50*sizeof(char));
-	mp3_ptr->tag = "tag";
-
-	/*mp3_ptr->title = (char*)malloc(50*sizeof(char));
-	mp3_ptr->title = "title";
-
-	mp3_ptr->artist = (char*)malloc(50*sizeof(char));
-	mp3_ptr->artist = "artist";
-
-	mp3_ptr->album = (char*)malloc(50*sizeof(char));
-	mp3_ptr->album = "album";
-
-	mp3_ptr->year = (char*)malloc(50*sizeof(char));
-	mp3_ptr->year = "year";
-
-	mp3_ptr->comment = (char*)malloc(50*sizeof(char));
-	mp3_ptr->comment = "comment";
-
-	mp3_ptr->genre = (char*)malloc(50*sizeof(char));
-	mp3_ptr->genre = "genre";*/
-
+	
 
 	st = ADT_Vector_new (&test);
 	if (st != OK) {
