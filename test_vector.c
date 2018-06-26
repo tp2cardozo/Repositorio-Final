@@ -11,28 +11,29 @@ int main(int argc, char *argv[]) {
 	status_t st;
 	ADT_Vector_t * test;
 	bool_t vacio;
-	mp3_header_t mp3_uno;
+	mp3_header_t *mp3_ptr, mp3_uno;
 
-	mp3_uno.tag = (char*)malloc(50*sizeof(char));
-	mp3_uno.tag = "tag";
+	mp3_ptr = &mp3_uno;
+	mp3_ptr->tag = (char*)malloc(50*sizeof(char));
+	mp3_ptr->tag = "tag";
 
-	mp3_uno.title = (char*)malloc(50*sizeof(char));
-	mp3_uno.title = "title";
+	/*mp3_ptr->title = (char*)malloc(50*sizeof(char));
+	mp3_ptr->title = "title";
 
-	mp3_uno.artist = (char*)malloc(50*sizeof(char));
-	mp3_uno.artist = "artist";
+	mp3_ptr->artist = (char*)malloc(50*sizeof(char));
+	mp3_ptr->artist = "artist";
 
-	mp3_uno.album = (char*)malloc(50*sizeof(char));
-	mp3_uno.album = "album";
+	mp3_ptr->album = (char*)malloc(50*sizeof(char));
+	mp3_ptr->album = "album";
 
-	mp3_uno.year = (char*)malloc(50*sizeof(char));
-	mp3_uno.year = "year";
+	mp3_ptr->year = (char*)malloc(50*sizeof(char));
+	mp3_ptr->year = "year";
 
-	mp3_uno.comment = (char*)malloc(50*sizeof(char));
-	mp3_uno.comment = "comment";
+	mp3_ptr->comment = (char*)malloc(50*sizeof(char));
+	mp3_ptr->comment = "comment";
 
-	mp3_uno.genre = (char*)malloc(50*sizeof(char));
-	mp3_uno.genre = "genre";
+	mp3_ptr->genre = (char*)malloc(50*sizeof(char));
+	mp3_ptr->genre = "genre";*/
 
 
 	st = ADT_Vector_new (&test);
@@ -67,13 +68,13 @@ int main(int argc, char *argv[]) {
 	}
 	printf("Seteamos destructor a \"destroy_mp3_t\"\n");
 
-	st = ADT_Vector_append_element(&test, &mp3_uno, ADT_Vector_delete);
+	st = ADT_Vector_append_element(&test, &mp3_ptr, ADT_Vector_delete);
 	if (st != OK) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
 	printf("Le damos 1 valor a el array\n");
-	printf("TAG: %s\n\n", ((mp3_header_t *)(test->elements[0]))->tag);
+	printf("TAG: %s\n\n", (*((mp3_header_t **)(test->elements[0])))->tag);
 
 	st = ADT_Vector_delete (&test);
 	if (st != OK) {

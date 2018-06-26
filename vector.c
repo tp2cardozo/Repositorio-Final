@@ -34,20 +34,20 @@ status_t ADT_Vector_new(ADT_Vector_t ** v) {
 	return OK;
 }
 
-status_t ADT_Vector_delete (ADT_Vector_t ** p) {
+status_t ADT_Vector_delete (ADT_Vector_t ** v) {
 	status_t st;
 	size_t i;
-	for(i=0; i<(*p)->size; i++) {
-		st = ((*p)->destructor)((*p)->elements[i]);
+	for(i=0; i<(*v)->size; i++) {
+		st = ((*v)->destructor)((*v)->elements[i]);
 		printf("b\n");
 		if (st != OK)
 			return st;
 	}
 
-	free((*p)->elements);
-	(*p)->elements = NULL;
-	free(*p);
-	*p=NULL;
+	free((*v)->elements);
+	(*v)->elements = NULL;
+	free(*v);
+	*v=NULL;
 	return OK;
 }
 
@@ -137,17 +137,17 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (
 
 	i=(*v)->size;
 	if(i==(*v)->alloc_size){
-		if((aux=realloc((*v)->elements,((*v)->alloc_size+ADT_VECTOR_CHOP_SIZE)*sizeof(void*)))==NULL){
+		if((aux = realloc((*v)->elements, ((*v)->alloc_size + ADT_VECTOR_CHOP_SIZE)*sizeof(void*))) == NULL) {
 			st = vector_deleter(v);
 			if (st!=OK)
 				return st;
 
 			return ERROR_OUT_OF_MEMORY;
         }
-		(*v)->elements=aux;
-		(*v)->alloc_size+=ADT_VECTOR_CHOP_SIZE;
+		(*v)->elements = aux;
+		(*v)->alloc_size += ADT_VECTOR_CHOP_SIZE;
     }
-	(*v)->elements[i]=element;
+	(*v)->elements[i] = element;
 	((*v)->size)++;
 
 	return OK;
@@ -253,51 +253,51 @@ int compare_mp3_by_genre (const void * record1, const void * record2) {
 */
 
 status_t destroy_mp3_t (void * record) {
-	mp3_header_t * rec;
+	mp3_header_t ** mp3;
 	if (record == NULL)
 		return ERROR_NULL_POINTER;
 
-	rec = (mp3_header_t *) record;
+	mp3 = (mp3_header_t **) record;
 
-	printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n", (*rec).tag, (*rec).title, (*rec).artist, (*rec).album, (*rec).year, (*rec).comment, (*rec).genre);
+	printf("destruir: %s\n", (*mp3)->tag);
 	
-	if((*rec).tag != NULL) {
-		free(&((*rec).tag));
-		(*rec).tag = NULL;
-	}
+	free((*mp3)->tag);
+	/*free((*(*mp3)).tag);
+	(*mp3)->tag = NULL;*/
 
-	if((*rec).title != NULL) {
-		free(&((*rec).title));
-		(*rec).title = NULL;
+/*
+	if((*mp3).title != NULL) {
+		free(&((*mp3).title));
+		(*mp3).title = NULL;
 	}
 	
-	if((*rec).artist != NULL) {
-		free(&((*rec).artist));
-		(*rec).artist = NULL;
+	if((*mp3).artist != NULL) {
+		free(&((*mp3).artist));
+		(*mp3).artist = NULL;
 	}
 	
-	if((*rec).album != NULL) {
-		free(&((*rec).album));
-		(*rec).album = NULL;
+	if((*mp3).album != NULL) {
+		free(&((*mp3).album));
+		(*mp3).album = NULL;
 	}
 	
-	if((*rec).year != NULL) {
-		free(&((*rec).year));
-		(*rec).year = NULL;
+	if((*mp3).year != NULL) {
+		free(&((*mp3).year));
+		(*mp3).year = NULL;
 	}
 	
-	if((*rec).comment != NULL) {
-		free(&((*rec).comment));
-		(*rec).comment = NULL;
+	if((*mp3).comment != NULL) {
+		free(&((*mp3).comment));
+		(*mp3).comment = NULL;
 	}
 	
-	if((*rec).genre != NULL) {
-		free(&((*rec).genre));
-		(*rec).genre = NULL;
+	if((*mp3).genre != NULL) {
+		free(&((*mp3).genre));
+		(*mp3).genre = NULL;
 	}
 	
-	free(rec);
-	rec = NULL;
-
+	free(mp3);
+	mp3 = NULL;
+*/
 	return OK;
 }
