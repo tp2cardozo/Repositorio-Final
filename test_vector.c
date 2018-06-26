@@ -110,16 +110,30 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
+	printf("\n");
 	printf("Le damos 1er valor a el array\n");
+	printf("tag: %s\n", ((ADT_track_t *)(test->elements[0]))->tag);
 	printf("title: %s\n", ((ADT_track_t *)(test->elements[0]))->title);
+	printf("artist: %s\n", ((ADT_track_t *)(test->elements[0]))->artist);
+	printf("album: %s\n", ((ADT_track_t *)(test->elements[0]))->album);
+	printf("year: %s\n", ((ADT_track_t *)(test->elements[0]))->year);
+	printf("comment: %s\n", ((ADT_track_t *)(test->elements[0]))->comment);
+	printf("year: %s\n", ((ADT_track_t *)(test->elements[0]))->year);
 
 	st = ADT_Vector_append_element(&test, track2, ADT_Vector_delete);
 	if (st != OK) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
+	printf("\n");
 	printf("Le damos 2do valor a el array\n");
+	printf("tag: %s\n", ((ADT_track_t *)(test->elements[1]))->tag);
 	printf("title: %s\n", ((ADT_track_t *)(test->elements[1]))->title);
+	printf("artist: %s\n", ((ADT_track_t *)(test->elements[1]))->artist);
+	printf("album: %s\n", ((ADT_track_t *)(test->elements[1]))->album);
+	printf("year: %s\n", ((ADT_track_t *)(test->elements[1]))->year);
+	printf("comment: %s\n", ((ADT_track_t *)(test->elements[1]))->comment);
+	printf("genre: %s\n", ((ADT_track_t *)(test->elements[1]))->genre);
 
 	st = ADT_Vector_delete (&test);
 	if (st != OK) {
