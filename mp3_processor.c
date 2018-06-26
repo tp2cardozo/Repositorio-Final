@@ -4,13 +4,10 @@
 #include "mp3_processor.h"
 #include "setup.h"
 
-status_t process_mp3_data(setup_t * setup, FILE * fo, FILE * fi)
-{
+status_t process_mp3_data(setup_t * setup, FILE * fo, FILE * fi) {
 	status_t st;
 	ADT_Vector_t * vector;
 	char header[MAX_HEADER_SIZE];
-
-
 
 	if(setup == NULL || fo == NULL || fi == NULL)
 		return ERROR_NULL_POINTER;
