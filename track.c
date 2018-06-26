@@ -48,7 +48,7 @@ status_t ADT_track_delete (void * t) {
     return OK;
 }
 
-status_t ADT_track_set (const char header[], ADT_track_t * track) {
+status_t ADT_track_set (char header[], ADT_track_t * track) {
     char buf[MP3_HEADER_SIZE];
 
     if (header == NULL || track == NULL)
