@@ -10,8 +10,8 @@
 extern char * errors_dictionary[MAX_ERRORS];
 
 status_t (*format_output[MAX_FORMATS]) (void *, FILE *) =  {
-    ADT_track_export_to_csv;
-    ADT_track_export_to_xml; /*falta codificar*/
+    ADT_track_export_to_csv,
+    ADT_track_export_to_xml /*falta codificar*/
 };
 
 int (*sort_output[MAX_SORTS]) (void *, void *) = {
