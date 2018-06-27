@@ -5,6 +5,8 @@
 #include <stdlib.h>
 
 #include "types.h"
+#include "main.h"
+#include "errors.h"
 
 #define CSV_DELIMITER '|'
 

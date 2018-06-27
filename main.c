@@ -63,11 +63,23 @@ int main(int argc, char *argv[])
 	}
 
 
-	st = ADT_Vector_set_printer (vector, format_output[doc_type])
+	if((st = ADT_Vector_set_printer (vector, format_output[doc_type])) != OK)
+	{
+		print_errors(st);
+		return st;
+	}
 
-	st = ADT_Vector_set_comparator(vector,sort_dictionary[sort_by])
+	if((st = ADT_Vector_set_comparator(vector,sort_dictionary[sort_by])) != OK)
+	{
+		print_errors(st);
+		return st;
+	}
 
-	st = ADT_Vector_set_destructor(vector, ADT_track_delete)
+	if((st = ADT_Vector_set_destructor(vector, ADT_track_delete)) != OK)
+	{
+		print_errors(st);
+		return st;
+	}
 
 
 
@@ -103,14 +115,23 @@ int main(int argc, char *argv[])
   	}
 
 
-  	ADT_Vector_sort_elements()
+  	if((st = ADT_Vector_sort_elements(vector, ADT_Vector_swap_elements)) != OK)
+  	{
+  		print_errors(st);
+  		return st;
+  	}
 
-  	
-  	
+	if((st = ADT_Vector_export(vector, file_out)) != OK)
+	{
+		print_errors(st);
+		return st;
+	}
 
-	st = ADT_Vector_export(vector, file_out);
-
-	st = ADT_Vector_delete(&vector);
+	if((st = ADT_Vector_delete(&vector)) != OK)
+	{
+		print_errors(st);
+		return st;
+	}
 
 	return OK;
 }
