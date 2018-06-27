@@ -8,10 +8,17 @@
 
 extern char * errors_dictionary[MAX_ERRORS];
 
-status_t (*format_output[MAX_FORMATS]) (void *, FILE*) = 
+status_t (*format_output[MAX_FORMATS]) (void *, FILE *) = 
 {
     ADT_track_export_to_csv,
     ADT_track_export_to_xml
+}
+
+status_t (*sort_dictionary[MAX_SORTS]) (void *, void *) =
+{
+    ADT_track_compare_by_name,
+    ADT_track_compare_by_artist,
+    ADT_track_compare_by_genre
 }
 
 status_t ADT_track_new (ADT_track_t ** track) {
