@@ -94,7 +94,7 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
 
     memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
     buf[LEXEM_SPAN_GENRE] = '\0';
-    sprintf(track->genre,"%s", buf);
+    sprintf(track->genre,"%c", buf[0]);
 
     return OK;
 }
