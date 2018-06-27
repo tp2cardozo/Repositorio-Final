@@ -17,7 +17,7 @@ status_t (*format_output[MAX_FORMATS]) (void *, FILE *) =
 
 status_t (*sort_dictionary[MAX_SORTS]) (void *, void *) =
 {
-    ADT_track_compare_by_name,
+    ADT_track_compare_by_title,
     ADT_track_compare_by_artist,
     ADT_track_compare_by_genre/*falta codificar*/
 };
@@ -259,7 +259,7 @@ status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
     return OK;
 }
 
-int ADT_track_compare_by_artist (const void * t1, const void * t2) {
+int ADT_track_compare_by_artist (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
 
@@ -301,7 +301,7 @@ int ADT_track_compare_by_artist (const void * t1, const void * t2) {
     return 0;
 }
 
-int ADT_track_compare_by_title (const void * t1, const void * t2) {
+int ADT_track_compare_by_title (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
 
@@ -326,7 +326,7 @@ int ADT_track_compare_by_title (const void * t1, const void * t2) {
 }
 
 
-int ADT_track_compare_by_genre (const void * t1, const void * t2) {
+int ADT_track_compare_by_genre (void * t1, void * t2) {
 
     /*EDIT*/
    /*ADT_track_t *track1, *track2;
