@@ -20,8 +20,8 @@ char * sort_dictionary[MAX_SORTS] =
 	SORT_BY_GENRE
 };
 
-extern status_t (*format_output[MAX_FORMATS]);
-extern int (*sort_output[MAX_SORTS]);
+extern status_t (*format_output[MAX_FORMATS])(void *, FILE *);
+extern int (*sort_output[MAX_SORTS]) (void *, void *);
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
 
