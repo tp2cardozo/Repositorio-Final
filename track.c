@@ -80,7 +80,7 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
 
     memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
     buf[LEXEM_SPAN_GENRE] = '\0';
-    sprintf(track->genre,"%s", buf);
+    sprintf(track->genre,"%c", buf[0]);
 
     return OK;
 }
@@ -179,7 +179,6 @@ status_t ADT_track_get_genre (ADT_track_t * track, char ** str) {
 status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
     char del = CSV_DELIMITER;
     char end_line = '\n';
-    status_t st;
     ADT_track_t * track;
 
     track = (ADT_track_t *)t;
@@ -220,24 +219,6 @@ int ADT_track_compare_by_artist (const void * t1, const void * t2) {
 
     if (track1 == NULL || track2 == NULL)
         return 0;
-
-    printf("-------------------\n");
-    printf("tag: %s\n", track1->tag);
-    printf("title: %s\n", track1->title);
-    printf("artist: %s\n", track1->artist);
-    printf("album: %s\n", track1->album);
-    printf("year: %s\n", track1->year);
-    printf("comment: %s\n", track1->comment);
-    printf("genre: %s\n", track1->genre);
-    printf("-------------------\n");
-    printf("tag: %s\n", track2->tag);
-    printf("title: %s\n", track2->title);
-    printf("artist: %s\n", track2->artist);
-    printf("album: %s\n", track2->album);
-    printf("year: %s\n", track2->year);
-    printf("comment: %s\n", track2->comment);
-    printf("genre: %s\n", track2->genre);
-    printf("-------------------\n");
 
     for(i=0; track1->artist[i] && track2->artist[i]; i++) {
         if (track1->artist[i] != track2->artist[i]) {
