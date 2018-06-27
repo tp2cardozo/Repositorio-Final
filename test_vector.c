@@ -140,11 +140,15 @@ int main(int argc, char *argv[]) {
 	printf("size: %ld\n", test->size);
 	printf("--------------------------\n");
 
+	printf("orden antes de ordenar\n");
+	printf("artist: %s\n", ((ADT_track_t *)(test->elements[0]))->artist);
+	printf("artist: %s\n", ((ADT_track_t *)(test->elements[1]))->artist);
 	st = ADT_Vector_sort_elements(test, ADT_Vector_swap_elements);
 	if (st != OK) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
+
 	printf("elementos ordenados\n");
 
 	printf("nuevo orden\n");

@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
   	}
 
 
-  	if((st = ADT_Vector_sort_elements(vector, ADT_Vector_swap_elements)) != OK)
+  	if((st = ADT_Vector_sort_elements(&vector, ADT_Vector_swap_elements)) != OK)
   	{
   		print_errors(st);
   		return st;

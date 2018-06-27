@@ -65,25 +65,25 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
        return ERROR_NULL_POINTER;
 
     memcpy(track->tag,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
-    track->tag[LEXEM_SPAN_TAG - 1] = '\0';
+    track->tag[LEXEM_SPAN_TAG] = '\0';
 
     memcpy(track->title,header+LEXEM_START_TITLE,LEXEM_SPAN_TITLE);
-    track->title[LEXEM_SPAN_TITLE - 1] = '\0';
+    track->title[LEXEM_SPAN_TITLE] = '\0';
 
     memcpy(track->artist,header+LEXEM_START_ARTIST,LEXEM_SPAN_ARTIST);
-    track->artist[LEXEM_SPAN_ARTIST - 1] = '\0';
+    track->artist[LEXEM_SPAN_ARTIST] = '\0';
 
     memcpy(track->album,header+LEXEM_START_ALBUM,LEXEM_SPAN_ALBUM);
-    track->album[LEXEM_SPAN_ALBUM - 1] = '\0';
+    track->album[LEXEM_SPAN_ALBUM] = '\0';
 
     memcpy(track->year,header+LEXEM_START_YEAR,LEXEM_SPAN_YEAR);
-    track->year[LEXEM_SPAN_YEAR - 1] = '\0';
+    track->year[LEXEM_SPAN_YEAR] = '\0';
 
     memcpy(track->comment,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
-    track->comment[LEXEM_SPAN_COMMENT - 1] = '\0';
+    track->comment[LEXEM_SPAN_COMMENT] = '\0';
 
     memcpy(track->genre,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
-    track->genre[LEXEM_SPAN_GENRE - 1] = '\0';
+    track->genre[LEXEM_SPAN_GENRE] = '\0';
 
     return OK;
 }

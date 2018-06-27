@@ -142,12 +142,12 @@ status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 	aux = *element1;
 	*element1 = *element2;
 	*element2 = aux;
-
+	
 	return OK;
 }
 
-status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, status_t (*elements_swapper)(void **, void **)) {
-	size_t i, j;
+status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector, status_t (*elements_swapper)(void **, void **)) {
+	size_t i, j = 1;
 	status_t st;
 
 	if (vector == NULL)
@@ -155,13 +155,14 @@ status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, status_t (*elements_s
 
 	while (j != 0) {
 		j = 0;
-		for(i = 0; i < vector->size - 1; i++) {
-			if((vector->comparator)(vector->elements[i], vector->elements[i+1]) > 0) {
-				if ((st = elements_swapper(&(vector->elements[i]), &(vector->elements[i+1]))) != OK)
+		for(i = 0; i < (*vector)->size - 1; i++) {
+			if(((*vector)->comparator)((*vector)->elements[i], (*vector)->elements[i+1]) > 0) {
+				if ((st = elements_swapper(&((*vector)->elements[i]), &((*vector)->elements[i+1]))) != OK)
 					return st;
 				j++;
 			}
 		}
 	}
+
 	return OK;
 }
