@@ -44,6 +44,15 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
+
+	st = ADT_Vector_set_printer (vector, format_output[doc_type])
+
+	st = ADT_Vector_set_comparator(vector, )
+
+	st = ADT_Vector_set_destructor(vector, )
+
+
+
 	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
 	{
 		st = ERR_INVALID_OUTPUT_FILE;
@@ -95,10 +104,10 @@ int main(int argc, char *argv[])
 
   	vector_sort();
 
-  	status_t ADT_Vector_set_printer (vector, *format_output[format])
+  	
   	
 
-	status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
+	st = ADT_Vector_export (vector, file_out);
 /*
 
 

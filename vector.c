@@ -48,7 +48,7 @@ status_t ADT_Vector_delete (ADT_Vector_t ** v) {
 	return OK;
 }
 
-void * ADT_Vector_get_element (const ADT_Vector_t * v, int position) {
+void * ADT_Vector_get_element (ADT_Vector_t * v, int position) {
 	if (v == NULL) return NULL;
 
 	if (position < 0) return v->elements[v->size + position];
@@ -57,7 +57,7 @@ void * ADT_Vector_get_element (const ADT_Vector_t * v, int position) {
 	return v->elements[position];
 }
 
-bool_t ADT_Vector_is_empty (const ADT_Vector_t * p) {
+bool_t ADT_Vector_is_empty (ADT_Vector_t * p) {
 	return (p->size) ? FALSE:TRUE;
 }
 
@@ -82,19 +82,7 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	return OK;
 }
 
-bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
-	size_t i;
-
-	if (v1->size != v2->size) return FALSE;
-
-	for (i=0; i<v1->size; i++) {
-		if((v1->comparator)(v1->elements[i], v2->elements[i]))
-			return FALSE;
-	}
-	return TRUE;
-}
-
-status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
+status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file) {
 	size_t i;
 	status_t st;
 
