@@ -57,9 +57,9 @@ status_t ADT_track_get_year (ADT_track_t * track, char ** str);
 status_t ADT_track_get_comment (ADT_track_t * track, char ** str);
 status_t ADT_track_get_genre (ADT_track_t * track, char ** str);
 status_t ADT_track_export_to_csv (void * track, FILE * file_out);
+status_t ADT_track_export_to_xml (void * t, FILE * file_out);
 int ADT_track_compare_by_artist (void * track1, void * track2);
 int ADT_track_compare_by_title (void * track1, void * track2);
-status_t ADT_track_export_to_xml (void * t, FILE * file_out);
 int ADT_track_compare_by_genre (void * t1, void * t2);
 /***************FIN PROTOTIPOS ADT_TRACK***************/
 
