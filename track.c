@@ -20,6 +20,27 @@ int (*sort_output[MAX_SORTS]) (void *, void *) = {
     ADT_track_compare_by_genre/*falta codificar*/
 };
 
+char * genres_dictionary[MAX_GENRES] = {
+    "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", 
+    "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies", "Other", "Pop", 
+    "R&B", "Rap", "Reggae", "Rock", "Techno", "Industrial", "Alternative", 
+    "Ska", "Death Metal", "Pranks", "Soundtrack", "Euro-Techno", "Ambient", "Trip-Hop", 
+    "Vocal", "Jazz+Funk", "Fusion", "Trance", "Classical", "Instrumental", "Acid", 
+    "House", "Game", "Sound Clip", "Gospel", "Noise", "AlternRock", "Bass", 
+    "Soul", "Punk", "Space", "Meditative", "Instrumental Pop", "Instrumental Rock", "Ethnic", 
+    "Gothic", "Darkwave", "Techno-Industrial", "Electronic", "Pop-Folk", "Eurodance", "Dream", 
+    "Southern Rock", "Comedy", "Cult", "Gangsta", "Top 40", "Christian Rap", "Pop/Funk", 
+    "Jungle", "Native American", "Cabaret", "New Wave", "Psychadelic", "Rave", "Showtunes", 
+    "Trailer", "Lo-Fi", "Tribal", "Acid Punk", "Acid Jazz", "Polka", "Retro", 
+    "Musical", "Rock & Roll", "Hard Rock", "Folk", "Folk-Rock", "National Folk", "Swing", 
+    "Fast Fusion", "Bebob", "Latin", "Revival", "Celtic", "Bluegrass", "Avantgarde", 
+    "Gothic Rock", "Progressive Rock", "Psychedelic Rock", "Symphonic Rock", "Slow Rock", "Big Band", "Chorus", 
+    "Easy Listening", "Acoustic", "Humour", "Speech", "Chanson", "Opera", "Chamber Music", 
+    "Sonata", "Symphony", "Booty Brass", "Primus", "Porn Groove", "Satire", "Slow Jam", 
+    "Club", "Tango", "Samba", "Folklore", "Ballad", "Poweer Ballad", "Rhytmic Soul", 
+    "Freestyle", "Duet", "Punk Rock", "Drum Solo", "A Capela", "Euro-House", "Dance Hall"
+};
+
 status_t ADT_track_new (ADT_track_t ** track) {
     if (track == NULL)
         return ERROR_NULL_POINTER;
@@ -83,98 +104,6 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
     track->comment[LEXEM_SPAN_COMMENT] = '\0';
 
     memcpy(track->genre,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
-    track->genre[LEXEM_SPAN_GENRE] = '\0';
-
-    return OK;
-}
-
-status_t ADT_track_get_tag (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->tag);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->tag, LEXEM_SPAN_TAG);
-
-    return OK;
-}
-
-status_t ADT_track_get_title (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->title);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->title, LEXEM_SPAN_TITLE);
-
-    return OK;
-}
-
-status_t ADT_track_get_artist (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->artist);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->artist, LEXEM_SPAN_ARTIST);
-
-    return OK;
-}
-
-status_t ADT_track_get_album (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->album);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->album, LEXEM_SPAN_ALBUM);
-
-    return OK;
-}
-
-status_t ADT_track_get_year (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->year);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->year, LEXEM_SPAN_YEAR);
-
-    return OK;
-}
-
-status_t ADT_track_get_comment (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->comment);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->comment, LEXEM_SPAN_COMMENT);
-
-    return OK;
-}
-
-status_t ADT_track_get_genre (ADT_track_t * track, char ** str) {
-    size_t len;
-
-    len = strlen(track->genre);
-
-    if (((*str) = (char*)malloc((len+1)*sizeof(char))) == NULL) 
-        return ERROR_OUT_OF_MEMORY;
-
-    memcpy((*str), track->genre, LEXEM_SPAN_GENRE);
 
     return OK;
 }
@@ -203,7 +132,7 @@ status_t ADT_track_export_to_xml (void * t, FILE * file_out) {
         return ERROR_WRITING_TO_FILE;
     
 
-    if(fprintf(file_out, "%s", track->genre) < 0)
+    if(fprintf(file_out, "%ld", track->genre) < 0)
         return ERROR_WRITING_TO_FILE;
 
 
@@ -237,7 +166,7 @@ status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
         return ERROR_WRITING_TO_FILE;
     
 
-    if(fprintf(file_out, "%s", track->genre) < 0)
+    if(fprintf(file_out, "%ld", track->genre) < 0)
         return ERROR_WRITING_TO_FILE;
 
 
