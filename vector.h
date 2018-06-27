@@ -37,6 +37,6 @@ status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf);
 status_t ADT_Vector_set_comparator(ADT_Vector_t * v, comparator_t cf);
 status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df);
 status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file);
-status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (*vector_deleter)(ADT_Vector_t **));
+status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element);
 
 #endif
