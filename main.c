@@ -74,11 +74,27 @@ int main(int argc, char *argv[])
 
 	  	fclose(mp3_file);
   	}
+/*
+  	validar argumentos
+  	ADT_Vector_new
+  	ADT_Vector_set_printer
+  	ADT_Vector_set_comparator
+  	ADT_Vector_set_destructor
+  	abrir archivo de salida
+  	FOR{
+  		abrir mp3
+  		procesar mp3
+  		guardar mp3 en el vector
+  		cerrar mp3
+  	}
+  	ADT_Vector_sort_elements
+  	ADT_Vector_export
+  	return OK
 
-
+*/
   	vector_sort();
 
-  	status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf)
+  	status_t ADT_Vector_set_printer (ADT_Vector_t * v, printer_t pf)
   	/*format_output[format]();*/
 
 	status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
