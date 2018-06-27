@@ -75,6 +75,13 @@ int main(int argc, char *argv[])
 	  	fclose(mp3_file);
   	}
 
+
+  	vector_sort();
+
+  	status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf)
+  	/*format_output[format]();*/
+
+	status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
 /*
 
 
