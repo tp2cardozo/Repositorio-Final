@@ -9,25 +9,15 @@
 
 extern char * errors_dictionary[MAX_ERRORS];
 
-status_t (*format_output[MAX_FORMATS]) (void *, FILE *) = 
-{
+status_t (*format_output[MAX_FORMATS]) (void *, FILE *) =  {
     ADT_track_export_to_csv;
     ADT_track_export_to_xml; /*falta codificar*/
 };
 
-<<<<<<< HEAD
-status_t (*sort_output[MAX_SORTS]) (void *, void *) =
-{
-    ADT_track_compare_by_name;
-    ADT_track_compare_by_artist;
-    ADT_track_compare_by_genre;/*falta codificar*/
-=======
-int (*sort_dictionary[MAX_SORTS]) (void *, void *) =
-{
+status_t (*sort_output[MAX_SORTS]) (void *, void *) = {
     ADT_track_compare_by_title,
     ADT_track_compare_by_artist,
     ADT_track_compare_by_genre/*falta codificar*/
->>>>>>> 531dc92cdf1c73d4032dab1c14fe5937ccf4b105
 };
 
 status_t ADT_track_new (ADT_track_t ** track) {
