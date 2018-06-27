@@ -15,11 +15,19 @@ status_t (*format_output[MAX_FORMATS]) (void *, FILE *) =
     ADT_track_export_to_xml; /*falta codificar*/
 };
 
+<<<<<<< HEAD
 status_t (*sort_output[MAX_SORTS]) (void *, void *) =
 {
     ADT_track_compare_by_name;
     ADT_track_compare_by_artist;
     ADT_track_compare_by_genre;/*falta codificar*/
+=======
+int (*sort_dictionary[MAX_SORTS]) (void *, void *) =
+{
+    ADT_track_compare_by_title,
+    ADT_track_compare_by_artist,
+    ADT_track_compare_by_genre/*falta codificar*/
+>>>>>>> 531dc92cdf1c73d4032dab1c14fe5937ccf4b105
 };
 
 status_t ADT_track_new (ADT_track_t ** track) {
@@ -94,7 +102,7 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
 
     memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
     buf[LEXEM_SPAN_GENRE] = '\0';
-    sprintf(track->genre,"%s", buf);
+    sprintf(track->genre,"%c", buf[0]);
 
     return OK;
 }
@@ -259,7 +267,7 @@ status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
     return OK;
 }
 
-int ADT_track_compare_by_artist (const void * t1, const void * t2) {
+int ADT_track_compare_by_artist (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
 
@@ -268,24 +276,6 @@ int ADT_track_compare_by_artist (const void * t1, const void * t2) {
 
     if (track1 == NULL || track2 == NULL)
         return 0;
-
-    printf("-------------------\n");
-    printf("tag: %s\n", track1->tag);
-    printf("title: %s\n", track1->title);
-    printf("artist: %s\n", track1->artist);
-    printf("album: %s\n", track1->album);
-    printf("year: %s\n", track1->year);
-    printf("comment: %s\n", track1->comment);
-    printf("genre: %s\n", track1->genre);
-    printf("-------------------\n");
-    printf("tag: %s\n", track2->tag);
-    printf("title: %s\n", track2->title);
-    printf("artist: %s\n", track2->artist);
-    printf("album: %s\n", track2->album);
-    printf("year: %s\n", track2->year);
-    printf("comment: %s\n", track2->comment);
-    printf("genre: %s\n", track2->genre);
-    printf("-------------------\n");
 
     for(i=0; track1->artist[i] && track2->artist[i]; i++) {
         if (track1->artist[i] != track2->artist[i]) {
@@ -301,7 +291,7 @@ int ADT_track_compare_by_artist (const void * t1, const void * t2) {
     return 0;
 }
 
-int ADT_track_compare_by_title (const void * t1, const void * t2) {
+int ADT_track_compare_by_title (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
 
@@ -326,7 +316,7 @@ int ADT_track_compare_by_title (const void * t1, const void * t2) {
 }
 
 
-int ADT_track_compare_by_genre (const void * t1, const void * t2) {
+int ADT_track_compare_by_genre (void * t1, void * t2) {
 
     /*EDIT*/
    /*ADT_track_t *track1, *track2;

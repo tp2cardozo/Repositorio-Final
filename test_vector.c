@@ -136,16 +136,16 @@ int main(int argc, char *argv[]) {
 	printf("genre: %s\n", ((ADT_track_t *)(test->elements[1]))->genre);
 
 	printf("--------------------------\n");
-
-
 	printf("dif: %d\n", (test->comparator)(test->elements[0], test->elements[1]));
 	printf("size: %ld\n", test->size);
+	printf("--------------------------\n");
 
-	if (sizeof(test->elements) == sizeof(ADT_track_t *))
-		printf("son iguales\n");
-	else
-		printf("son distintos\n");
-
+	st = ADT_Vector_sort_elements(test, ADT_Vector_swap_elements);
+	if (st != OK) {
+		fprintf(stderr, "%s\n", errors_dictionary[st]);
+		return st;
+	}
+	printf("elementos ordenados\n");
 
 	printf("nuevo orden\n");
 	printf("artist: %s\n", ((ADT_track_t *)(test->elements[0]))->artist);
