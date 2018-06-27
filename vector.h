@@ -17,6 +17,7 @@ typedef status_t (*destructor_t) (void *);
 typedef int (*comparator_t) (void *, void *);
 typedef status_t (*printer_t) (void *, const void *, FILE *);
 
+
 typedef struct{
 	void ** elements;
 	size_t size;
@@ -26,6 +27,7 @@ typedef struct{
 	printer_t printer;
 }ADT_Vector_t;
 
+/*Prototipos de funciones*/
 status_t ADT_Vector_new(ADT_Vector_t ** p);
 status_t ADT_Vector_delete (ADT_Vector_t ** p);
 void * ADT_Vector_get_element (ADT_Vector_t * v, int position);

@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
 }
 
 
-/*Función que valida los argumentos de la invocación*/
+/*Función que valida los argumentos de invocación*/
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) 
 {
 	size_t i;

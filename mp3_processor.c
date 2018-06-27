@@ -34,6 +34,7 @@ status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector)
 
 	return OK;	
 }
+
 /*Lee el "header" del archivo mp3*/
 status_t get_mp3_header(FILE * fi, char header[])
 {

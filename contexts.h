@@ -1,6 +1,8 @@
 #ifndef CONTEXTS__H
 #define CONTEXTS__H
 
+#include <stdio.h>
+
 #define MAX_XML_CONTEXTS 9
 
 #define CSV_DELIMITER '|'

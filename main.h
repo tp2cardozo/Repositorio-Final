@@ -16,17 +16,21 @@
 #define MAX_FORMATS 2
 #define MAX_SORTS 3
 
+/*Formatos de impresión*/
 #define CSV_FORMAT "csv"
 #define XML_FORMAT "xml"
 
+/*Formas de ordenamiento*/
 #define SORT_BY_NAME "name"
 #define SORT_BY_ARTIST "artist"
 #define SORT_BY_GENRE "genre"
 
+/*Tokens*/
 #define FORMAT_FLAG_TOKEN "-fmt"
 #define SORT_FLAG_TOKEN "-sort"
 #define OUT_FLAG_TOKEN "-out"
 
+/*Prototipo*/
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file);
 
 #endif

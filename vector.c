@@ -5,6 +5,8 @@
 
 extern char * errors_dictionary[MAX_ERRORS];
 
+
+/*Esta función crea un nuevo vector*/
 status_t ADT_Vector_new(ADT_Vector_t ** v) {
 	size_t i;
 
@@ -32,6 +34,7 @@ status_t ADT_Vector_new(ADT_Vector_t ** v) {
 	return OK;
 }
 
+/*Esta función destruye un vector*/
 status_t ADT_Vector_delete (ADT_Vector_t ** v) {
 	status_t st;
 	size_t i;
@@ -48,6 +51,7 @@ status_t ADT_Vector_delete (ADT_Vector_t ** v) {
 	return OK;
 }
 
+/*Esta función obtiene un elemento de un vector*/
 void * ADT_Vector_get_element (ADT_Vector_t * v, int position) {
 	if (v == NULL) return NULL;
 
@@ -57,10 +61,12 @@ void * ADT_Vector_get_element (ADT_Vector_t * v, int position) {
 	return v->elements[position];
 }
 
+/*Esta función se fija si un vector está vacío*/
 bool_t ADT_Vector_is_empty (ADT_Vector_t * p) {
 	return (p->size) ? FALSE:TRUE;
 }
 
+/*Esta función establece una función de impresión de vector*/
 status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf) {
 	if(v==NULL) return ERROR_NULL_POINTER;
 
@@ -68,6 +74,7 @@ status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf) {
 	return OK;
 }
 
+/*Esta función establece una función que compara elementos*/
 status_t ADT_Vector_set_comparator(ADT_Vector_t * v, comparator_t cf) {
 	if(v==NULL) return ERROR_NULL_POINTER;
 
@@ -75,6 +82,7 @@ status_t ADT_Vector_set_comparator(ADT_Vector_t * v, comparator_t cf) {
 	return OK;
 }
 
+/*Esta función establece una función que destruye elementos*/
 status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	if(v==NULL) return ERROR_NULL_POINTER;
 
@@ -82,6 +90,7 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	return OK;
 }
 
+/*Esta función exporta un Vector*/
 status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, setup_t setup) {
 	size_t i;
 	status_t st;
@@ -113,6 +122,7 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 	return OK;
 }
 
+/*Esta función establece un elemento*/
 status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_element) {
 	if(v==NULL)
 		return ERROR_NULL_POINTER;
@@ -129,6 +139,7 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 	return OK;
 }
 
+/*Esta función agrega un elemento a un vector*/
 status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element) {
 	size_t i;
 	void ** aux;
@@ -150,6 +161,7 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element) {
 	return OK;
 }
 
+/*Esta funcion intercambia ele lugar de dos elementos de un vector*/
 status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 	void * aux;
 
@@ -163,6 +175,7 @@ status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 	return OK;
 }
 
+/*Esta función ordena los elementos de un vector*/
 status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector, status_t (*elements_swapper)(void **, void **)) {
 	size_t i, j = 1;
 	status_t st;

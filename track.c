@@ -9,6 +9,9 @@
 
 extern char * errors_dictionary[MAX_ERRORS];
 
+
+/*Diccionarios de formato, tipos de ordenes y generos*/
+
 status_t (*format_output[MAX_FORMATS]) (void *, const void *, FILE *) =  {
     ADT_track_export_to_csv,
     ADT_track_export_to_xml /*falta codificar*/
@@ -41,6 +44,7 @@ char * genres_dictionary[MAX_GENRES] = {
     "Freestyle", "Duet", "Punk Rock", "Drum Solo", "A Capela", "Euro-House", "Dance Hall"
 };
 
+/*Esta función crea una nueva pista*/
 status_t ADT_track_new (ADT_track_t ** track) {
     
     if (track == NULL)
@@ -60,6 +64,7 @@ status_t ADT_track_new (ADT_track_t ** track) {
     return OK;
 }
 
+/*Esta funcion destruye una pista*/
 status_t ADT_track_delete (void * t) {
     ADT_track_t * track;
 
@@ -82,6 +87,7 @@ status_t ADT_track_delete (void * t) {
     return OK;
 }
 
+/*Esta función establece una pista*/
 status_t ADT_track_set (char header[], ADT_track_t * track) {
     char aux[2];
 
@@ -112,6 +118,7 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
     return OK;
 }
 
+/*Esta función exporta una pista a un archivo csv*/
 status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_out) {
     char del;
     ADT_track_t * track;
@@ -137,6 +144,7 @@ status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_ou
     return OK;
 }
 
+/*Esta función exporta una pista a un archivo csv*/
 status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out) {
     char ** xml_contexts;
     ADT_track_t * track;
@@ -180,6 +188,7 @@ status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_ou
     return OK;
 }
 
+/*Esta función compara dos pistas según el artista*/
 int ADT_track_compare_by_artist (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
@@ -204,6 +213,7 @@ int ADT_track_compare_by_artist (void * t1, void * t2) {
     return 0;
 }
 
+/*Esta función compara dos pistas segun el nombre*/
 int ADT_track_compare_by_title (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
@@ -229,7 +239,7 @@ int ADT_track_compare_by_title (void * t1, void * t2) {
     return 0;
 }
 
-
+/*Esta función compara dos pistas segun el género*/
 int ADT_track_compare_by_genre (void * t1, void * t2) {
     ADT_track_t *track1, *track2;
 

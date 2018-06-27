@@ -3,6 +3,8 @@
 #include "types.h"
 #include "contexts.h"
 
+/*Variables que contienen el contexto para la exportacion*/
+
 char context_csv = CSV_DELIMITER;
 
 char * context_xml[MAX_XML_CONTEXTS] = {
