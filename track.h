@@ -8,8 +8,6 @@
 #include "main.h"
 #include "errors.h"
 
-#define CSV_DELIMITER '|'
-
 #define MAX_GENRES 126
 
 #define MP3_HEADER_SIZE		128
