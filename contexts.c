@@ -7,7 +7,8 @@
 
 char context_csv = CSV_DELIMITER;
 
-char * context_xml[MAX_XML_CONTEXTS] = {
+char * context_xml[MAX_XML_CONTEXTS] =
+{
 	XML_VERSION_LINE,
 	XML_OPEN_INITIAL_BRACKET,
 	XML_OPEN_FINISHER_BRACKET,

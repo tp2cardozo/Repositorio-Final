@@ -16,7 +16,8 @@ typedef int (*comparator_t) (void *, void *);
 typedef status_t (*printer_t) (void *, const void *, FILE *);
 
 
-typedef struct{
+typedef struct
+{
 	void ** elements;
 	size_t size;
 	size_t alloc_size;

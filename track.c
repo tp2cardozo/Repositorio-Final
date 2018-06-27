@@ -12,18 +12,21 @@ extern char * errors_dictionary[MAX_ERRORS];
 
 /*Diccionarios de formato, tipos de ordenes y generos*/
 
-status_t (*format_output[MAX_FORMATS]) (void *, const void *, FILE *) =  {
+status_t (*format_output[MAX_FORMATS]) (void *, const void *, FILE *) = 
+{
     ADT_track_export_to_csv,
-    ADT_track_export_to_xml /*falta codificar*/
+    ADT_track_export_to_xml
 };
 
-int (*sort_output[MAX_SORTS]) (void *, void *) = {
+int (*sort_output[MAX_SORTS]) (void *, void *) =
+{
     ADT_track_compare_by_title,
     ADT_track_compare_by_artist,
-    ADT_track_compare_by_genre/*falta codificar*/
+    ADT_track_compare_by_genre
 };
 
-char * genres_dictionary[MAX_GENRES] = {
+char * genres_dictionary[MAX_GENRES] = 
+{
     "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", 
     "Hip-Hop", "Jazz", "Metal", "New Age", "Oldies", "Other", "Pop", 
     "R&B", "Rap", "Reggae", "Rock", "Techno", "Industrial", "Alternative", 
@@ -45,7 +48,8 @@ char * genres_dictionary[MAX_GENRES] = {
 };
 
 /*Esta función crea una nueva pista*/
-status_t ADT_track_new (ADT_track_t ** track) {
+status_t ADT_track_new (ADT_track_t ** track)
+{
     if (track == NULL)
         return ERROR_NULL_POINTER;
 
@@ -64,7 +68,8 @@ status_t ADT_track_new (ADT_track_t ** track) {
 }
 
 /*Esta funcion destruye una pista*/
-status_t ADT_track_delete (void * t) {
+status_t ADT_track_delete (void * t)
+{
     ADT_track_t * track;
 
     track = (ADT_track_t *)t; 
@@ -87,7 +92,8 @@ status_t ADT_track_delete (void * t) {
 }
 
 /*Esta función establece una pista*/
-status_t ADT_track_set (char header[], ADT_track_t * track) {
+status_t ADT_track_set (char header[], ADT_track_t * track)
+{
     char aux[2];
 
     if (header == NULL || track == NULL)
@@ -118,7 +124,8 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
 }
 
 /*Esta función exporta una pista a un archivo csv*/
-status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_out) {
+status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_out)
+{
     char del;
     ADT_track_t * track;
 
@@ -144,7 +151,8 @@ status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_ou
 }
 
 /*Esta función exporta una pista a un archivo csv*/
-status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out) {
+status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out)
+{
     char ** xml_contexts;
     ADT_track_t * track;
 
@@ -188,7 +196,8 @@ status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_ou
 }
 
 /*Esta función compara dos pistas según el artista*/
-int ADT_track_compare_by_artist (void * t1, void * t2) {
+int ADT_track_compare_by_artist (void * t1, void * t2)
+{
     size_t i;
     ADT_track_t *track1, *track2;
 
@@ -198,22 +207,27 @@ int ADT_track_compare_by_artist (void * t1, void * t2) {
     if (track1 == NULL || track2 == NULL)
         return 0;
 
-    for(i=0; track1->artist[i] && track2->artist[i]; i++) {
-        if (track1->artist[i] != track2->artist[i]) {
+    for(i=0; track1->artist[i] && track2->artist[i]; i++)
+    {
+        if (track1->artist[i] != track2->artist[i])
+        {
             return (track1->artist[i] - track2->artist[i]);
         }
     }
-    if (!track1->artist[i] && track2->artist[i]) {
+    if (!track1->artist[i] && track2->artist[i])
+    {
         return 1;
     }
-    if (track1->artist[i] && !track2->artist[i]) {
+    if (track1->artist[i] && !track2->artist[i])
+    {
         return -1;
     }
     return 0;
 }
 
 /*Esta función compara dos pistas segun el nombre*/
-int ADT_track_compare_by_title (void * t1, void * t2) {
+int ADT_track_compare_by_title (void * t1, void * t2)
+{
     size_t i;
     ADT_track_t *track1, *track2;
 
@@ -224,22 +238,27 @@ int ADT_track_compare_by_title (void * t1, void * t2) {
     track2 = (ADT_track_t *)t2;
 
 
-    for(i=0; track1->title[i] && track2->title[i]; i++) {
-        if (track1->title[i] != track2->title[i]) {
+    for(i=0; track1->title[i] && track2->title[i]; i++)
+    {
+        if (track1->title[i] != track2->title[i])
+        {
             return (track1->title[i] - track2->title[i]);
         }
     }
-    if (!track1->title[i] && track2->title[i]) {
+    if (!track1->title[i] && track2->title[i])
+    {
         return 1;
     }
-    if (track1->title[i] && !track2->title[i]) {
+    if (track1->title[i] && !track2->title[i])
+    {
         return -1;
     }
     return 0;
 }
 
 /*Esta función compara dos pistas segun el género*/
-int ADT_track_compare_by_genre (void * t1, void * t2) {
+int ADT_track_compare_by_genre (void * t1, void * t2)
+{
     ADT_track_t *track1, *track2;
 
     if (t1 == NULL || t2 == NULL)

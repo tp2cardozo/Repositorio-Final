@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 /*Define el tipo status_t*/
-typedef enum{
+typedef enum
+{
 	OK = 0,
 	ERROR_INVALID_OUTPUT_FILE,
 	ERROR_WRITING_TO_FILE,
@@ -18,19 +19,22 @@ typedef enum{
 } status_t;
 
 /*Define el tipo bool_t*/
-typedef enum{
+typedef enum
+{
 	TRUE,
 	FALSE
 } bool_t;
 
 /*Define el tipo format_t*/
-typedef enum{
+typedef enum
+{
 	FMT_CSV = 0,
 	FMT_XML = 1
 } format_t;
 
 /*Define el tipo sort_t*/
-typedef enum{
+typedef enum
+{
 	SORT_NAME = 0,
 	SORT_ARTIST = 1,
 	SORT_GENRE = 2

@@ -3,7 +3,8 @@
 
 #include "errors.h"
 
-char * errors_dictionary[MAX_ERRORS] = {
+char * errors_dictionary[MAX_ERRORS] =
+{
 	"",
 	MSG_ERROR_INVALID_OUTPUT_FILE,
 	MSG_ERROR_WRITING_TO_FILE,
@@ -16,7 +17,8 @@ char * errors_dictionary[MAX_ERRORS] = {
 	MSG_ERROR_INVALID_TRACK
 };
 
-status_t print_errors(status_t st) {
+status_t print_errors(status_t st)
+{
 	fprintf(stderr, "%s\n", errors_dictionary[st]);
 	return OK;
 }

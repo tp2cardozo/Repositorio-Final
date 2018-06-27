@@ -33,7 +33,8 @@
 #define LEXEM_START_GENRE  127
 #define LEXEM_SPAN_GENRE     1
 
-typedef struct{
+typedef struct
+{
 	char tag[LEXEM_SPAN_TAG + 1];
 	char title[LEXEM_SPAN_TITLE + 1];
 	char artist[LEXEM_SPAN_ARTIST + 1];

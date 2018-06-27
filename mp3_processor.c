@@ -4,7 +4,8 @@
 #include "mp3_processor.h"
 
 /*Esta función se ocupa de insertar un track en un vector*/
-status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector) {
+status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector)
+{
 	status_t st;
 	char header[MAX_HEADER_SIZE];
 	ADT_track_t * track;
@@ -32,7 +33,8 @@ status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector) {
 }
 
 /*Lee el "header" del archivo mp3*/
-status_t get_mp3_header(FILE * fi, char header[]) {
+status_t get_mp3_header(FILE * fi, char header[])
+{
 	size_t length;
 
 	if(fi == NULL)
