@@ -132,7 +132,7 @@ status_t ADT_track_export_to_xml (void * t, FILE * file_out) {
         return ERROR_WRITING_TO_FILE;
     
 
-    if(fprintf(file_out, "%ld", track->genre) < 0)
+    if(fprintf(file_out, "%ls", track->genre) < 0)
         return ERROR_WRITING_TO_FILE;
 
 
@@ -166,7 +166,7 @@ status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
         return ERROR_WRITING_TO_FILE;
     
 
-    if(fprintf(file_out, "%ld", track->genre) < 0)
+    if(fprintf(file_out, "%ls", track->genre) < 0)
         return ERROR_WRITING_TO_FILE;
 
 
