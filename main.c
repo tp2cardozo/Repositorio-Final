@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "main.h"
 
@@ -19,8 +20,8 @@ char * sort_dictionary[MAX_SORTS] =
 	SORT_BY_GENRE
 };
 
-extern status_t * format_output[MAX_FORMATS];
-extern status_t * sort_output[MAX_SORTS];
+extern status_t (*format_output[MAX_FORMATS]);
+extern int (*sort_output[MAX_SORTS]);
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
 
@@ -70,7 +71,7 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-	if((st = ADT_Vector_set_comparator(vector,sort_dictionary[setup.sort_by])) != OK)
+	if((st = ADT_Vector_set_comparator(vector, sort_output[setup.sort_by])) != OK)
 	{
 		print_errors(st);
 		return st;
@@ -86,7 +87,7 @@ int main(int argc, char *argv[])
 
 	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
 	{
-		st = ERR_INVALID_OUTPUT_FILE;
+		st = ERROR_INVALID_OUTPUT_FILE;
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
 	}
@@ -141,7 +142,10 @@ int main(int argc, char *argv[])
 /*Función que valida los argumentos de la invocación*/
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) 
 {
-	size_t i, fmt_flag, sort_flag, out_flag;
+	size_t i;
+	size_t fmt_flag = 0;
+	size_t sort_flag = 0;
+	size_t out_flag = 0;
 	
 	if(argv == NULL || setup == NULL)
 		return ERROR_NULL_POINTER;
