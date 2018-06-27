@@ -11,8 +11,6 @@
 #define INIT_CHOP 4
 #define ADT_VECTOR_CHOP_SIZE 4
 
-#define CSV_DELIMITER '|'
-
 typedef status_t (*destructor_t) (void *);
 typedef int (*comparator_t) (void *, void *);
 typedef status_t (*printer_t) (void *, const void *, FILE *);

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "types.h"
 
-#define MAX_ERRORS 8
+#define MAX_ERRORS 10
 
 #define MSG_ERROR_INVALID_OUTPUT_FILE "Error, archivo de salida inválido."
 #define MSG_ERROR_WRITING_TO_FILE "Error al escribir en el archivo."
