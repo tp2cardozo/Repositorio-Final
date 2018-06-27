@@ -15,7 +15,7 @@ status_t (*format_output[MAX_FORMATS]) (void *, FILE *) =
     ADT_track_export_to_xml /*falta codificar*/
 };
 
-status_t (*sort_dictionary[MAX_SORTS]) (void *, void *) =
+int (*sort_dictionary[MAX_SORTS]) (void *, void *) =
 {
     ADT_track_compare_by_title,
     ADT_track_compare_by_artist,
