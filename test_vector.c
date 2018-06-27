@@ -137,6 +137,7 @@ int main(int argc, char *argv[]) {
 
 	printf("--------------------------\n");
 
+
 	printf("dif: %d\n", (test->comparator)(test->elements[0], test->elements[1]));
 	printf("size: %ld\n", test->size);
 

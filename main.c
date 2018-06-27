@@ -1,13 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "types.h"
-#include "errors.h"
-#include "setup.h"
+#include "main.h"
 
-#define SALIDA "salida.csv"
+/*Biblioteca de formatos*/
+char * format_dictionary[MAX_FORMATS] =
+{
+	CSV_FORMAT,
+	XML_FORMAT
+}
 
-#define INDEX_FIRST_MP3 7
+
+/*Biblioteca de ordenamientos*/
+char * sort_dictionary[MAX_SORTS] =
+{
+	SORT_BY_NAME,
+	SORT_BY_ARTIST,
+	SORT_BY_GENRE
+}
+
 
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
@@ -43,7 +54,7 @@ int main(int argc, char *argv[])
 		if((mp3_file = fopen(argv[INDEX_FIRST_MP3 + i], "rt")) == NULL)
 			return ERROR_INVALID_MP3_FILE;
 
-		if((st = process_mp3_data(&setup, mp3_file)) != OK) 
+		if((st = process_mp3_data(&setup, mp3_file, vector)) != OK) 
 		{
 			if((ADT_Vector_delete(&vector)) != OK)
 				return st;
@@ -54,10 +65,24 @@ int main(int argc, char *argv[])
 
 	  	fclose(mp3_file);
   	}
-  
+
+/*
+
+
+
+falta ordenar el vector
+
+falta imprimir el vector en en el archivo
+
+
+
+*/
+
 	return OK;
 }
 
+
+/*Función que valida los argumentos de la invocación*/
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) 
 {
 	size_t i, fmt_flag, sort_flag, out_flag;
@@ -85,7 +110,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 	for(i=0 ; i < MAX_FORMATS; i++)
 	{
 		if (!(strcmp(argv[fmt_flag + 1], format_dictionary[i]))) 
-		{ 														/*Hacer diccionario de formatos*/ 
+		{
 			setup->doc_type = i;
 			break;
 		}
