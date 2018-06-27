@@ -20,12 +20,15 @@ char * sort_dictionary[MAX_SORTS] =
 	SORT_BY_GENRE
 };
 
+
+/**********Externs**********/
 extern char context_csv;
 extern char * context_xml[MAX_XML_CONTEXTS];
 extern status_t (*format_output[MAX_FORMATS])(void *, const void *, FILE *);
 extern int (*sort_output[MAX_SORTS]) (void *, void *);
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
+/**********Externs**********/
 
 int main(int argc, char *argv[]) 
 {
@@ -35,24 +38,6 @@ int main(int argc, char *argv[])
 	status_t st;
 	ADT_Vector_t * vector;
 	void * context;
-/*
-  	validar argumentos listo*****
-  	ADT_Vector_new listo******
-  	ADT_Vector_set_printer listo*****
-  	ADT_Vector_set_comparator (falta validar)
-  	ADT_Vector_set_destructor (falta validar)
-  	abrir archivo de salida listo ******
-  	FOR{
-  		abrir mp3
-  		procesar mp3
-  		guardar mp3 en el vector
-  		cerrar mp3
-  	} ***listo****
-  	ADT_Vector_sort_elements 
-  	ADT_Vector_export
-  	ADT_Vector_delete
-  	return OK
-*/
 
 	if((st = validate_arguments(argc, argv, &setup, &out_index)) != OK)
 	{
@@ -60,9 +45,12 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-	if (setup.doc_type == FMT_CSV) {
+	if (setup.doc_type == FMT_CSV)
+	{
 		context = &context_csv;
-	}else{
+	}
+	else
+	{
 		context = &context_xml;
 	}
 
@@ -91,7 +79,7 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-
+	/*Se abre el archivo de salida*/
 
 	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
 	{
@@ -100,6 +88,8 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
+
+	/*Aquí se abren los archivos mp3, se processan los datos y luego se cierran*/
 	for(i = 0; i < argc - INDEX_FIRST_MP3; i++ ) 
 	{
 
@@ -125,23 +115,30 @@ int main(int argc, char *argv[])
   	}
 
 
+  	/*Se ordena el vector donde se ingresaron los datos de los archivos mp3*/
   	if((st = ADT_Vector_sort_elements(&vector, ADT_Vector_swap_elements)) != OK)
   	{
   		print_errors(st);
   		return st;
   	}
 
+
+  	/*Se imprimen los elementos en el orden y formato elegido*/
 	if((st = ADT_Vector_export(vector, context, file_out, setup)) != OK)
 	{
 		print_errors(st);
 		return st;
 	}
 
+
+	/*Se destruye el vector utilizado*/
 	if((st = ADT_Vector_delete(&vector)) != OK)
 	{
 		print_errors(st);
 		return st;
 	}
+	/*Se cierra el archivo de salida*/
+	fclose(file_out);
 
 	return OK;
 }
