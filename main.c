@@ -90,11 +90,12 @@ int main(int argc, char *argv[])
   	ADT_Vector_sort_elements
   	ADT_Vector_export
   	return OK
-
 */
+
+
   	vector_sort();
 
-  	status_t ADT_Vector_set_printer (ADT_Vector_t * v, printer_t pf)
+  	status_t ADT_Vector_set_printer (ADT_Vector_t * v, /* dicc_printers[setup.doc_type] */printer_t pf)
   	/*format_output[format]();*/
 
 	status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
