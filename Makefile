@@ -1,4 +1,4 @@
-CFLAGS= -Wall -Werror -ansi -pedantic -O2
+CFLAGS= -Wall -Werror -pedantic -O2 -std=c89
 
 cc=gcc
 
