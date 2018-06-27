@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	if((st = ADT_Vector_set_destructor(vector, ADT_track_delete)) != OK)
 	{
 		print_errors(st);
-		ADT_Vector_delete(&vector)
+		ADT_Vector_delete(&vector);
 		return st;
 	}
 
