@@ -8,7 +8,7 @@ status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector)
 {
 
 	status_t st;
-	const char header[MAX_HEADER_SIZE];
+	char header[MAX_HEADER_SIZE];
 	ADT_track_t * track;
 
 	if(setup == NULL || fi == NULL || vector == NULL)
@@ -19,7 +19,7 @@ status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector)
 
 	if((st = get_mp3_header(fi, header)) != OK)
 	{	
-		if((st = ADT_trak_delete(&track)) != OK)
+		if((st = ADT_track_delete(&track)) != OK)
 			return st;
 
 		return st;
@@ -28,14 +28,14 @@ status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector)
 	if((st = ADT_track_set(header, track)) != OK)
 		return st;
 
-	if((st = ADT_Vector_append_element(&vector, track, ADT_Vector_delete)) != OK)
+	if((st = ADT_Vector_append_element(&vector, track)) != OK)
 		return st;
 
 
 	return OK;	
 }
 /*Lee el "header" del archivo mp3*/
-status_t get_mp3_header(FILE * fi, const char header[])
+status_t get_mp3_header(FILE * fi, char header[])
 {
 	size_t length;
 
