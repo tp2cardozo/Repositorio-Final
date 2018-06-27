@@ -82,8 +82,6 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	return OK;
 }
 
-<<<<<<< HEAD
-=======
 bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
 	size_t i;
 
@@ -96,7 +94,6 @@ bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
 	return TRUE;
 }
 
->>>>>>> fff15b740853f2244e8613bddb0de7d0de390b10
 status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file) {
 	size_t i;
 	status_t st;
