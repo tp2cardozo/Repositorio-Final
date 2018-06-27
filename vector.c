@@ -117,7 +117,7 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element) {
 	void ** aux;
 	status_t st;
 
-	if(v == NULL || element == NULL || vector_deleter == NULL)
+	if(v == NULL || element == NULL)
 		return ERROR_NULL_POINTER;
 
 	i=(*v)->size;
@@ -149,18 +149,20 @@ status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 
 status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, status_t (*elements_swapper)(void **, void **)) {
 	size_t i, j;
-	bool_t end = FALSE;
+	status_t st;
 
 	if (vector == NULL)
 		return ERROR_NULL_POINTER;
 
 	while (j != 0) {
 		j = 0;
-		for(i=0; i < vector->size - 1; i++) {
+		for(i = 0; i < vector->size - 1; i++) {
 			if((vector->comparator)(vector->elements[i], vector->elements[i+1]) > 0) {
-				elements_swapper(&(vector->elements[i]), &(vector->elements[i+1]));
+				if ((st = elements_swapper(&(vector->elements[i]), &(vector->elements[i+1]))) != OK)
+					return st;
 				j++;
 			}
 		}
 	}
+	return OK;
 }
