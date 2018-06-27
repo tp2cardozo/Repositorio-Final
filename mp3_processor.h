@@ -15,4 +15,5 @@ status_t process_mp3_data(setup_t * setup, FILE * fi, ADT_Vector_t * vector);
 
 status_t get_mp3_header(FILE * fi, const char header[]);
 
+
 #endif

@@ -13,7 +13,9 @@
 #define CSV_DELIMITER '|'
 
 typedef status_t (*destructor_t) (void *);
+
 typedef int (*comparator_t) (const void *, const void *);
+
 typedef status_t (*printer_t) (void *, FILE *);
 
 
