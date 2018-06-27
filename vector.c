@@ -162,3 +162,8 @@ status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 
 	return OK;
 }
+
+status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, comparator_t comparator) {
+
+
+}
