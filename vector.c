@@ -154,9 +154,13 @@ status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, status_t (*elements_s
 	if (vector == NULL)
 		return ERROR_NULL_POINTER;
 
-	for(i=0; i < vector->size - 1; i++) {
-		if((vector->comparator)(vector->elements[i], vector->elements[i+1]) > 0) {
-			elements_swapper(&(vector->elements[i]), &(vector->elements[i+1]));
+	while (j != 0) {
+		j = 0;
+		for(i=0; i < vector->size - 1; i++) {
+			if((vector->comparator)(vector->elements[i], vector->elements[i+1]) > 0) {
+				elements_swapper(&(vector->elements[i]), &(vector->elements[i+1]));
+				j++;
+			}
 		}
 	}
 }
