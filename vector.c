@@ -112,7 +112,7 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 	return OK;
 }
 
-status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (*vector_deleter)(ADT_Vector_t **)) {
+status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element) {
 	size_t i;
 	void ** aux;
 	status_t st;
@@ -123,10 +123,6 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (
 	i=(*v)->size;
 	if(i==(*v)->alloc_size){
 		if((aux = realloc((*v)->elements, ((*v)->alloc_size + ADT_VECTOR_CHOP_SIZE)*sizeof(void*))) == NULL) {
-			st = vector_deleter(v);
-			if (st!=OK)
-				return st;
-
 			return ERROR_OUT_OF_MEMORY;
         }
 		(*v)->elements = aux;
@@ -151,14 +147,14 @@ status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 	return OK;
 }
 
-status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, status_t (*vector_deleter)(ADT_Vector_t **), status_t (*elements_swapper)(void **, void **)) {
+status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, status_t (*elements_swapper)(void **, void **)) {
 	size_t i, j;
 	bool_t end = FALSE;
 
 	if (vector == NULL)
 		return ERROR_NULL_POINTER;
 
-	for(i=0; i < vector->size; i++) {
+	for(i=0; i < (vector->size/2); i++) {
 		
 	}
 }
