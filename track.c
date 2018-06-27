@@ -184,36 +184,29 @@ status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
 
     track = (ADT_track_t *)t;
 
-    if(fprintf(file_out, "%s", track->title) < 0) {
-        st = ERROR_WRITING_TO_FILE; 
-        fprintf(stderr, "%s\n", errors_dictionary[st]);
-        return st;
-    }
-    if (fputc(del, file_out) == EOF) {
-        st = ERROR_WRITING_TO_FILE; 
-        fprintf(stderr, "%s\n", errors_dictionary[st]);
-        return st;
-    }
-    if(fprintf(file_out, "%s", track->artist) < 0) {
-        st = ERROR_WRITING_TO_FILE; 
-        fprintf(stderr, "%s\n", errors_dictionary[st]);
-        return st;
-    }
-    if (fputc(del, file_out) == EOF) {
-        st = ERROR_WRITING_TO_FILE; 
-        fprintf(stderr, "%s\n", errors_dictionary[st]);
-        return st;
-    }
-    if(fprintf(file_out, "%s", track->genre) < 0) {
-        st = ERROR_WRITING_TO_FILE; 
-        fprintf(stderr, "%s\n", errors_dictionary[st]);
-        return st;
-    }
-    if (fputc(end_line, file_out) == EOF) {
-        st = ERROR_WRITING_TO_FILE; 
-        fprintf(stderr, "%s\n", errors_dictionary[st]);
-        return st;
-    }
+    if(fprintf(file_out, "%s", track->title) < 0)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if (fputc(del, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+  
+
+    if(fprintf(file_out, "%s", track->artist) < 0)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if(fputc(del, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if(fprintf(file_out, "%s", track->genre) < 0)
+        return ERROR_WRITING_TO_FILE;
+
+
+    if (fputc(end_line, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+    
 
     return OK;
 }

@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "types.h"
 #include "vector.h"
-#include "errors.h"
 
 extern char * errors_dictionary[MAX_ERRORS];
 

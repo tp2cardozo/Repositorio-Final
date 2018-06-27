@@ -14,3 +14,10 @@ char * errors_dictionary[MAX_ERRORS] = {
 	MSG_ERROR_OUT_OF_MEMORY,
 	MSG_ERROR_OUT_OF_RANGE
 };
+
+status_t print_errors(status_t st)
+{
+	fprintf(stderr, "%s\n", errors_dictionary[st]);
+	
+	return OK;
+}

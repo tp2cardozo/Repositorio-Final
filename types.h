@@ -28,9 +28,9 @@ typedef enum{
 } format_t;
 
 typedef enum{
-	SORT_BY_NAME = 0,
-	SORT_BY_ARTIST = 1,
-	SORT_BY_GENRE = 2
+	SORT_NAME = 0,
+	SORT_ARTIST = 1,
+	SORT_GENRE = 2
 } sort_t;
 
 #endif

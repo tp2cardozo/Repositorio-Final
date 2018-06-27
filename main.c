@@ -39,7 +39,10 @@ int main(int argc, char *argv[])
 	}
 
 	if((st = ADT_Vector_new(&vector)) != OK)
+	{
+		print_errors(st);
 		return st;
+	}
 
 	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
 	{
@@ -57,9 +60,15 @@ int main(int argc, char *argv[])
 		if((st = process_mp3_data(&setup, mp3_file, vector)) != OK) 
 		{
 			if((ADT_Vector_delete(&vector)) != OK)
+			{
+				print_errors(st);
 				return st;
+			}
 			
 			fclose(mp3_file);
+			
+			print_errors(st);
+
 			break;	
 		}
 
