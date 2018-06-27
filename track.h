@@ -43,31 +43,18 @@ typedef struct
 	
 } ADT_track_t;
 
-
 status_t ADT_track_new (ADT_track_t ** track);
-
 status_t ADT_track_delete (void * track);
-
 status_t ADT_track_set (char header[], ADT_track_t * track);
-
 status_t ADT_track_get_tag (ADT_track_t * track, char ** str);
-
 status_t ADT_track_get_title (ADT_track_t * track, char ** str);
-
 status_t ADT_track_get_artist (ADT_track_t * track, char ** str);
-
 status_t ADT_track_get_album (ADT_track_t * track, char ** str);
-
 status_t ADT_track_get_year (ADT_track_t * track, char ** str);
-
 status_t ADT_track_get_comment (ADT_track_t * track, char ** str);
-
 status_t ADT_track_get_genre (ADT_track_t * track, char ** str);
-
 status_t ADT_track_export_to_csv (void * track, FILE * file_out);
-
 int ADT_track_compare_by_artist (const void * track1, const void * track2);
-
 int ADT_track_compare_by_title (const void * track1, const void * track2);
 
 #endif

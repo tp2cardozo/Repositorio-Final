@@ -25,7 +25,6 @@
 #define SORT_FLAG_TOKEN "-sort"
 #define OUT_FLAG_TOKEN "-out"
 
-
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file);
 
 #endif
