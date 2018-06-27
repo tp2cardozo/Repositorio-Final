@@ -70,11 +70,17 @@ int main(int argc, char *argv[]) {
 
 	/*Se abre el archivo de salida*/
 
-	if ((file_out = fopen(argv[out_index], "wt")) == NULL) {
-		st = ERROR_INVALID_OUTPUT_FILE;
-		fprintf(stderr, "%s\n", errors_dictionary[st]);
-		return st;
+	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
+	{
+		if((ADT_Vector_delete(&vector)) != OK) 
+		{
+			print_errors(st);
+			return st;
+		}
+		return ERROR_INVALID_OUTPUT_FILE;
 	}
+	
+
 
 
 	/*Aquí se abren los archivos mp3, se processan los datos y luego se cierran*/
@@ -92,12 +98,14 @@ int main(int argc, char *argv[]) {
 				return st;
 			}
 
-			fclose(mp3_file);
+			if((fclose(mp3_file)) == EOF)
+				return ERROR_CLOSING_FILE;
 			print_errors(st);
 
 			break;	
 		}
-	  	fclose(mp3_file);
+	  	if((fclose(mp3_file)) == EOF)
+	  		return ERROR_CLOSING_FILE;
   	}
 
 
@@ -119,7 +127,8 @@ int main(int argc, char *argv[]) {
 		return st;
 	}
 	/*Se cierra el archivo de salida*/
-	fclose(file_out);
+	if((fclose(file_out)) == EOF)
+		return ERROR_CLOSING_FILE;
 
 	return OK;
 }
