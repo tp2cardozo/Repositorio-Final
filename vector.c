@@ -82,6 +82,21 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	return OK;
 }
 
+<<<<<<< HEAD
+=======
+bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
+	size_t i;
+
+	if (v1->size != v2->size) return FALSE;
+
+	for (i=0; i<v1->size; i++) {
+		if((v1->comparator)(v1->elements[i], v2->elements[i]))
+			return FALSE;
+	}
+	return TRUE;
+}
+
+>>>>>>> fff15b740853f2244e8613bddb0de7d0de390b10
 status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file) {
 	size_t i;
 	status_t st;
