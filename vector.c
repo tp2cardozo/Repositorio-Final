@@ -94,7 +94,7 @@ bool_t ADT_Vector_compare (const ADT_Vector_t * v1, const ADT_Vector_t *v2) {
 	return TRUE;
 }
 
-status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file) {
+status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file) {
 	size_t i;
 	status_t st;
 
