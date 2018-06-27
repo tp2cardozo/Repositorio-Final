@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
 
   	vector_sort();
 
-  	status_t ADT_Vector_set_printer (ADT_Vector_t * v, /* dicc_printers[setup.doc_type] */printer_t pf)
-  	/*format_output[format]();*/
+  	status_t ADT_Vector_set_printer (vector, *format_output[format])
+  	
 
 	status_t ADT_Vector_export (const ADT_Vector_t * v, FILE * file);
 /*
