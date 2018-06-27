@@ -82,7 +82,6 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	return OK;
 }
 
-
 status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file) {
 	size_t i;
 	status_t st;
