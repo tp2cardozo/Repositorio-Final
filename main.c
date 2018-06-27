@@ -5,16 +5,14 @@
 #include "main.h"
 
 /*Biblioteca de formatos*/
-char * format_dictionary[MAX_FORMATS] =
-{
+char * format_dictionary[MAX_FORMATS] = {
 	CSV_FORMAT,
 	XML_FORMAT
 };
 
 
 /*Biblioteca de ordenamientos*/
-char * sort_dictionary[MAX_SORTS] =
-{
+char * sort_dictionary[MAX_SORTS] = {
 	SORT_BY_NAME,
 	SORT_BY_ARTIST,
 	SORT_BY_GENRE
@@ -125,6 +123,7 @@ int main(int argc, char *argv[]) {
 
 	return OK;
 }
+
 
 
 /*Función que valida los argumentos de la invocación*/
