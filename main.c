@@ -31,6 +31,24 @@ int main(int argc, char *argv[])
 	FILE *file_out, *mp3_file;
 	status_t st;
 	ADT_Vector_t * vector;
+/*
+  	validar argumentos listo*****
+  	ADT_Vector_new listo******
+  	ADT_Vector_set_printer listo*****
+  	ADT_Vector_set_comparator (falta validar)
+  	ADT_Vector_set_destructor (falta validar)
+  	abrir archivo de salida listo ******
+  	FOR{
+  		abrir mp3
+  		procesar mp3
+  		guardar mp3 en el vector
+  		cerrar mp3
+  	} ***listo****
+  	ADT_Vector_sort_elements 
+  	ADT_Vector_export
+  	ADT_Vector_delete
+  	return OK
+*/
 
 	if((st = validate_arguments(argc, argv[], &setup, &out_index)) != OK)
 	{
@@ -83,23 +101,6 @@ int main(int argc, char *argv[])
 
 	  	fclose(mp3_file);
   	}
-/*
-  	validar argumentos
-  	ADT_Vector_new
-  	ADT_Vector_set_printer
-  	ADT_Vector_set_comparator
-  	ADT_Vector_set_destructor
-  	abrir archivo de salida
-  	FOR{
-  		abrir mp3
-  		procesar mp3
-  		guardar mp3 en el vector
-  		cerrar mp3
-  	}
-  	ADT_Vector_sort_elements
-  	ADT_Vector_export
-  	return OK
-*/
 
 
   	ADT_Vector_sort_elements()
@@ -108,17 +109,8 @@ int main(int argc, char *argv[])
   	
 
 	st = ADT_Vector_export(vector, file_out);
-/*
 
-
-
-falta ordenar el vector
-
-falta imprimir el vector en en el archivo
-
-
-
-*/
+	st = ADT_Vector_delete(&vector);
 
 	return OK;
 }
