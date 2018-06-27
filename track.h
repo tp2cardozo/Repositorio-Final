@@ -35,14 +35,13 @@
 
 typedef struct
 {
-	char tag[LEXEM_SPAN_TAG];
-	char title[LEXEM_SPAN_TITLE];
-	char artist[LEXEM_SPAN_ARTIST];
-	char album[LEXEM_SPAN_ALBUM];
-	char year[LEXEM_SPAN_YEAR];
-	char comment[LEXEM_SPAN_COMMENT];
-	char genre[LEXEM_SPAN_GENRE];
-	
+	char tag[LEXEM_SPAN_TAG + 1];
+	char title[LEXEM_SPAN_TITLE + 1];
+	char artist[LEXEM_SPAN_ARTIST + 1];
+	char album[LEXEM_SPAN_ALBUM + 1];
+	char year[LEXEM_SPAN_YEAR + 1];
+	char comment[LEXEM_SPAN_COMMENT + 1];
+	char genre[LEXEM_SPAN_GENRE + 1];	
 } ADT_track_t;
 
 /****************PROTOTIPOS ADT_TRACK*****************/
