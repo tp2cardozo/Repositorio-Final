@@ -61,38 +61,29 @@ status_t ADT_track_delete (void * t) {
 }
 
 status_t ADT_track_set (char header[], ADT_track_t * track) {
-    char buf[MP3_HEADER_SIZE];
-
     if (header == NULL || track == NULL)
        return ERROR_NULL_POINTER;
 
-    memcpy(buf,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
-    buf[LEXEM_SPAN_TAG] = '\0';
-    sprintf(track->tag,"%s", buf);
+    memcpy(track->tag,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
+    track->tag[LEXEM_SPAN_TAG - 1] = '\0';
 
-    memcpy(buf,header+LEXEM_START_TITLE,LEXEM_SPAN_TITLE);
-    buf[LEXEM_SPAN_TITLE] = '\0';
-    sprintf(track->title,"%s", buf);
+    memcpy(track->title,header+LEXEM_START_TITLE,LEXEM_SPAN_TITLE);
+    track->title[LEXEM_SPAN_TITLE - 1] = '\0';
 
-    memcpy(buf,header+LEXEM_START_ARTIST,LEXEM_SPAN_ARTIST);
-    buf[LEXEM_SPAN_ARTIST] = '\0';
-    sprintf(track->artist,"%s", buf);
+    memcpy(track->artist,header+LEXEM_START_ARTIST,LEXEM_SPAN_ARTIST);
+    track->artist[LEXEM_SPAN_ARTIST - 1] = '\0';
 
-    memcpy(buf,header+LEXEM_START_ALBUM,LEXEM_SPAN_ALBUM);
-    buf[LEXEM_SPAN_ALBUM] = '\0';
-    sprintf(track->album,"%s", buf);
+    memcpy(track->album,header+LEXEM_START_ALBUM,LEXEM_SPAN_ALBUM);
+    track->album[LEXEM_SPAN_ALBUM - 1] = '\0';
 
-    memcpy(buf,header+LEXEM_START_YEAR,LEXEM_SPAN_YEAR);
-    buf[LEXEM_SPAN_YEAR] = '\0';
-    sprintf(track->year,"%s", buf);
+    memcpy(track->year,header+LEXEM_START_YEAR,LEXEM_SPAN_YEAR);
+    track->year[LEXEM_SPAN_YEAR - 1] = '\0';
 
-    memcpy(buf,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
-    buf[LEXEM_SPAN_COMMENT] = '\0';
-    sprintf(track->comment,"%s", buf);
+    memcpy(track->comment,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
+    track->comment[LEXEM_SPAN_COMMENT - 1] = '\0';
 
-    memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
-    buf[LEXEM_SPAN_GENRE] = '\0';
-    sprintf(track->genre,"%c", buf[0]);
+    memcpy(track->genre,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
+    track->genre[LEXEM_SPAN_GENRE - 1] = '\0';
 
     return OK;
 }
