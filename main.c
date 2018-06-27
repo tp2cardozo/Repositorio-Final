@@ -8,7 +8,7 @@ char * format_dictionary[MAX_FORMATS] =
 {
 	CSV_FORMAT,
 	XML_FORMAT
-}
+};
 
 
 /*Biblioteca de ordenamientos*/
@@ -17,9 +17,10 @@ char * sort_dictionary[MAX_SORTS] =
 	SORT_BY_NAME,
 	SORT_BY_ARTIST,
 	SORT_BY_GENRE
-}
+};
 
-
+extern status_t * format_output[MAX_FORMATS];
+extern status_t * sort_output[MAX_SORTS];
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
 
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
   	return OK
 */
 
-	if((st = validate_arguments(argc, argv[], &setup, &out_index)) != OK)
+	if((st = validate_arguments(argc, argv, &setup, &out_index)) != OK)
 	{
    		print_errors(st);
 		return st;
@@ -63,13 +64,13 @@ int main(int argc, char *argv[])
 	}
 
 
-	if((st = ADT_Vector_set_printer (vector, format_output[doc_type])) != OK)
+	if((st = ADT_Vector_set_printer (vector, format_output[setup.doc_type])) != OK)
 	{
 		print_errors(st);
 		return st;
 	}
 
-	if((st = ADT_Vector_set_comparator(vector,sort_dictionary[sort_by])) != OK)
+	if((st = ADT_Vector_set_comparator(vector,sort_dictionary[setup.sort_by])) != OK)
 	{
 		print_errors(st);
 		return st;

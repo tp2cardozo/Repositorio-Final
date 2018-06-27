@@ -8,6 +8,7 @@
 #include "vector.h"
 #include "errors.h"
 #include "track.h"
+#include "setup.h"
 
 #define MIN_ARGUMENTS 8
 #define INDEX_FIRST_MP3 7
