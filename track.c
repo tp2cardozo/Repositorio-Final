@@ -5,20 +5,21 @@
 #include "types.h"
 #include "track.h"
 #include "errors.h"
+#include "main.h"
 
 extern char * errors_dictionary[MAX_ERRORS];
 
 status_t (*format_output[MAX_FORMATS]) (void *, FILE *) = 
 {
     ADT_track_export_to_csv,
-    ADT_track_export_to_xml
+    ADT_track_export_to_xml /*falta codificar*/
 }
 
 status_t (*sort_dictionary[MAX_SORTS]) (void *, void *) =
 {
     ADT_track_compare_by_name,
     ADT_track_compare_by_artist,
-    ADT_track_compare_by_genre
+    ADT_track_compare_by_genre/*falta codificar*/
 }
 
 status_t ADT_track_new (ADT_track_t ** track) {
@@ -189,10 +190,44 @@ status_t ADT_track_get_genre (ADT_track_t * track, char ** str) {
     return OK;
 }
 
+status_t ADT_track_export_to_xml (void * t, FILE * file_out) {
+    /*EDITAR*/
+    char del = CSV_DELIMITER;
+    char end_line = '\n';
+    ADT_track_t * track;
+
+    track = (ADT_track_t *)t;
+
+    if(fprintf(file_out, "%s", track->title) < 0)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if (fputc(del, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+  
+
+    if(fprintf(file_out, "%s", track->artist) < 0)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if(fputc(del, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if(fprintf(file_out, "%s", track->genre) < 0)
+        return ERROR_WRITING_TO_FILE;
+
+
+    if (fputc(end_line, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    return OK;
+}
+
 status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
     char del = CSV_DELIMITER;
     char end_line = '\n';
-    status_t st;
     ADT_track_t * track;
 
     track = (ADT_track_t *)t;
@@ -291,10 +326,12 @@ int ADT_track_compare_by_title (const void * t1, const void * t2) {
 }
 
 
-/*int ADT_track_compare_by_genre (const void * t1, const void * t2) {
-    ADT_track_t *track1, *track2;
+int ADT_track_compare_by_genre (const void * t1, const void * t2) {
+
+    /*EDIT*/
+   /*ADT_track_t *track1, *track2;
 
     track1 = (ADT_track_t *)t1;
-    track2 = (ADT_track_t *)t2;
-    
-}*/
+    track2 = (ADT_track_t *)t2;*/
+    return 1;
+}

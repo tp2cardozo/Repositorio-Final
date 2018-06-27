@@ -115,7 +115,6 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element) {
 	size_t i;
 	void ** aux;
-	status_t st;
 
 	if(v == NULL || element == NULL)
 		return ERROR_NULL_POINTER;
