@@ -167,6 +167,17 @@ status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
 }
 
 status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector, comparator_t comparator) {
+	void ** ord_table;
+	void * lesser_value;
+
+	if (vector == NULL)
+		return ERROR_NULL_POINTER;
+
+	if ((ord_table = (void**)malloc((*vector)->alloc_size*sizeof(void*))) == NULL) {
+		free(*v);
+		*v = NULL;
+		return ERROR_OUT_OF_MEMORY;
+	}
 
 
 }
