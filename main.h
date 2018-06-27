@@ -9,6 +9,7 @@
 #include "errors.h"
 #include "track.h"
 #include "setup.h"
+#include "contexts.h"
 
 #define MIN_ARGUMENTS 8
 #define INDEX_FIRST_MP3 7

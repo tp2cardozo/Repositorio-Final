@@ -5,7 +5,7 @@ cc=gcc
 all:mp3explorer
 
 mp3explorer: main.o errors.o mp3_processor.o vector.o track.o setup.o
-	$(cc) $(CFLAGS) -o mp3explorer main.o errors.o mp3_processor.o vector.o track.o setup.o
+	$(cc) $(CFLAGS) -o mp3explorer main.o errors.o mp3_processor.o vector.o track.o setup.o contexts.o
 
 
 main.o:main.h main.c errors.h vector.h types.h setup.h
@@ -25,6 +25,9 @@ track.o:track.h track.c types.h
 
 setup.o:setup.h setup.c types.h
 	$(cc) $(CFLAGS) -o setup.o -c setup.c
+
+contexts.o:contexts.h contexts.c types.h
+	$(cc) $(CFLAGS) -o contexts.o -c context.c
 
 clean:
 	rm *.o

@@ -6,6 +6,7 @@
 
 #include "types.h"
 #include "errors.h"
+#include "setup.h"
 
 #define INIT_CHOP 4
 #define ADT_VECTOR_CHOP_SIZE 4
