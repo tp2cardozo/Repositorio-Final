@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
 	printf("album: %s\n", ((ADT_track_t *)(test->elements[0]))->album);
 	printf("year: %s\n", ((ADT_track_t *)(test->elements[0]))->year);
 	printf("comment: %s\n", ((ADT_track_t *)(test->elements[0]))->comment);
-	printf("year: %s\n", ((ADT_track_t *)(test->elements[0]))->year);
+	printf("genre: %s\n", ((ADT_track_t *)(test->elements[0]))->genre);
 
 	st = ADT_Vector_append_element(&test, track2, ADT_Vector_delete);
 	if (st != OK) {

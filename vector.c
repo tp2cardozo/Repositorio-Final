@@ -149,3 +149,16 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element, status_t (
 
 	return OK;
 }
+
+status_t ADT_Vector_swap_elements (void ** element1, void ** element2) {
+	void * aux;
+
+	if (element1 == NULL || element2 == NULL)
+		return ERROR_NULL_POINTER;
+
+	aux = *element1;
+	*element1 = *element2;
+	*element2 = aux;
+
+	return OK;
+}

@@ -80,7 +80,8 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
 
     memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
     buf[LEXEM_SPAN_GENRE] = '\0';
-    sprintf(track->genre,"%s", buf);
+    sprintf(track->genre,"%c", buf[0]);
+
 
     return OK;
 }
@@ -179,7 +180,6 @@ status_t ADT_track_get_genre (ADT_track_t * track, char ** str) {
 status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
     char del = CSV_DELIMITER;
     char end_line = '\n';
-    status_t st;
     ADT_track_t * track;
 
     track = (ADT_track_t *)t;
