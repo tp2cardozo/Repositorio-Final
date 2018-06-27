@@ -117,7 +117,7 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element) {
 	void ** aux;
 	status_t st;
 
-	if(v == NULL || element == NULL || vector_deleter == NULL)
+	if(v == NULL || element == NULL)
 		return ERROR_NULL_POINTER;
 
 	i=(*v)->size;

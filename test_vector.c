@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 	}
 	printf("Seteamos destructor a \"ADT_track_delete\"\n");
 
-	st = ADT_Vector_append_element(&test, track1, ADT_Vector_delete);
+	st = ADT_Vector_append_element(&test, track1);
 	if (st != OK) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 	printf("comment: %s\n", ((ADT_track_t *)(test->elements[0]))->comment);
 	printf("genre: %s\n", ((ADT_track_t *)(test->elements[0]))->genre);
 
-	st = ADT_Vector_append_element(&test, track2, ADT_Vector_delete);
+	st = ADT_Vector_append_element(&test, track2);
 	if (st != OK) {
 		fprintf(stderr, "%s\n", errors_dictionary[st]);
 		return st;
