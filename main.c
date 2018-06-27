@@ -47,9 +47,9 @@ int main(int argc, char *argv[])
 
 	st = ADT_Vector_set_printer (vector, format_output[doc_type])
 
-	st = ADT_Vector_set_comparator(vector, )
+	st = ADT_Vector_set_comparator(vector,sort_dictionary[sort_by])
 
-	st = ADT_Vector_set_destructor(vector, )
+	st = ADT_Vector_set_destructor(vector, ADT_track_delete)
 
 
 
@@ -102,12 +102,12 @@ int main(int argc, char *argv[])
 */
 
 
-  	vector_sort();
+  	ADT_Vector_sort_elements()
 
   	
   	
 
-	st = ADT_Vector_export (vector, file_out);
+	st = ADT_Vector_export(vector, file_out);
 /*
 
 
