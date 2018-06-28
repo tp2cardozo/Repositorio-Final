@@ -22,7 +22,7 @@ char * sort_dictionary[MAX_SORTS] =
 
 extern char context_csv;
 extern char * context_xml[MAX_XML_CONTEXTS];
-extern status_t (*format_output[MAX_FORMATS])(void *, FILE *);
+extern status_t (*format_output[MAX_FORMATS])(void *, const void *, FILE *);
 extern int (*sort_output[MAX_SORTS]) (void *, void *);
 extern char * errors_dictionary[MAX_ERRORS];
 extern setup_t setup;
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
   		return st;
   	}
 
-	if((st = ADT_Vector_export(vector, context, file_out)) != OK)
+	if((st = ADT_Vector_export(vector, context, file_out, setup)) != OK)
 	{
 		print_errors(st);
 		return st;

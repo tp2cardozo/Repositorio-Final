@@ -9,7 +9,7 @@
 
 extern char * errors_dictionary[MAX_ERRORS];
 
-status_t (*format_output[MAX_FORMATS]) (void *, FILE *) =  {
+status_t (*format_output[MAX_FORMATS]) (void *, const void *, FILE *) =  {
     ADT_track_export_to_csv,
     ADT_track_export_to_xml /*falta codificar*/
 };
@@ -114,7 +114,6 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
 
 status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_out) {
     char del;
-    char end_line = '\n';
     ADT_track_t * track;
 
     del = *((char *)context);
@@ -123,34 +122,23 @@ status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_ou
     if(fprintf(file_out, "%s", track->title) < 0)
         return ERROR_WRITING_TO_FILE;
     
-
     if (fputc(del, file_out) == EOF)
         return ERROR_WRITING_TO_FILE;
   
-
     if(fprintf(file_out, "%s", track->artist) < 0)
         return ERROR_WRITING_TO_FILE;
-    
 
     if(fputc(del, file_out) == EOF)
         return ERROR_WRITING_TO_FILE;
     
-
-    if(fprintf(file_out, "%s", genres_dictionary[track->genre]) < 0)
+    if(fprintf(file_out, "%s\n", genres_dictionary[track->genre]) < 0)
         return ERROR_WRITING_TO_FILE;
-
-
-    if (fputc(end_line, file_out) == EOF)
-        return ERROR_WRITING_TO_FILE;
-    
 
     return OK;
 }
 
 status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out) {
-    /*EDITAR*/
     char ** xml_contexts;
-    char end_line = '\n';
     ADT_track_t * track;
 
     xml_contexts = (char **)context;
