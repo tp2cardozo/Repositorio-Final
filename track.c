@@ -117,7 +117,6 @@ status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_ou
     ADT_track_t * track;
 
     del = *((char *)context);
-
     track = (ADT_track_t *)t;
 
     if(fprintf(file_out, "%s", track->title) < 0)
@@ -149,10 +148,11 @@ status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_ou
 
 status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out) {
     /*EDITAR*/
-    char del = CSV_DELIMITER;
+    char ** xml_types;
     char end_line = '\n';
     ADT_track_t * track;
 
+    xml_types = (char **)context;
     track = (ADT_track_t *)t;
 
     if(fprintf(file_out, "%s", track->title) < 0)

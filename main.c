@@ -20,6 +20,8 @@ char * sort_dictionary[MAX_SORTS] =
 	SORT_BY_GENRE
 };
 
+extern char context_csv;
+extern char * context_xml[];
 extern status_t (*format_output[MAX_FORMATS])(void *, FILE *);
 extern int (*sort_output[MAX_SORTS]) (void *, void *);
 extern char * errors_dictionary[MAX_ERRORS];
@@ -27,12 +29,12 @@ extern setup_t setup;
 
 int main(int argc, char *argv[]) 
 {
-
 	size_t i;
 	size_t out_index;
 	FILE *file_out, *mp3_file;
 	status_t st;
 	ADT_Vector_t * vector;
+	void * context;
 /*
   	validar argumentos listo*****
   	ADT_Vector_new listo******
@@ -56,6 +58,12 @@ int main(int argc, char *argv[])
 	{
    		print_errors(st);
 		return st;
+	}
+
+	if (setup.doc_type == CSV) {
+		context = &context_csv;
+	}else{
+		context = &context_xml;
 	}
 
 	if((st = ADT_Vector_new(&vector)) != OK)
@@ -123,7 +131,7 @@ int main(int argc, char *argv[])
   		return st;
   	}
 
-	if((st = ADT_Vector_export(vector, file_out)) != OK)
+	if((st = ADT_Vector_export(vector, context, file_out)) != OK)
 	{
 		print_errors(st);
 		return st;
