@@ -87,17 +87,6 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-	/*Se abre el archivo de salida*/
-	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
-	{
-		st = ERROR_INVALID_OUTPUT_FILE;
-		print_errors(st);
-		ADT_Vector_delete(&vector);
-		return st;
-	}
-	
-
-
 
 	/*Aquí se abren los archivos mp3, se processan los datos y luego se cierran*/
 	for(i = 0; i < argc - INDEX_FIRST_MP3; i++ )
@@ -114,7 +103,6 @@ int main(int argc, char *argv[])
 		{
 			ADT_Vector_delete(&vector);
 			fclose(mp3_file);
-			fclose(file_out);
 			print_errors(st);
 			return st;	
 		}
@@ -128,6 +116,16 @@ int main(int argc, char *argv[])
 	  	}
   	}
 
+
+	/*Se abre el archivo de salida*/
+	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
+	{
+		st = ERROR_INVALID_OUTPUT_FILE;
+		print_errors(st);
+		ADT_Vector_delete(&vector);
+		return st;
+	}
+	
 
   	/*Se ordena el vector donde se ingresaron los datos de los archivos mp3*/
   	if((st = ADT_Vector_sort_elements(&vector, ADT_Vector_swap_elements)) != OK)
