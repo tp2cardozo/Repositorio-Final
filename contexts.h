@@ -1,7 +1,7 @@
 #ifndef CONTEXTS__H
 #define CONTEXTS__H
 
-#define MAX_XML_CONTEXTS 9
+#define MAX_XML_CONTEXTS 10
 
 #define CSV_DELIMITER '|'
 
@@ -12,8 +12,10 @@
 
 #define XML_TRACKS_FLAG "tracks"
 #define XML_TRACK_FLAG "track"
-#define XML_ARTIST_FLAG "artist"
 #define XML_NAME_FLAG "name"
+#define XML_ARTIST_FLAG "artist"
 #define XML_GENRE_FLAG "genre"
+
+#define XML_TAB "	"
 
 #endif

@@ -149,36 +149,45 @@ status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_ou
 
 status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out) {
     /*EDITAR*/
-    char ** xml_types;
+    char ** xml_contexts;
     char end_line = '\n';
     ADT_track_t * track;
 
-    xml_types = (char **)context;
+    xml_contexts = (char **)context;
     track = (ADT_track_t *)t;
+
+    if(fprintf(file_out, "\t%s%s%s\n", xml_contexts[1], xml_contexts[5], xml_contexts[3]) < 0)
+        return ERROR_WRITING_TO_FILE;
+
+    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[1], xml_contexts[6], xml_contexts[3]) < 0)
+        return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", track->title) < 0)
         return ERROR_WRITING_TO_FILE;
-    
 
-    if (fputc(del, file_out) == EOF)
+    if(fprintf(file_out, "%s%s%s\n", xml_contexts[2], xml_contexts[6], xml_contexts[3]) < 0)
         return ERROR_WRITING_TO_FILE;
-  
+
+    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[1], xml_contexts[7], xml_contexts[3]) < 0)
+        return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", track->artist) < 0)
         return ERROR_WRITING_TO_FILE;
-    
 
-    if(fputc(del, file_out) == EOF)
+    if(fprintf(file_out, "%s%s%s\n", xml_contexts[2], xml_contexts[7], xml_contexts[3]) < 0)
         return ERROR_WRITING_TO_FILE;
-    
+
+    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[1], xml_contexts[8], xml_contexts[3]) < 0)
+        return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", genres_dictionary[track->genre]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-
-    if (fputc(end_line, file_out) == EOF)
+    if(fprintf(file_out, "%s%s%s\n", xml_contexts[2], xml_contexts[8], xml_contexts[3]) < 0)
         return ERROR_WRITING_TO_FILE;
-    
+
+    if(fprintf(file_out, "\t%s%s%s\n", xml_contexts[2], xml_contexts[5], xml_contexts[3]) < 0)
+        return ERROR_WRITING_TO_FILE;
 
     return OK;
 }

@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-	if((st = ADT_Vector_set_comparator(vector, sort_output[setup.sort_by])) != OK)
+	if((st = ADT_Vector_set_comparator (vector, sort_output[setup.sort_by])) != OK)
 	{
 		print_errors(st);
 		return st;

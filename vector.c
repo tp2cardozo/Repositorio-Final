@@ -82,17 +82,31 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 	return OK;
 }
 
-status_t ADT_Vector_export (ADT_Vector_t * v, void * context, FILE * file) {
+status_t ADT_Vector_export (ADT_Vector_t * v, void * context, FILE * file, setup_t setup) {
 	size_t i;
 	status_t st;
 
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
 
+	if (setup.doc_type == FMT_XML) {
+		if(fprintf(file_out, "%s\n", xml_contexts[0]) < 0)
+			return ERROR_WRITING_TO_FILE;
+
+		if(fprintf(file_out, "%s%s%s", xml_contexts[1], xml_contexts[4], xml_contexts[3]) < 0)
+			return ERROR_WRITING_TO_FILE;
+	}
+
 	for (i = 0; i < v->size; i++) {
 		if ((st = (v->printer)(v->elements[i], file)) != OK)
 			return st;
 	}
+
+	if (setup.doc_type == FMT_XML) {
+		if(fprintf(file_out, "%s%s%s", xml_contexts[2], xml_contexts[4], xml_contexts[3]) < 0)
+			return ERROR_WRITING_TO_FILE;
+	}
+
 	return OK;
 }
 
