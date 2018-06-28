@@ -55,29 +55,41 @@ int main(int argc, char *argv[]) {
 
 	if((st = ADT_Vector_set_printer (vector, format_output[setup.doc_type])) != OK) {
 		print_errors(st);
+		if((ADT_Vector_delete(&vector)) != OK) {
+			print_errors(st);
+			return st;
+		}
 		return st;
 	}
 
 	if((st = ADT_Vector_set_comparator (vector, sort_output[setup.sort_by])) != OK) {
 		print_errors(st);
+		if((ADT_Vector_delete(&vector)) != OK) {
+			print_errors(st);
+			return st;
+		}
 		return st;
 	}
 
 	if((st = ADT_Vector_set_destructor(vector, ADT_track_delete)) != OK) {
 		print_errors(st);
+		if((ADT_Vector_delete(&vector)) != OK) {
+			print_errors(st);
+			return st;
+		}
 		return st;
 	}
 
 	/*Se abre el archivo de salida*/
 
-	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
-	{
-		if((ADT_Vector_delete(&vector)) != OK) 
-		{
+	if ((file_out = fopen(argv[out_index], "wt")) == NULL) {
+		st = ERROR_INVALID_OUTPUT_FILE;
+		print_errors(st);
+		if((ADT_Vector_delete(&vector)) != OK) {
 			print_errors(st);
 			return st;
 		}
-		return ERROR_INVALID_OUTPUT_FILE;
+		return st;
 	}
 	
 
@@ -97,27 +109,47 @@ int main(int argc, char *argv[]) {
 				print_errors(st);
 				return st;
 			}
-
-			if((fclose(mp3_file)) == EOF)
-				return ERROR_CLOSING_FILE;
+			if((fclose(mp3_file)) == EOF) {
+				st = ERROR_CLOSING_FILE;
+				print_errors(st);
+				if((ADT_Vector_delete(&vector)) != OK) {
+					print_errors(st);
+					return st;
+				}
+				return st;
+			}
 			print_errors(st);
-
-			break;	
+			return st;	
 		}
-	  	if((fclose(mp3_file)) == EOF)
-	  		return ERROR_CLOSING_FILE;
+	  	if((fclose(mp3_file)) == EOF) {
+	  		st = ERROR_CLOSING_FILE;
+			print_errors(st);
+			if((ADT_Vector_delete(&vector)) != OK) {
+				print_errors(st);
+				return st;
+			}
+			return st;
+	  	}
   	}
 
 
   	/*Se ordena el vector donde se ingresaron los datos de los archivos mp3*/
   	if((st = ADT_Vector_sort_elements(&vector, ADT_Vector_swap_elements)) != OK) {
   		print_errors(st);
+  		if((ADT_Vector_delete(&vector)) != OK) {
+			print_errors(st);
+			return st;
+		}
   		return st;
   	}
 
   	/*Se imprimen los elementos en el orden y formato elegido*/
 	if((st = ADT_Vector_export(vector, context, file_out, setup)) != OK) {
 		print_errors(st);
+		if((ADT_Vector_delete(&vector)) != OK) {
+			print_errors(st);
+			return st;
+		}
 		return st;
 	}
 
@@ -127,8 +159,11 @@ int main(int argc, char *argv[]) {
 		return st;
 	}
 	/*Se cierra el archivo de salida*/
-	if((fclose(file_out)) == EOF)
-		return ERROR_CLOSING_FILE;
+	if((fclose(file_out)) == EOF) {
+		st = ERROR_CLOSING_FILE;
+		print_errors(st);
+		return st;
+	}
 
 	return OK;
 }
