@@ -85,7 +85,7 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df) {
 status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, setup_t setup) {
 	size_t i;
 	status_t st;
-	char ** xml_contexts;
+	char ** xml_contexts = NULL;
 
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
