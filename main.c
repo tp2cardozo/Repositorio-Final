@@ -138,7 +138,6 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 		return ERROR_NULL_POINTER;
 
 	if(argc < MIN_ARGUMENTS) {
-		printf("%d%d%s\n", ERROR_NULL_POINTER, ERROR_INVOCATION, errors_dictionary[ERROR_INVOCATION]);
 		return ERROR_INVOCATION;
 	}
 
