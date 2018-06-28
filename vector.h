@@ -33,7 +33,7 @@ bool_t ADT_Vector_is_empty (ADT_Vector_t * p);
 status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf);
 status_t ADT_Vector_set_comparator(ADT_Vector_t * v, comparator_t cf);
 status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df);
-status_t ADT_Vector_export (ADT_Vector_t * v, FILE * file);
+status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file);
 status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element);
 status_t ADT_Vector_swap_elements (void ** element1, void ** element2);
 status_t ADT_Vector_sort_elements (ADT_Vector_t ** vector, status_t (*elements_swapper)(void **, void **));
