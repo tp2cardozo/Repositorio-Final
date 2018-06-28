@@ -137,8 +137,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 	if(argv == NULL || setup == NULL)
 		return ERROR_NULL_POINTER;
 
-	if(argc < MIN_ARGUMENTS)
+	if(argc < MIN_ARGUMENTS) {
+		printf("%d%d%s\n", ERROR_NULL_POINTER, ERROR_INVOCATION, errors_dictionary[ERROR_INVOCATION]);
 		return ERROR_INVOCATION;
+	}
 
 	for(i=0; i<argc; i++)
 	{
@@ -149,7 +151,6 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 		if(strcmp(argv[i], OUT_FLAG_TOKEN) == 0)
 			out_flag = i;
 	}
-
 
 	if(!fmt_flag || !sort_flag || !out_flag)
 		return ERROR_INVOCATION;
@@ -175,10 +176,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 		}
 	}
 
-	*index_out_file = out_flag + 1;
-
 	if(i == MAX_SORTS)
 		return ERROR_INVOCATION;
+
+	*index_out_file = out_flag + 1;
 
 	return OK;
 }

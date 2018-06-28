@@ -7,7 +7,7 @@ char * errors_dictionary[MAX_ERRORS] = {
 	"",
 	MSG_ERROR_INVALID_OUTPUT_FILE,
 	MSG_ERROR_WRITING_TO_FILE,
-	MSG_ERROR_CLOSING_FILE
+	MSG_ERROR_CLOSING_FILE,
 	MSG_ERROR_INVALID_MP3_FILE,
 	MSG_ERROR_INVOCATION,
 	MSG_ERROR_NULL_POINTER,
@@ -18,6 +18,5 @@ char * errors_dictionary[MAX_ERRORS] = {
 
 status_t print_errors(status_t st) {
 	fprintf(stderr, "%s\n", errors_dictionary[st]);
-	
 	return OK;
 }
