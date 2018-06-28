@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "types.h"
+#include "contexts.h"
 
 char context_csv = CSV_DELIMITER;
 
