@@ -14,7 +14,7 @@
 
 typedef status_t (*destructor_t) (void *);
 typedef int (*comparator_t) (void *, void *);
-typedef status_t (*printer_t) (void *, FILE *);
+typedef status_t (*printer_t) (void *, const void *, FILE *);
 
 typedef struct{
 	void ** elements;

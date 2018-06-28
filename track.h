@@ -42,18 +42,18 @@ typedef struct{
 	char album[LEXEM_SPAN_ALBUM + 1];
 	char year[LEXEM_SPAN_YEAR + 1];
 	char comment[LEXEM_SPAN_COMMENT + 1];
-	unsigned int genre[LEXEM_SPAN_GENRE + 1];	
+	unsigned int genre;
 } ADT_track_t;
 
 /****************PROTOTIPOS ADT_TRACK*****************/
 status_t ADT_track_new (ADT_track_t ** track);
 status_t ADT_track_delete (void * track);
 status_t ADT_track_set (char header[], ADT_track_t * track);
-status_t ADT_track_export_to_csv (void * track, FILE * file_out);
-status_t ADT_track_export_to_xml (void * t, FILE * file_out); /*FALTA*/
+status_t ADT_track_export_to_csv (void * track, const void * context, FILE * file_out);
+status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out); /*FALTA*/
 int ADT_track_compare_by_artist (void * track1, void * track2);
 int ADT_track_compare_by_title (void * track1, void * track2);
-int ADT_track_compare_by_genre (void * t1, void * t2); /*FALTA*/
+int ADT_track_compare_by_genre (void * t1, void * t2);
 /***************FIN PROTOTIPOS ADT_TRACK***************/
 
 #endif

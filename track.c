@@ -54,7 +54,7 @@ status_t ADT_track_new (ADT_track_t ** track) {
     (*track)->album[0] = '\0';
     (*track)->year[0] = '\0';
     (*track)->comment[0] = '\0';
-    (*track)->genre[0] = '\0';
+    (*track)->genre = 1;
 
     return OK;
 }
@@ -73,7 +73,7 @@ status_t ADT_track_delete (void * t) {
     track->album[0] = '\0';
     track->year[0] = '\0';
     track->comment[0] = '\0';
-    track->genre[0] = '\0';
+    track->genre = 0;
 
     free(track);
     track = NULL;
@@ -82,6 +82,8 @@ status_t ADT_track_delete (void * t) {
 }
 
 status_t ADT_track_set (char header[], ADT_track_t * track) {
+    char aux[2];
+
     if (header == NULL || track == NULL)
        return ERROR_NULL_POINTER;
 
@@ -103,12 +105,49 @@ status_t ADT_track_set (char header[], ADT_track_t * track) {
     memcpy(track->comment,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
     track->comment[LEXEM_SPAN_COMMENT] = '\0';
 
-    memcpy(track->genre,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
+    memcpy(aux,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
+    track->genre = aux[0];
 
     return OK;
 }
 
-status_t ADT_track_export_to_xml (void * t, FILE * file_out) {
+status_t ADT_track_export_to_csv (void * t, const void * context, FILE * file_out) {
+    char del;
+    char end_line = '\n';
+    ADT_track_t * track;
+
+    del = *((char *)context);
+
+    track = (ADT_track_t *)t;
+
+    if(fprintf(file_out, "%s", track->title) < 0)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if (fputc(del, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+  
+
+    if(fprintf(file_out, "%s", track->artist) < 0)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if(fputc(del, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    if(fprintf(file_out, "%s", genres_dictionary[track->genre]) < 0)
+        return ERROR_WRITING_TO_FILE;
+
+
+    if (fputc(end_line, file_out) == EOF)
+        return ERROR_WRITING_TO_FILE;
+    
+
+    return OK;
+}
+
+status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_out) {
     /*EDITAR*/
     char del = CSV_DELIMITER;
     char end_line = '\n';
@@ -132,41 +171,7 @@ status_t ADT_track_export_to_xml (void * t, FILE * file_out) {
         return ERROR_WRITING_TO_FILE;
     
 
-    if(fprintf(file_out, "%ls", track->genre) < 0)
-        return ERROR_WRITING_TO_FILE;
-
-
-    if (fputc(end_line, file_out) == EOF)
-        return ERROR_WRITING_TO_FILE;
-    
-
-    return OK;
-}
-
-status_t ADT_track_export_to_csv (void * t, FILE * file_out) {
-    char del = CSV_DELIMITER;
-    char end_line = '\n';
-    ADT_track_t * track;
-
-    track = (ADT_track_t *)t;
-
-    if(fprintf(file_out, "%s", track->title) < 0)
-        return ERROR_WRITING_TO_FILE;
-    
-
-    if (fputc(del, file_out) == EOF)
-        return ERROR_WRITING_TO_FILE;
-  
-
-    if(fprintf(file_out, "%s", track->artist) < 0)
-        return ERROR_WRITING_TO_FILE;
-    
-
-    if(fputc(del, file_out) == EOF)
-        return ERROR_WRITING_TO_FILE;
-    
-
-    if(fprintf(file_out, "%ls", track->genre) < 0)
+    if(fprintf(file_out, "%s", genres_dictionary[track->genre]) < 0)
         return ERROR_WRITING_TO_FILE;
 
 
@@ -205,11 +210,12 @@ int ADT_track_compare_by_title (void * t1, void * t2) {
     size_t i;
     ADT_track_t *track1, *track2;
 
+    if (t1 == NULL || t2 == NULL)
+        return 0;
+
     track1 = (ADT_track_t *)t1;
     track2 = (ADT_track_t *)t2;
 
-    if (track1 == NULL || track2 == NULL)
-        return 0;
 
     for(i=0; track1->title[i] && track2->title[i]; i++) {
         if (track1->title[i] != track2->title[i]) {
@@ -227,11 +233,13 @@ int ADT_track_compare_by_title (void * t1, void * t2) {
 
 
 int ADT_track_compare_by_genre (void * t1, void * t2) {
+    ADT_track_t *track1, *track2;
 
-    /*EDIT*/
-   /*ADT_track_t *track1, *track2;
+    if (t1 == NULL || t2 == NULL)
+        return 0;
 
     track1 = (ADT_track_t *)t1;
-    track2 = (ADT_track_t *)t2;*/
-    return 1;
+    track2 = (ADT_track_t *)t2;
+
+    return track1->genre - track2->genre;
 }
