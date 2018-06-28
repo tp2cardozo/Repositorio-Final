@@ -124,11 +124,8 @@ int main(int argc, char *argv[]) {
 	return OK;
 }
 
-
-
 /*Función que valida los argumentos de la invocación*/
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file) {
-
 	size_t i;
 	size_t fmt_flag = 0;
 	size_t sort_flag = 0;
