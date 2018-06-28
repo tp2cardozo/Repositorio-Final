@@ -32,5 +32,6 @@
 
 /*Prototipo*/
 status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file, void ** context);
+status_t set_printer_context (setup_t * setup, void ** context); 
 
 #endif
