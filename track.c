@@ -42,7 +42,6 @@ char * genres_dictionary[MAX_GENRES] = {
 };
 
 status_t ADT_track_new (ADT_track_t ** track) {
-    
     if (track == NULL)
         return ERROR_NULL_POINTER;
 
@@ -55,7 +54,7 @@ status_t ADT_track_new (ADT_track_t ** track) {
     (*track)->album[0] = '\0';
     (*track)->year[0] = '\0';
     (*track)->comment[0] = '\0';
-    (*track)->genre = 1;
+    (*track)->genre = 0;
 
     return OK;
 }
