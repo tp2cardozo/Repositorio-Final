@@ -16,6 +16,6 @@
 #define MSG_ERROR_OUT_OF_RANGE "Error, fuera de rango."
 #define MSG_ERROR_INVALID_TRACK "Error, track inválido."
 
-status_t print_errors(status_t st);
+status_t print_error(status_t st);
 
 #endif

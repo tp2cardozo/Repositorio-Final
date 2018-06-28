@@ -102,7 +102,7 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df)
 }
 
 /*Esta función exporta un Vector*/
-status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, setup_t setup)
+status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, setup_t * setup)
 {
 	size_t i;
 	status_t st;
@@ -111,7 +111,7 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
 
-	if (setup.doc_type == FMT_XML)
+	if (setup->doc_type == FMT_XML)
 	{
 		xml_contexts = (char **)context;
 
@@ -128,7 +128,7 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 			return st;
 	}
 
-	if (setup.doc_type == FMT_XML)
+	if (setup->doc_type == FMT_XML)
 	{
 		if(fprintf(file, "%s%s%s\n", xml_contexts[2], xml_contexts[4], xml_contexts[3]) < 0)
 			return ERROR_WRITING_TO_FILE;

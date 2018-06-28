@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	/*Se validan los argumentos*/
 	if((st = validate_arguments(argc, argv, &setup, &out_index)) != OK)
 	{
-   		print_errors(st);
+   		print_error(st);
 		return st;
 	}
 
@@ -58,14 +58,14 @@ int main(int argc, char *argv[])
 	/*Se crea el vector*/
 	if((st = ADT_Vector_new(&vector)) != OK)
 	{
-		print_errors(st);
+		print_error(st);
 		return st;
 	}
 
 	/*Se establece una funcion para imprimir*/
 	if((st = ADT_Vector_set_printer (vector, format_output[setup.doc_type])) != OK) 
 	{
-		print_errors(st);
+		print_error(st);
 		ADT_Vector_delete(&vector);
 
 		return st;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	/*Se establece una funcion para comparar*/
 	if((st = ADT_Vector_set_comparator (vector, sort_output[setup.sort_by])) != OK)
 	{
-		print_errors(st);
+		print_error(st);
 		ADT_Vector_delete(&vector);
 		return st;
 	}
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 	/*Se establece una funcion para destruir elementos*/
 	if((st = ADT_Vector_set_destructor(vector, ADT_track_delete)) != OK)
 	{
-		print_errors(st);
+		print_error(st);
 		ADT_Vector_delete(&vector);
 		return st;
 	}
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 		if((mp3_file = fopen(argv[INDEX_FIRST_MP3 + i], "rt")) == NULL)
 		{
 			st = ERROR_INVALID_MP3_FILE;
-			print_errors(st);
+			print_error(st);
 			return st;
 		}
 
@@ -103,14 +103,14 @@ int main(int argc, char *argv[])
 		{
 			ADT_Vector_delete(&vector);
 			fclose(mp3_file);
-			print_errors(st);
+			print_error(st);
 			return st;	
 		}
 
 	  	if((fclose(mp3_file)) == EOF)
 	  	{
 	  		st = ERROR_CLOSING_FILE;
-			print_errors(st);
+			print_error(st);
 			ADT_Vector_delete(&vector);
 			return st;
 	  	}
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 	if ((file_out = fopen(argv[out_index], "wt")) == NULL)
 	{
 		st = ERROR_INVALID_OUTPUT_FILE;
-		print_errors(st);
+		print_error(st);
 		ADT_Vector_delete(&vector);
 		return st;
 	}
@@ -130,16 +130,16 @@ int main(int argc, char *argv[])
   	/*Se ordena el vector donde se ingresaron los datos de los archivos mp3*/
   	if((st = ADT_Vector_sort_elements(&vector, ADT_Vector_swap_elements)) != OK)
   	{
-  		print_errors(st);
+  		print_error(st);
   		fclose(file_out);
   		ADT_Vector_delete(&vector);
   		return st;
   	}
 
   	/*Se imprimen los elementos en el orden y formato elegido*/
-	if((st = ADT_Vector_export(vector, context, file_out, setup)) != OK)
+	if((st = ADT_Vector_export(vector, context, file_out, &setup)) != OK)
 	{
-		print_errors(st);
+		print_error(st);
 		fclose(file_out);
 		ADT_Vector_delete(&vector);
 		return st;
@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
 	if((st = ADT_Vector_delete(&vector)) != OK)
 	{
 		fclose(file_out);
-		print_errors(st);
+		print_error(st);
 		return st;
 	}
 
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 	if((fclose(file_out)) == EOF)
 	{
 		st = ERROR_CLOSING_FILE;
-		print_errors(st);
+		print_error(st);
 		return st;
 	}
 
