@@ -21,7 +21,7 @@ char * sort_dictionary[MAX_SORTS] =
 };
 
 extern char context_csv;
-extern char * context_xml[];
+extern char * context_xml[MAX_XML_CONTEXTS];
 extern status_t (*format_output[MAX_FORMATS])(void *, FILE *);
 extern int (*sort_output[MAX_SORTS]) (void *, void *);
 extern char * errors_dictionary[MAX_ERRORS];
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-	if (setup.doc_type == CSV) {
+	if (setup.doc_type == FMT_CSV) {
 		context = &context_csv;
 	}else{
 		context = &context_xml;
