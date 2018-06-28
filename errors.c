@@ -12,7 +12,8 @@ char * errors_dictionary[MAX_ERRORS] = {
 	MSG_ERROR_INVOCATION,
 	MSG_ERROR_NULL_POINTER,
 	MSG_ERROR_OUT_OF_MEMORY,
-	MSG_ERROR_OUT_OF_RANGE
+	MSG_ERROR_OUT_OF_RANGE,
+	MSG_ERROR_INVALID_TRACK
 };
 
 status_t print_errors(status_t st)

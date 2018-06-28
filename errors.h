@@ -13,7 +13,8 @@
 #define MSG_ERROR_INVOCATION "Error de invocación."
 #define MSG_ERROR_NULL_POINTER "Error, puntero nulo."
 #define MSG_ERROR_OUT_OF_MEMORY "Error, memoria insuficiente."
-#define MSG_ERROR_OUT_OF_RANGE "Error, fuera de rango"
+#define MSG_ERROR_OUT_OF_RANGE "Error, fuera de rango."
+#define MSG_ERROR_INVALID_TRACK "Error, track inválido."
 
 status_t print_errors(status_t st);
 
