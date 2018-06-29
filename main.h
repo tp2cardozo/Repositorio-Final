@@ -31,6 +31,6 @@
 #define OUT_FLAG_TOKEN "-out"
 
 /*Prototipo*/
-status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file);
+status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file, void ** context);
 
 #endif

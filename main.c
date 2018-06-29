@@ -40,19 +40,10 @@ int main(int argc, char *argv[])
 	void * context;
 
 	/*Se validan los argumentos*/
-	if((st = validate_arguments(argc, argv, &setup, &out_index)) != OK)
+	if((st = validate_arguments(argc, argv, &setup, &out_index, &context)) != OK)
 	{
    		print_errors(st);
 		return st;
-	}
-
-	if (setup.doc_type == FMT_CSV)
-	{
-		context = &context_csv;
-	}
-	else
-	{
-		context = &context_xml;
 	}
 
 	/*Se crea el vector*/
@@ -165,12 +156,13 @@ int main(int argc, char *argv[])
 }
 
 /*Función que valida los argumentos de la invocación*/
-status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file)
+status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * index_out_file, void ** context)
 {
 	size_t i;
 	size_t fmt_flag = 0;
 	size_t sort_flag = 0;
 	size_t out_flag = 0;
+	status_t st;
 	
 	if(argv == NULL || setup == NULL)
 		return ERROR_NULL_POINTER;
@@ -201,6 +193,8 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 			break;
 		}
 	}
+	if ((st = set_printer_context(setup, context)) != OK)
+		return st;
 
 	if(i == MAX_FORMATS)
 		return ERROR_INVOCATION;
@@ -218,6 +212,23 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 		return ERROR_INVOCATION;
 
 	*index_out_file = out_flag + 1;
+
+	return OK;
+}
+
+status_t set_printer_context (setup_t * setup, void ** context) 
+{
+	if (setup == NULL || context == NULL)
+		return ERROR_NULL_POINTER;
+
+	switch (setup->doc_type) 
+	{
+		case (FMT_XML) :
+			*context = &context_xml;
+
+		case (FMT_CSV) :
+			*context = &context_csv;
+	}
 
 	return OK;
 }
