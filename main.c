@@ -191,7 +191,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup, size_t * i
 			break;
 		}
 	}
-	if ((st = set_printer_context(setup, context)) != OK)
+	if((st = set_printer_context(setup, context)) != OK)
 		return st;
 
 	if(i == MAX_FORMATS)
