@@ -114,14 +114,14 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 	if (setup->doc_type == FMT_XML)
 	{
 		xml_contexts = (char **)context;
-
-		if(fprintf(file, "%s\n", xml_contexts[0]) < 0)
+		
+		if(fprintf(file, "%s\n", xml_contexts[XML_VERSION_LINE_INDEX]) < 0)
 			return ERROR_WRITING_TO_FILE;
 
-		if(fprintf(file, "%s%s%s\n", xml_contexts[1], xml_contexts[4], xml_contexts[3]) < 0)
+		if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
 			return ERROR_WRITING_TO_FILE;
 	}
-
+	printf("c\n");
 	for (i = 0; i < v->size; i++)
 	{
 		if ((st = (v->printer)(v->elements[i], context, file)) != OK)
@@ -130,7 +130,7 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 
 	if (setup->doc_type == FMT_XML)
 	{
-		if(fprintf(file, "%s%s%s\n", xml_contexts[2], xml_contexts[4], xml_contexts[3]) < 0)
+		if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
 			return ERROR_WRITING_TO_FILE;
 	}
 

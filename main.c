@@ -4,7 +4,7 @@
 
 #include "main.h"
 
-/*Biblioteca de formatos*/
+/*Diccionario de formatos*/
 char * format_dictionary[MAX_FORMATS] =
 {
 	CSV_FORMAT,
@@ -12,7 +12,7 @@ char * format_dictionary[MAX_FORMATS] =
 };
 
 
-/*Biblioteca de ordenamientos*/
+/*Diccionario de ordenamientos*/
 char * sort_dictionary[MAX_SORTS] =
 {
 	SORT_BY_NAME,
@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
    		print_error(st);
 		return st;
 	}
-
 	/*Se crea el vector*/
 	if((st = ADT_Vector_new(&vector)) != OK)
 	{
@@ -61,7 +60,6 @@ int main(int argc, char *argv[])
 
 		return st;
 	}
-
 	/*Se establece una funcion para comparar*/
 	if((st = ADT_Vector_set_comparator (vector, sort_output[setup.sort_by])) != OK)
 	{
@@ -225,10 +223,11 @@ status_t set_printer_context (setup_t * setup, void ** context)
 	{
 		case (FMT_XML) :
 			*context = &context_xml;
+			break;
 
 		case (FMT_CSV) :
 			*context = &context_csv;
+			break;
 	}
-
 	return OK;
 }

@@ -159,37 +159,37 @@ status_t ADT_track_export_to_xml (void * t, const void * context, FILE * file_ou
     xml_contexts = (char **)context;
     track = (ADT_track_t *)t;
 
-    if(fprintf(file_out, "\t%s%s%s\n", xml_contexts[1], xml_contexts[5], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "\t%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_TRACK_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[1], xml_contexts[6], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_NAME_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", track->title) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s%s%s\n", xml_contexts[2], xml_contexts[6], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_NAME_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[1], xml_contexts[7], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_ARTIST_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", track->artist) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s%s%s\n", xml_contexts[2], xml_contexts[7], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_ARTIST_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[1], xml_contexts[8], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "\t\t%s%s%s", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_GENRE_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", genres_dictionary[track->genre]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s%s%s\n", xml_contexts[2], xml_contexts[8], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_GENRE_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t%s%s%s\n", xml_contexts[2], xml_contexts[5], xml_contexts[3]) < 0)
+    if(fprintf(file_out, "\t%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACK_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     return OK;
