@@ -12,18 +12,7 @@
 #include "contexts.h"
 
 #define MIN_ARGUMENTS 8
-#define INDEX_FIRST_MP3 7
-#define MAX_FORMATS 2
-#define MAX_SORTS 3
-
-/*Formatos de impresión*/
-#define CSV_FORMAT "csv"
-#define XML_FORMAT "xml"
-
-/*Formas de ordenamiento*/
-#define SORT_BY_NAME "name"
-#define SORT_BY_ARTIST "artist"
-#define SORT_BY_GENRE "genre"
+#define INDEX_FIRST_MP3_FILE 7
 
 /*Tokens*/
 #define FORMAT_FLAG_TOKEN "-fmt"
