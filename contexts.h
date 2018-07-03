@@ -5,7 +5,7 @@
 
 #define MAX_XML_CONTEXTS 9
 
-#define CSV_DELIMITER '|'
+#define CSV_DELIMITER "|"
 
 #define XML_VERSION_LINE "<?xml version=\"1.0\" ?>"
 #define XML_OPEN_INITIAL_BRACKET "<"

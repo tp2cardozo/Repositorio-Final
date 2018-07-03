@@ -3,8 +3,6 @@
 
 #include "vector.h"
 
-extern char * errors_dictionary[MAX_ERRORS];
-
 
 /*Esta función crea un nuevo vector*/
 status_t ADT_Vector_new(ADT_Vector_t ** v)
@@ -102,7 +100,7 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df)
 }
 
 /*Esta función exporta un Vector*/
-status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, setup_t * setup)
+status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, doc_type_t doc_type)
 {
 	size_t i;
 	status_t st;
@@ -110,8 +108,8 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
-
-	if (setup->doc_type == FMT_XML)
+/*
+	if (doc_type == FMT_XML)
 	{
 		xml_contexts = (char **)context;
 
@@ -128,12 +126,45 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 			return st;
 	}
 
-	if (setup->doc_type == FMT_XML)
+	if (doc_type == FMT_XML)
 	{
 		if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
 			return ERROR_WRITING_TO_FILE;
 	}
+*/
 
+	switch (doc_type) 
+	{
+		case FMT_CSV :
+			for (i = 0; i < v->size; i++)
+			{
+				if ((st = (v->printer)(v->elements[i], context, file)) != OK)
+					return st;
+			}
+			
+			break;
+
+		case FMT_XML :
+			xml_contexts = (char **)context;
+
+			if(fprintf(file, "%s\n", xml_contexts[XML_VERSION_LINE_INDEX]) < 0)
+				return ERROR_WRITING_TO_FILE;
+
+			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
+				return ERROR_WRITING_TO_FILE;
+
+			for (i = 0; i < v->size; i++)
+			{
+				if ((st = (v->printer)(v->elements[i], context, file)) != OK)
+					return st;
+			}
+			
+			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
+				return ERROR_WRITING_TO_FILE;
+			
+			break;		
+	}
+	
 	return OK;
 }
 
