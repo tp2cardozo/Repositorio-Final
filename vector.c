@@ -55,15 +55,23 @@ status_t ADT_Vector_delete (ADT_Vector_t ** v)
 	return OK;
 }
 
-/*Esta función obtiene un elemento de un vector*/
-void * ADT_Vector_get_element (ADT_Vector_t * v, int position)
+/*Esta función devuelve un elemento de un vector por copia, 
+siempre hay que pasarle el tamaño del tipo de dato a copiar*/
+void * ADT_Vector_get_element (ADT_Vector_t * v, int position, size_t size)
 {
+	void * copia;
+
 	if (v == NULL) return NULL;
 
-	if (position < 0) return v->elements[v->size + position];
+	if (position < 0) 
+	{
+		memcpy(copia, v->elements[v->size + position], size);
+		return copia;
+	}
 	if (position > v->size) return NULL;
 	
-	return v->elements[position];
+	memcpy(copia, v->elements[position], size);
+	return copia;
 }
 
 /*Esta función se fija si un vector está vacío*/

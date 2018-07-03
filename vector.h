@@ -29,7 +29,7 @@ typedef struct
 /*Prototipos de funciones*/
 status_t ADT_Vector_new(ADT_Vector_t ** p);
 status_t ADT_Vector_delete (ADT_Vector_t ** p);
-void * ADT_Vector_get_element (ADT_Vector_t * v, int position);
+void * ADT_Vector_get_element (ADT_Vector_t * v, int position, size_t size);
 status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_element);
 bool_t ADT_Vector_is_empty (ADT_Vector_t * p);
 status_t ADT_Vector_set_printer(ADT_Vector_t * v, printer_t pf);
