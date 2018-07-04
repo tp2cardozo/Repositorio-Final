@@ -173,6 +173,9 @@ status_t set_printer_context (doc_type_t doc_type, void ** context)
 		case FMT_CSV :
 			*context = &context_csv;
 			break;
+
+		case FMT_HTML :
+			return ERROR_NOT_IMPLEMENTED;
 	}
 	return OK;
 }

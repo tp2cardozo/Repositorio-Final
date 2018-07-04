@@ -68,6 +68,7 @@ void * ADT_Vector_get_element (ADT_Vector_t * v, int position, size_t size)
 		memcpy(copia, v->elements[v->size + position], size);
 		return copia;
 	}
+
 	if (position > v->size) return NULL;
 	
 	memcpy(copia, v->elements[position], size);
@@ -116,30 +117,6 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
-/*
-	if (doc_type == FMT_XML)
-	{
-		xml_contexts = (char **)context;
-
-		if(fprintf(file, "%s\n", xml_contexts[XML_VERSION_LINE_INDEX]) < 0)
-			return ERROR_WRITING_TO_FILE;
-
-		if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
-			return ERROR_WRITING_TO_FILE;
-	}
-
-	for (i = 0; i < v->size; i++)
-	{
-		if ((st = (v->printer)(v->elements[i], context, file)) != OK)
-			return st;
-	}
-
-	if (doc_type == FMT_XML)
-	{
-		if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
-			return ERROR_WRITING_TO_FILE;
-	}
-*/
 
 	switch (doc_type) 
 	{
@@ -149,7 +126,6 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 				if ((st = (v->printer)(v->elements[i], context, file)) != OK)
 					return st;
 			}
-			
 			break;
 
 		case FMT_XML :
@@ -169,8 +145,11 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 			
 			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
 				return ERROR_WRITING_TO_FILE;
+			break;	
+
+		case FMT_HTML : 
+			return ERROR_NOT_IMPLEMENTED;
 			
-			break;		
 	}
 	
 	return OK;
@@ -185,12 +164,6 @@ status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_e
 	if(position > (*v)->size)
 		return ERROR_OUT_OF_RANGE;
 
-	if(position < 0)
-	{
-		(*v)->elements[(*v)->size + position] = new_element;
-		return OK;
-	}
-	
 	(*v)->elements[position]=new_element;
 	return OK;
 }
@@ -211,6 +184,7 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element)
 		{
 			return ERROR_OUT_OF_MEMORY;
         }
+        free((*v)->elements);
 		(*v)->elements = aux;
 		(*v)->alloc_size += ADT_VECTOR_CHOP_SIZE;
     }
@@ -220,26 +194,12 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element)
 	return OK;
 }
 
-/*Esta funcion intercambia ele lugar de dos elementos de un vector*/
-status_t ADT_Vector_swap_elements (void ** element1, void ** element2)
-{
-	void * aux;
-
-	if (element1 == NULL || element2 == NULL)
-		return ERROR_NULL_POINTER;
-
-	aux = *element1;
-	*element1 = *element2;
-	*element2 = aux;
-	
-	return OK;
-}
-
 /*Esta función ordena los elementos de un vector*/
-status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector, status_t (*elements_swapper)(void **, void **))
+status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector)
 {
 	size_t i, j = 1;
 	status_t st;
+	void * aux;
 
 	if (vector == NULL)
 		return ERROR_NULL_POINTER;
@@ -251,8 +211,9 @@ status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector, status_t (*elements_
 		{
 			if(((*vector)->comparator)((*vector)->elements[i], (*vector)->elements[i+1]) > 0)
 			{
-				if ((st = elements_swapper(&((*vector)->elements[i]), &((*vector)->elements[i+1]))) != OK)
-					return st;
+				aux = (*vector)->elements[i];
+				(*vector)->elements[i] = (*vector)->elements[i+1];
+				(*vector)->elements[i+1] = aux;
 				j++;
 			}
 		}

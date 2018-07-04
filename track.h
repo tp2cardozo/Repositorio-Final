@@ -6,10 +6,14 @@
 
 #include "types.h"
 #include "main.h"
-#include "errors.h"
 #include "mp3.h"
+#include "types.h"
 
 
+#define XML_TRACK_FLAG "track"
+#define XML_NAME_FLAG "name"
+#define XML_ARTIST_FLAG "artist"
+#define XML_GENRE_FLAG "genre"
 
 typedef struct
 {

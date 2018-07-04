@@ -2,26 +2,24 @@
 #define CONTEXTS__H
 
 #include <stdio.h>
+#include "types.h"
+#include "track.h"
 
 #define MAX_XML_CONTEXTS 9
 
 #define CSV_DELIMITER "|"
 
-#define XML_VERSION_LINE "<?xml version=\"1.0\" ?>"
-#define XML_OPEN_INITIAL_BRACKET "<"
-#define XML_OPEN_FINISHER_BRACKET "</"
-#define XML_CLOSE_BRACKET ">"
+#define XML_DECLARATION "<?xml version=\"1.0\" ?>"
+#define XML_OPEN_INITIAL_TAG "<"
+#define XML_OPEN_FINISHER_TAG "</"
+#define XML_CLOSE_TAG ">"
 
 #define XML_TRACKS_FLAG "tracks"
-#define XML_TRACK_FLAG "track"
-#define XML_NAME_FLAG "name"
-#define XML_ARTIST_FLAG "artist"
-#define XML_GENRE_FLAG "genre"
 
-#define XML_VERSION_LINE_INDEX 0
-#define XML_OPEN_INITIAL_BRACKET_INDEX 1 
-#define XML_OPEN_FINISHER_BRACKET_INDEX 2
-#define XML_CLOSE_BRACKET_INDEX 3
+#define XML_DECLARATION_INDEX 0
+#define XML_OPEN_INITIAL_TAG_INDEX 1 
+#define XML_OPEN_FINISHER_TAG_INDEX 2
+#define XML_CLOSE_TAG_INDEX 3
 #define XML_TRACKS_FLAG_INDEX 4
 #define XML_TRACK_FLAG_INDEX 5
 #define XML_NAME_FLAG_INDEX 6

@@ -15,7 +15,8 @@ typedef enum
 	ERROR_NULL_POINTER,
 	ERROR_OUT_OF_MEMORY,
 	ERROR_OUT_OF_RANGE,
-	ERROR_INVALID_TRACK
+	ERROR_INVALID_TRACK,
+	ERROR_NOT_IMPLEMENTED
 } status_t;
 
 /*Define el tipo bool_t*/
@@ -28,18 +29,18 @@ typedef enum
 /*Define el tipo format_t*/
 typedef enum
 {
-	FMT_CSV = 0,
-	FMT_XML = 1
+	FMT_CSV,
+	FMT_XML,
+	FMT_HTML
 } doc_type_t;
 
 /*Define el tipo sort_t*/
 typedef enum
 {
-	SORT_NAME = 0,
-	SORT_ARTIST = 1,
-	SORT_GENRE = 2
+	SORT_NAME,
+	SORT_ARTIST,
+	SORT_GENRE
 } sorting_criteria_t;
-
 
 typedef status_t (*destructor_t) (void *);
 typedef int (*comparator_t) (void *, void *);

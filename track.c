@@ -2,15 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "types.h"
 #include "track.h"
-#include "errors.h"
-#include "main.h"
-
-extern char * errors_dictionary[MAX_ERRORS];
-
-
-
 
 /*Esta función crea una nueva pista*/
 status_t ADT_Track_new (ADT_Track_t ** track)

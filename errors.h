@@ -15,6 +15,7 @@
 #define MSG_ERROR_OUT_OF_MEMORY "Memoria insuficiente."
 #define MSG_ERROR_OUT_OF_RANGE "Fuera de rango."
 #define MSG_ERROR_INVALID_TRACK "Track inválido."
+#define MSG_ERROR_NOT_IMPLEMENTED "Función no implementada."
 
 status_t print_error(status_t st);
 
