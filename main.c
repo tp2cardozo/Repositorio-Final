@@ -38,7 +38,6 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	size_t fmt_flag = 0;
 	size_t sort_flag = 0;
 	size_t out_flag = 0;
-	status_t st;
 	
 	if(argv == NULL || setup == NULL)
 		return ERROR_NULL_POINTER;
@@ -80,7 +79,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	{
 		if(!(strcmp(argv[sort_flag + 1], sorting_formats[i])))
 		{
-			setup->sorting_criterium = i;
+			setup->sorting_criteria = i;
 			break;
 		}
 	}
