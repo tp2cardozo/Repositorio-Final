@@ -10,7 +10,7 @@ mp3explorer: main.o errors.o mp3_processor.o vector.o track.o setup.o contexts.o
 main.o:main.h main.c errors.h vector.h types.h setup.h
 	$(CC) $(CFLAGS) -o main.o -c main.c
 
-mp3.o:mp3.c mp3.h types.h
+mp3.o:mp3.c mp3.h types.h track.h
 	$(CC) $(CFLAGS) -o mp3.o -c mp3.c
 	
 errors.o:errors.h errors.c types.h

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "types.h"
+#include "track.h"
 
 #define MAX_HEADER_SIZE 128
 
