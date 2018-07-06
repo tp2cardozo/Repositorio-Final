@@ -9,17 +9,18 @@
 #include "setup.h"
 
 #define MIN_ARGUMENTS 8
-#define INDEX_FIRST_MP3_FILE 7
+#define FIRST_MP3_FILE_INDEX 7
 
-#define CSV_FORMAT "csv"
-#define XML_FORMAT "xml"
+#define MAX_FORMAT_NAMES 3
+#define MAX_SORT_NAMES 3
 
-#define SORT_BY_NAME "name"
-#define SORT_BY_ARTIST "artist"
-#define SORT_BY_GENRE "genre"
+#define CSV_FORMAT_STR "csv"
+#define XML_FORMAT_STR "xml"
+#define HTML_FORMAT_STR "html"
 
-#define MAX_FORMATS 2
-#define MAX_SORTS 3
+#define SORT_BY_NAME_STR "name"
+#define SORT_BY_ARTIST_STR "artist"
+#define SORT_BY_GENRE_STR "genre"
 
 /*Tokens*/
 #define FORMAT_FLAG_TOKEN "-fmt"

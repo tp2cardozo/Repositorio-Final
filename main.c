@@ -7,8 +7,20 @@
 
 /**********Externs**********/
 extern setup_t setup;
-extern char * doc_formats[MAX_FORMATS];
-extern char * sorting_formats[MAX_SORTS];
+
+/*Diccionario de formatos*/
+char * doc_formats[MAX_FORMAT_NAMES] = {
+	CSV_FORMAT_STR,
+	XML_FORMAT_STR,
+	HTML_FORMAT_STR
+};
+
+/*Diccionario de ordenamientos*/
+char * sorting_formats[MAX_SORT_NAMES] = {
+	SORT_BY_NAME_STR,
+	SORT_BY_ARTIST_STR,
+	SORT_BY_GENRE_STR
+};
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +34,7 @@ int main(int argc, char *argv[])
 		return st;
 	}
 
-	if((st = process_mp3_files(argc, argv, &setup)) != OK) 
+	if((st = process_mp3_files(argc - FIRST_MP3_FILE_INDEX, &(argv[FIRST_MP3_FILE_INDEX]), &setup)) != OK) 
 	{
 		print_error(st);
 		return st;
@@ -45,7 +57,6 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	if(argc < MIN_ARGUMENTS)
 		return ERROR_INVOCATION;
 
-
 	for(i=1; i<MIN_ARGUMENTS; i++)
 	{
 		if(strcmp(argv[i], FORMAT_FLAG_TOKEN) == 0)
@@ -62,7 +73,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	if(!fmt_flag || !sort_flag || !out_flag)
 		return ERROR_INVOCATION;
 
-	for(i=0 ; i < MAX_FORMATS; i++)
+	for(i=0 ; i < MAX_FORMAT_NAMES; i++)
 	{
 		if (!(strcmp(argv[fmt_flag + 1], doc_formats[i]))) 
 		{
@@ -72,10 +83,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	}
 
 
-	if(i == MAX_FORMATS)
+	if(i == MAX_FORMAT_NAMES)
 		return ERROR_INVOCATION;
 
-	for(i=0 ; i < MAX_SORTS ; i++)
+	for(i=0 ; i < MAX_SORT_NAMES ; i++)
 	{
 		if(!(strcmp(argv[sort_flag + 1], sorting_formats[i])))
 		{
@@ -84,7 +95,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 		}
 	}
 
-	if(i == MAX_SORTS)
+	if(i == MAX_SORT_NAMES)
 		return ERROR_INVOCATION;
 
 	setup -> output_file_path = argv[out_flag + 1];

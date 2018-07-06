@@ -1,21 +1,8 @@
 #include <stdio.h>
+#include <string.h>
 #include "mp3.h"
 
 /*Diccionarios de formato, tipos de ordenes y generos*/
-
-status_t (*track_exports[MAX_FORMATS]) (void *, const void *, FILE *) = 
-{
-    ADT_track_export_to_csv,
-    ADT_track_export_to_xml
-};
-
-int (*track_components[MAX_SORTS]) (void *, void *) =
-{
-    ADT_track_compare_by_title,
-    ADT_track_compare_by_artist,
-    ADT_track_compare_by_genre
-};
-
 char * genres_dictionary[MAX_GENRES] = 
 {
     "Blues", "Classic Rock", "Country", "Dance", "Disco", "Funk", "Grunge", 
@@ -38,28 +25,6 @@ char * genres_dictionary[MAX_GENRES] =
     "Freestyle", "Duet", "Punk Rock", "Drum Solo", "A Capela", "Euro-House", "Dance Hall"
 };
 
-
-
-status_t set_track_from_mp3_file(FILE * fi, ADT_Track_t * track)
-{
-	char header[MAX_HEADER_SIZE];
-    char * header_fields[MAX_HEADER_FIELDS];
-
-	if (fi == NULL || track == NULL)
-		return ERROR_NULL_POINTER;
-
-	if((st = get_mp3_header(fi, header)) != OK) 
-        return st;
-
-    if((st = get_info_from_header(header, header_fields)) != OK)
-        return st;
-
-    if((st = ADT_track_get_info_for_fields(header_fields, track)) != OK)
-        return st;
-
-    return OK;
-}
-
 /*Lee el encabezado del archivo mp3*/
 status_t get_mp3_header(FILE * fi, char header[])
 {
@@ -81,56 +46,4 @@ status_t get_mp3_header(FILE * fi, char header[])
 		return ERROR_INVALID_MP3_FILE;
 
 	return OK;
-}
-
-status_t get_info_from_header(char * header, char * fields[])
-{
-    char buf[MP3_HEADER_SIZE];
-    char tag[LEXEM_SPAN_TAG + 1];
-    char title[LEXEM_SPAN_TITLE + 1];
-    char artist[LEXEM_SPAN_ARTIST + 1];
-    char album[LEXEM_SPAN_ALBUM + 1];
-    char year[LEXEM_SPAN_YEAR + 1];
-    char comment[LEXEM_SPAN_COMMENT + 1];
-    unsigned char genre;
-
-    if(header == NULL || fields == NULL || fields[MAX_HEADER_FIELDS - 1] == NULL)
-        return ERROR_NULL_POINTER;
-
-    memcpy(buf,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
-    buf[LEXEM_SPAN_TAG] = '\0';
-    sprintf(tag, "%s", buf);
-
-    memcpy(buf,header+LEXEM_START_TITLE,LEXEM_SPAN_TITLE);
-    buf[LEXEM_SPAN_TITLE] = '\0';
-    sprintf(title,"%s",buf);
-
-    memcpy(buf,header+LEXEM_START_ARTIST,LEXEM_SPAN_ARTIST);
-    buf[LEXEM_SPAN_ARTIST] = '\0';
-    sprintf(artist,"%s",buf);
-
-    memcpy(buf,header+LEXEM_START_ALBUM,LEXEM_SPAN_ALBUM);
-    buf[LEXEM_SPAN_ALBUM] = '\0';
-    sprintf(album,"%s",buf);
-
-    memcpy(buf,header+LEXEM_START_YEAR,LEXEM_SPAN_YEAR);
-    buf[LEXEM_SPAN_YEAR] = '\0';
-    sprintf(year,"%s",buf);
-
-    memcpy(buf,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
-    buf[LEXEM_SPAN_COMMENT] = '\0';
-    sprintf(comment,"%s",buf);
-
-    memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
-    genre = buf[0];
-    
-    fields[HEADER_FIELDS_TAG_INDEX] = tag;
-    fields[HEADER_FIELDS_TITLE_INDEX] = title;
-    fields[HEADER_FIELDS_ARTIST_INDEX] = artist;
-    fields[HEADER_FIELDS_ALBUM_INDEX] = album;
-    fields[HEADER_FIELDS_YEAR_INDEX] = year;
-    fields[HEADER_FIELDS_COMMENT_INDEX] = comment;
-    fields[HEADER_FIELDS_GENRE_INDEX] = &genre;
-
-    return OK;
 }

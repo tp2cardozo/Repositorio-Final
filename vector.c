@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "vector.h"
 
@@ -14,19 +15,19 @@ status_t ADT_Vector_new(ADT_Vector_t ** v)
 	if ((*v =(ADT_Vector_t*)malloc(sizeof(ADT_Vector_t))) == NULL)
 		return ERROR_OUT_OF_MEMORY;
 
-	if (((*v)->elements = (void**)malloc(INIT_CHOP*sizeof(void*))) == NULL)
+	if (((*v)->elements = (void**)malloc(ADT_VECTOR_INIT_CHOP*sizeof(void*))) == NULL)
 	{
 		free(*v);
 		*v = NULL;
 		return ERROR_OUT_OF_MEMORY;
 	}
 
-	for(i=0; i<INIT_CHOP; i++)
+	for(i=0; i<ADT_VECTOR_INIT_CHOP; i++)
 	{
 		(*v)->elements[i] = NULL;
 	}
 
-	(*v)->alloc_size = INIT_CHOP;
+	(*v)->alloc_size = ADT_VECTOR_INIT_CHOP;
 
 	(*v)->size = 0;
 	(*v)->destructor = NULL;
@@ -43,7 +44,7 @@ status_t ADT_Vector_delete (ADT_Vector_t ** v)
 	size_t i;
 	for(i=0; i<(*v)->size; i++)
 	{
-		st = ((*v)->destructor)((*v)->elements[i]);
+		st = ((*v)->destructor)(&((*v)->elements[i]));
 		if (st != OK)
 			return st;
 	}
@@ -131,10 +132,10 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 		case FMT_XML :
 			xml_contexts = (char **)context;
 
-			if(fprintf(file, "%s\n", xml_contexts[XML_VERSION_LINE_INDEX]) < 0)
+			if(fprintf(file, "%s\n", xml_contexts[XML_DECLARATION_INDEX]) < 0)
 				return ERROR_WRITING_TO_FILE;
 
-			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
+			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_TAG_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_TAG_INDEX]) < 0)
 				return ERROR_WRITING_TO_FILE;
 
 			for (i = 0; i < v->size; i++)
@@ -143,7 +144,7 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 					return st;
 			}
 			
-			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_BRACKET_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_BRACKET_INDEX]) < 0)
+			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_TAG_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_TAG_INDEX]) < 0)
 				return ERROR_WRITING_TO_FILE;
 			break;	
 
@@ -198,7 +199,6 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element)
 status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector)
 {
 	size_t i, j = 1;
-	status_t st;
 	void * aux;
 
 	if (vector == NULL)

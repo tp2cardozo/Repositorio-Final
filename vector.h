@@ -2,23 +2,21 @@
 #define VECTOR__H
 
 #include <stdio.h>
-
-#include "contexts.h"
 #include "types.h"
 #include "errors.h"
+#include "contexts.h"
 
 #define ADT_VECTOR_INIT_CHOP 4
 #define ADT_VECTOR_CHOP_SIZE 4
 
-typedef struct
-{
+typedef struct {
 	void ** elements;
 	size_t size;
 	size_t alloc_size;
 	destructor_t destructor;
 	comparator_t comparator;
 	printer_t printer;
-}ADT_Vector_t;
+} ADT_Vector_t;
 
 /*Prototipos de funciones*/
 status_t ADT_Vector_new(ADT_Vector_t ** p);
