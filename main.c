@@ -9,14 +9,14 @@
 extern setup_t setup;
 
 /*Diccionario de formatos*/
-char * doc_formats[MAX_FORMAT_NAMES] = {
+char * doc_formats[MAX_DOC_FORMATS] = {
 	CSV_FORMAT_STR,
 	XML_FORMAT_STR,
 	HTML_FORMAT_STR
 };
 
 /*Diccionario de ordenamientos*/
-char * sorting_formats[MAX_SORT_NAMES] = {
+char * sorting_formats[MAX_SORTING_FORMATS] = {
 	SORT_BY_NAME_STR,
 	SORT_BY_ARTIST_STR,
 	SORT_BY_GENRE_STR
@@ -73,7 +73,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	if(!fmt_flag || !sort_flag || !out_flag)
 		return ERROR_INVOCATION;
 
-	for(i=0 ; i < MAX_FORMAT_NAMES; i++)
+	for(i=0 ; i < MAX_DOC_FORMATS; i++)
 	{
 		if (!(strcmp(argv[fmt_flag + 1], doc_formats[i]))) 
 		{
@@ -83,10 +83,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	}
 
 
-	if(i == MAX_FORMAT_NAMES)
+	if(i == MAX_DOC_FORMATS)
 		return ERROR_INVOCATION;
 
-	for(i=0 ; i < MAX_SORT_NAMES ; i++)
+	for(i=0 ; i < MAX_SORTING_FORMATS ; i++)
 	{
 		if(!(strcmp(argv[sort_flag + 1], sorting_formats[i])))
 		{
@@ -95,7 +95,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 		}
 	}
 
-	if(i == MAX_SORT_NAMES)
+	if(i == MAX_SORTING_FORMATS)
 		return ERROR_INVOCATION;
 
 	setup -> output_file_path = argv[out_flag + 1];

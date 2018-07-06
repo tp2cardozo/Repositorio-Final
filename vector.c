@@ -4,7 +4,6 @@
 
 #include "vector.h"
 
-
 /*Esta función crea un nuevo vector*/
 status_t ADT_Vector_new(ADT_Vector_t ** v)
 {
@@ -76,10 +75,10 @@ void * ADT_Vector_get_element (ADT_Vector_t * v, int position, size_t size)
 	return copia;
 }
 
-/*Esta función se fija si un vector está vacío*/
-bool_t ADT_Vector_is_empty (ADT_Vector_t * p)
+/*Esta función se fija si el vector tiene elementos*/
+bool_t ADT_Vector_is_empty (ADT_Vector_t p)
 {
-	return (p->size) ? FALSE:TRUE;
+	return (p.size) ? FALSE:TRUE;
 }
 
 /*Esta función establece una función de impresión de vector*/
@@ -159,13 +158,18 @@ status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file,
 /*Esta función establece un elemento*/
 status_t ADT_Vector_set_element(ADT_Vector_t ** v, size_t position, void * new_element)
 {
+	status_t st;
+
 	if(v==NULL)
 		return ERROR_NULL_POINTER;
 	
 	if(position > (*v)->size)
 		return ERROR_OUT_OF_RANGE;
 
-	(*v)->elements[position]=new_element;
+	if ((st = ((*v)->destructor)(&((*v)->elements[position]))) != OK)
+			return st;
+
+	(*v)->elements[position] = new_element;
 	return OK;
 }
 
@@ -195,7 +199,7 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element)
 	return OK;
 }
 
-/*Esta función ordena los elementos de un vector*/
+/*Esta función ordena por burbujeo, dependiendo del comparador, los elementos de un vector*/
 status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector)
 {
 	size_t i, j = 1;

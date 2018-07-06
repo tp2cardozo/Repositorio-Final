@@ -6,13 +6,14 @@
 
 extern char * genres_dictionary[MAX_GENRES];
 
-status_t (*track_exports[MAX_FORMATS]) (void *, const void *, FILE *) = 
+status_t (*track_exports[MAX_FORMAT_TYPES]) (void *, const void *, FILE *) = 
 {
     ADT_Track_export_to_csv,
-    ADT_Track_export_to_xml
+    ADT_Track_export_to_xml,
+    NULL/*HTML no implementado*/
 };
 
-int (*track_components[MAX_SORTS]) (void *, void *) =
+int (*track_comparators[MAX_SORTING_CRITERIA]) (void *, void *) =
 {
     ADT_Track_compare_by_title,
     ADT_Track_compare_by_artist,
@@ -60,10 +61,6 @@ status_t ADT_Track_get_info_for_fields (char header[], ADT_Track_t * track)
 {
     if (header == NULL || track == NULL)
         return ERROR_NULL_POINTER;
-/*
-    if((st = set_info_from_header(header, &(track->tag), &(track->title), &(track->artist), &(track->album), &(track->year), &(track->comment), &(track->genre))) != OK)
-        return st;
-*/
 
     memcpy(track->tag,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
     track->tag[LEXEM_SPAN_TAG] = '\0';

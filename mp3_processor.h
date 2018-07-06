@@ -2,12 +2,12 @@
 #define MP3_PROCESSOR__H
 
 #include <stdio.h>
-#include "vector.h"
-#include "setup.h"
 #include "types.h"
-#include "track.h"
 #include "errors.h"
+#include "setup.h"
 #include "mp3.h"
+#include "track.h"
+#include "vector.h"
 
 /*Prototipos*/
 status_t process_mp3_files(int argc, char * argv[], setup_t * setup);

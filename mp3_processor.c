@@ -3,8 +3,8 @@
 
 #include "mp3_processor.h"
 
-extern status_t (*track_exports[MAX_FORMATS])(void *, const void *, FILE *);
-extern int (*track_components[MAX_SORTS]) (void *, void *);
+extern status_t (*track_exports[MAX_FORMAT_TYPES])(void *, const void *, FILE *);
+extern int (*track_comparators[MAX_SORTING_CRITERIA]) (void *, void *);
 extern char * context_csv;
 extern char * context_xml[MAX_XML_CONTEXTS];
 
@@ -32,7 +32,7 @@ status_t process_mp3_files(int max_input_files, char * input_files[], setup_t * 
 		return st;
 	}
 	
-	if((st = ADT_Vector_set_comparator (vector, track_components[setup->sorting_criteria])) != OK)
+	if((st = ADT_Vector_set_comparator (vector, track_comparators[setup->sorting_criteria])) != OK)
 	{
 		ADT_Vector_delete(&vector);
 		return st;
@@ -114,7 +114,7 @@ status_t process_mp3_file(setup_t * setup, FILE * fi, ADT_Vector_t ** vector)
 		return ERROR_NULL_POINTER;
 
 	if((st = ADT_Track_new(&track)) != OK)
-		return ERROR_INVALID_TRACK;
+		return st;
 
 	if((st = set_track_from_mp3_file(fi, track)) != OK)
 	{
@@ -126,22 +126,6 @@ status_t process_mp3_file(setup_t * setup, FILE * fi, ADT_Vector_t ** vector)
 		return st;
 
 	return OK;	
-}
-
-status_t vector_set (ADT_Vector_t * vector, setup_t * setup) 
-{
-	status_t st;
-
-	if((st = ADT_Vector_set_printer (vector, track_exports[setup->doc_type])) != OK) 
-		return st;
-	
-	if((st = ADT_Vector_set_comparator (vector, track_components[setup->sorting_criteria])) != OK)
-		return st;
-
-	if((st = ADT_Vector_set_destructor(vector, ADT_Track_delete)) != OK)
-		return st;
-
-	return OK;
 }
 
 status_t set_printer_context (doc_type_t doc_type, void ** context) 
