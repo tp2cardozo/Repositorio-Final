@@ -21,7 +21,7 @@ char * sorting_formats[MAX_SORTS] = {
 	SORT_BY_GENRE
 };
 
-status_t process_mp3_files (int argc, char * argv[], setup_t * setup) 
+status_t process_mp3_files(int argc, char * argv[], setup_t * setup) 
 {
 	ADT_Vector_t * vector;
 	size_t i;
