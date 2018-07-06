@@ -41,7 +41,7 @@ status_t ADT_Track_delete (void * t)
 }
 
 /*Esta función establece una pista*/
-status_t ADT_Track_get_info_from_file (char header[], ADT_Track_t * track)
+status_t ADT_Track_get_info_for_fields (char header[], ADT_Track_t * track)
 {
     if (header == NULL || track == NULL)
        return ERROR_NULL_POINTER;
