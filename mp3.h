@@ -1,6 +1,9 @@
 #ifndef MP3__H
 #define MP3__H
 
+#include <stdio.h>
+#include "types.h"
+
 #define MAX_HEADER_SIZE 128
 
 #define MAX_GENRES 126
@@ -38,6 +41,8 @@
 
 #define MAX_HEADER_FIELDS 7
 
+status_t set_track_from_mp3_file(FILE * fi, ADT_Track_t * track);
+status_t get_info_from_header(char * header, char * fields[]);
 status_t get_mp3_header(FILE * fi, char header[]);
 
 #endif

@@ -29,7 +29,7 @@ typedef struct
 /****************PROTOTIPOS ADT_TRACK*****************/
 status_t ADT_Track_new (ADT_Track_t ** track);
 status_t ADT_Track_delete (void * track);
-status_t ADT_Track_get_info_for_fields (char header[], ADT_Track_t * track);
+status_t ADT_Track_get_info_for_fields (char * header[], ADT_Track_t * track);
 status_t ADT_Track_export_to_csv (void * t, const void * context, FILE * file_out);
 status_t ADT_Track_export_to_xml (void * t, const void * context, FILE * file_out); /*FALTA*/
 int ADT_Track_compare_by_artist (void * t1, void * t2);

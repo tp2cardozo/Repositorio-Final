@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include "mp3.h"
 
@@ -52,10 +51,10 @@ status_t set_track_from_mp3_file(FILE * fi, ADT_Track_t * track)
 	if((st = get_mp3_header(fi, header)) != OK) 
         return st;
 
-    if((st = get_info_from_header(header, &header_fields)) != OK)
+    if((st = get_info_from_header(header, header_fields)) != OK)
         return st;
 
-    if((st = ADT_track_get_info_from_file(header, track)) != OK)
+    if((st = ADT_track_get_info_for_fields(header_fields, track)) != OK)
         return st;
 
     return OK;
@@ -84,7 +83,9 @@ status_t get_mp3_header(FILE * fi, char header[])
 	return OK;
 }
 
-status_t get_info_from_header(char * header, char *** fields) {
+status_t get_info_from_header(char * header, char * fields[])
+{
+    char buf[MP3_HEADER_SIZE];
     char tag[LEXEM_SPAN_TAG + 1];
     char title[LEXEM_SPAN_TITLE + 1];
     char artist[LEXEM_SPAN_ARTIST + 1];
@@ -92,9 +93,8 @@ status_t get_info_from_header(char * header, char *** fields) {
     char year[LEXEM_SPAN_YEAR + 1];
     char comment[LEXEM_SPAN_COMMENT + 1];
     unsigned char genre;
-    char buf[MP3_HEADER_SIZE];
 
-    if(header == NULL || fields == NULL || (*fields)[MAX_HEADER_FIELDS - 1] == NULL)
+    if(header == NULL || fields == NULL || fields[MAX_HEADER_FIELDS - 1] == NULL)
         return ERROR_NULL_POINTER;
 
     memcpy(buf,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
@@ -121,15 +121,16 @@ status_t get_info_from_header(char * header, char *** fields) {
     buf[LEXEM_SPAN_COMMENT] = '\0';
     sprintf(comment,"%s",buf);
 
-    memcpy(genre,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
+    memcpy(buf,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
+    genre = buf[0];
     
-    (*fields)[HEADER_FIELDS_TAG_INDEX] = tag;
-    (*fields)[HEADER_FIELDS_TITLE_INDEX] = title;
-    (*fields)[HEADER_FIELDS_ARTIST_INDEX] = artist;
-    (*fields)[HEADER_FIELDS_ALBUM_INDEX] = album;
-    (*fields)[HEADER_FIELDS_YEAR_INDEX] = year;
-    (*fields)[HEADER_FIELDS_COMMENT_INDEX] = comment;
-    (*fields)[HEADER_FIELDS_GENRE_INDEX] = genre;
+    fields[HEADER_FIELDS_TAG_INDEX] = tag;
+    fields[HEADER_FIELDS_TITLE_INDEX] = title;
+    fields[HEADER_FIELDS_ARTIST_INDEX] = artist;
+    fields[HEADER_FIELDS_ALBUM_INDEX] = album;
+    fields[HEADER_FIELDS_YEAR_INDEX] = year;
+    fields[HEADER_FIELDS_COMMENT_INDEX] = comment;
+    fields[HEADER_FIELDS_GENRE_INDEX] = &genre;
 
     return OK;
 }
