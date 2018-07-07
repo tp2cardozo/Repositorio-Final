@@ -8,7 +8,7 @@
 #include "mp3.h"
 #include "contexts.h"
 
-#define MAX_FORMAT_TYPES 3
+#define MAX_FORMAT_TYPES 2
 #define MAX_SORTING_CRITERIA 3
 
 #define XML_TRACK_FLAG "track"

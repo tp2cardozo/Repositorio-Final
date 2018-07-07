@@ -3,7 +3,7 @@
 
 #include "mp3_processor.h"
 
-extern status_t (*track_exports[MAX_FORMAT_TYPES])(void *, const void *, FILE *);
+extern status_t (*track_exports[MAX_FORMAT_TYPES]) (void *, const void *, FILE *);
 extern int (*track_comparators[MAX_SORTING_CRITERIA]) (void *, void *);
 extern char * context_csv;
 extern char * context_xml[MAX_XML_CONTEXTS];
@@ -140,6 +140,7 @@ status_t set_printer_context (doc_type_t doc_type, void ** context)
 			break;
 
 		case FMT_CSV :
+			printf("b\n");
 			*context = context_csv;
 			break;
 

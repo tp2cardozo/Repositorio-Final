@@ -9,8 +9,7 @@ extern char * genres_dictionary[MAX_GENRES];
 status_t (*track_exports[MAX_FORMAT_TYPES]) (void *, const void *, FILE *) = 
 {
     ADT_Track_export_to_csv,
-    ADT_Track_export_to_xml,
-    NULL/*HTML no implementado*/
+    ADT_Track_export_to_xml
 };
 
 int (*track_comparators[MAX_SORTING_CRITERIA]) (void *, void *) =
