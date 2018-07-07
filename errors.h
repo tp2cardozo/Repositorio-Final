@@ -14,7 +14,7 @@
 #define MSG_ERROR_NULL_POINTER "Puntero nulo."
 #define MSG_ERROR_OUT_OF_MEMORY "Memoria insuficiente."
 #define MSG_ERROR_OUT_OF_RANGE "Fuera de rango."
-#define MSG_ERROR_NOT_IMPLEMENTED "Función no implementada."
+#define MSG_ERROR_NOT_IMPLEMENTED "Funcionalidad no implementada."
 
 status_t print_error(status_t st);
 
