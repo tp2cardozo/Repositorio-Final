@@ -4,12 +4,11 @@
 
 #include "track.h"
 
-extern char * genres_dictionary[MAX_GENRES];
-
-status_t (*track_exports[MAX_FORMAT_TYPES]) (void *, const void *, FILE *) = 
+status_t (*track_exports[MAX_DOC_TYPES]) (void *, const void *, FILE *) = 
 {
     ADT_Track_export_to_csv,
-    ADT_Track_export_to_xml
+    ADT_Track_export_to_xml,
+    ADT_Track_export_to_html
 };
 
 int (*track_comparators[MAX_SORTING_CRITERIA]) (void *, void *) =
@@ -55,31 +54,24 @@ status_t ADT_Track_delete (void * track)
     return OK;
 }
 
-/*Esta función establece una pista*/
-status_t ADT_Track_get_info_for_fields (char header[], ADT_Track_t * track)
+/*Esta función establece una pista desde un archivo MP3*/
+status_t ADT_Track_get_info_for_fields (FILE * file, ADT_Track_t * track)
 {
-    if (header == NULL || track == NULL)
+    char header[MAX_HEADER_SIZE];
+    status_t st;
+
+    /*ante una ampliación se debería agregar un switch acá con los distintos 
+    formatos de archivos de música, en este trabajo sólo utilizamos archivos
+    MP3 ID3v1*/
+
+    if (file == NULL || track == NULL)
         return ERROR_NULL_POINTER;
 
-    memcpy(track->tag,header+LEXEM_START_TAG,LEXEM_SPAN_TAG);
-    track->tag[LEXEM_SPAN_TAG] = '\0';
+    if((st = get_mp3_header(file, header)) != OK) 
+        return st;
 
-    memcpy(track->title,header+LEXEM_START_TITLE,LEXEM_SPAN_TITLE);
-    track->title[LEXEM_SPAN_TITLE] = '\0';
-
-    memcpy(track->artist,header+LEXEM_START_ARTIST,LEXEM_SPAN_ARTIST);
-    track->artist[LEXEM_SPAN_ARTIST] = '\0';
-
-    memcpy(track->album,header+LEXEM_START_ALBUM,LEXEM_SPAN_ALBUM);
-    track->album[LEXEM_SPAN_ALBUM] = '\0';
-
-    memcpy(track->year,header+LEXEM_START_YEAR,LEXEM_SPAN_YEAR);
-    track->year[LEXEM_SPAN_YEAR] = '\0';
-
-    memcpy(track->comment,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
-    track->comment[LEXEM_SPAN_COMMENT] = '\0';
-
-    memcpy(&(track->genre),header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
+    if ((st = parse_mp3_header(header, track->tag, track->title, track->artist, track->album, track->year, track->comment, &(track->genre))) != OK)
+        return st;
 
     return OK;
 }
@@ -93,13 +85,13 @@ status_t ADT_Track_export_to_csv (void * t, const void * context, FILE * file_ou
     del = (char *)context;
     track = (ADT_Track_t *)t;
 
-    if(fprintf(file_out, "%s%c", track->title, del[0]) < 0)
+    if(fprintf(file_out, "%s%c", track->title, *del) < 0)
         return ERROR_WRITING_TO_FILE;
   
-    if(fprintf(file_out, "%s%c", track->artist, del[0]) < 0)
+    if(fprintf(file_out, "%s%c", track->artist, *del) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s\n", genres_dictionary[track->genre]) < 0)
+    if(fprintf(file_out, "%s\n", get_genre_name(track->genre)) < 0)
         return ERROR_WRITING_TO_FILE;
 
     return OK;
@@ -114,40 +106,44 @@ status_t ADT_Track_export_to_xml (void * t, const void * context, FILE * file_ou
     xml_context = (char**)context;
     track = (ADT_Track_t *)t;
 
-    if(fprintf(file_out, "\t%s%s%s\n", xml_context[XML_OPEN_INITIAL_TAG_INDEX], xml_context[XML_TRACK_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "\t%s\n", xml_context[XML_TRACK_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t\t%s%s%s", xml_context[XML_OPEN_INITIAL_TAG_INDEX], xml_context[XML_NAME_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "\t\t%s", xml_context[XML_NAME_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", track->title) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s%s%s\n", xml_context[XML_OPEN_FINISHER_TAG_INDEX], xml_context[XML_NAME_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "%s\n", xml_context[XML_NAME_END_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t\t%s%s%s", xml_context[XML_OPEN_INITIAL_TAG_INDEX], xml_context[XML_ARTIST_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "\t\t%s", xml_context[XML_ARTIST_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     if(fprintf(file_out, "%s", track->artist) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s%s%s\n", xml_context[XML_OPEN_FINISHER_TAG_INDEX], xml_context[XML_ARTIST_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "%s\n", xml_context[XML_ARTIST_END_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t\t%s%s%s", xml_context[XML_OPEN_INITIAL_TAG_INDEX], xml_context[XML_GENRE_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "\t\t%s", xml_context[XML_GENRE_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s", genres_dictionary[track->genre]) < 0)
+    if(fprintf(file_out, "%s", get_genre_name(track->genre)) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "%s%s%s\n", xml_context[XML_OPEN_FINISHER_TAG_INDEX], xml_context[XML_GENRE_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "%s\n", xml_context[XML_GENRE_END_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
-    if(fprintf(file_out, "\t%s%s%s\n", xml_context[XML_OPEN_FINISHER_TAG_INDEX], xml_context[XML_TRACK_FLAG_INDEX], xml_context[XML_CLOSE_TAG_INDEX]) < 0)
+    if(fprintf(file_out, "\t%s\n", xml_context[XML_TRACK_END_TAG_INDEX]) < 0)
         return ERROR_WRITING_TO_FILE;
 
     return OK;
+}
+
+status_t ADT_Track_export_to_html (void * t, const void * context, FILE * file_out) {
+    return ERROR_NOT_IMPLEMENTED;
 }
 
 /*Esta función compara dos pistas según el artista*/

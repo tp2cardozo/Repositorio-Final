@@ -156,9 +156,11 @@ status_t get_mp3_header(FILE * fi, char header[])
 	return OK;
 }
 
-status_t parse_mp3_header(char header[], char * artist, char * tag, char * title, char * artist, char * album, char * year, char * comment, unsigned char * genre) {
+/*Divide el encabezado en los distintos campos*/
+status_t parse_mp3_header(char header[], char * tag, char * title, char * artist, char * album, char * year, char * comment, unsigned char * genre) 
+{
 
-    if (header == NULL || artist == NULL || tag == NULL || title == NULL || artist == NULL || album == NULL || year == NULL || comment == NULL || genre) {
+    if (header == NULL || artist == NULL || tag == NULL || title == NULL || artist == NULL || album == NULL || year == NULL || comment == NULL || genre == NULL) {
         return ERROR_NULL_POINTER;
     }
 
@@ -179,8 +181,12 @@ status_t parse_mp3_header(char header[], char * artist, char * tag, char * title
 
     memcpy(comment,header+LEXEM_START_COMMENT,LEXEM_SPAN_COMMENT);
     comment[LEXEM_SPAN_COMMENT] = '\0';
-
+    
     memcpy(genre,header+LEXEM_START_GENRE,LEXEM_SPAN_GENRE);
 
     return OK;
+}
+
+char * get_genre_name(unsigned char genre) {
+    return genres_dictionary[genre];
 }

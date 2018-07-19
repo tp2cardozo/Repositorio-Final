@@ -3,6 +3,14 @@
 #include <string.h>
 
 #include "vector.h"
+#include "types.h"
+#include "contexts.h"
+
+status_t (*vector_exporter[MAX_DOC_TYPES]) (ADT_Vector_t *, const void *, FILE *) = {
+	ADT_Vector_export_as_csv,
+	ADT_Vector_export_as_xml,
+	ADT_Vector_export_as_html
+};
 
 /*Esta función crea un nuevo vector*/
 status_t ADT_Vector_new(ADT_Vector_t ** v)
@@ -76,9 +84,9 @@ void * ADT_Vector_get_element (ADT_Vector_t * v, int position, size_t size)
 }
 
 /*Esta función se fija si el vector tiene elementos*/
-bool_t ADT_Vector_is_empty (ADT_Vector_t p)
+bool_t ADT_Vector_is_empty (ADT_Vector_t * p)
 {
-	return (p.size) ? FALSE:TRUE;
+	return (p->size) ? FALSE:TRUE;
 }
 
 /*Esta función establece una función de impresión de vector*/
@@ -111,46 +119,13 @@ status_t ADT_Vector_set_destructor(ADT_Vector_t * v, destructor_t df)
 /*Esta función exporta un Vector*/
 status_t ADT_Vector_export (ADT_Vector_t * v, const void * context, FILE * file, doc_type_t doc_type)
 {
-	size_t i;
 	status_t st;
-	char ** xml_contexts = NULL;
 
 	if (v == NULL || file == NULL)
 		return ERROR_NULL_POINTER;
 
-	switch (doc_type) 
-	{
-		case FMT_CSV :
-			for (i = 0; i < v->size; i++)
-			{
-				if ((st = (v->printer)(v->elements[i], context, file)) != OK)
-					return st;
-			}
-			break;
-
-		case FMT_XML :
-			xml_contexts = (char **)context;
-
-			if(fprintf(file, "%s\n", xml_contexts[XML_DECLARATION_INDEX]) < 0)
-				return ERROR_WRITING_TO_FILE;
-
-			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_INITIAL_TAG_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_TAG_INDEX]) < 0)
-				return ERROR_WRITING_TO_FILE;
-
-			for (i = 0; i < v->size; i++)
-			{
-				if ((st = (v->printer)(v->elements[i], context, file)) != OK)
-					return st;
-			}
-			
-			if(fprintf(file, "%s%s%s\n", xml_contexts[XML_OPEN_FINISHER_TAG_INDEX], xml_contexts[XML_TRACKS_FLAG_INDEX], xml_contexts[XML_CLOSE_TAG_INDEX]) < 0)
-				return ERROR_WRITING_TO_FILE;
-			break;	
-
-		case FMT_HTML : 
-			return ERROR_NOT_IMPLEMENTED;
-			
-	}
+	if ((st = vector_exporter[doc_type](v, context, file)) != OK)
+		return st;
 	
 	return OK;
 }
@@ -200,7 +175,7 @@ status_t ADT_Vector_append_element(ADT_Vector_t ** v, void * element)
 }
 
 /*Esta función ordena por burbujeo, dependiendo del comparador, los elementos de un vector*/
-status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector)
+status_t  ADT_Vector_sort_elements (ADT_Vector_t * vector)
 {
 	size_t i, j = 1;
 	void * aux;
@@ -211,17 +186,58 @@ status_t  ADT_Vector_sort_elements (ADT_Vector_t ** vector)
 	while (j != 0)
 	{
 		j = 0;
-		for(i = 0; i < (*vector)->size - 1; i++)
+		for(i = 0; i < vector->size - 1; i++)
 		{
-			if(((*vector)->comparator)((*vector)->elements[i], (*vector)->elements[i+1]) > 0)
+			if((vector->comparator)(vector->elements[i], vector->elements[i+1]) > 0)
 			{
-				aux = (*vector)->elements[i];
-				(*vector)->elements[i] = (*vector)->elements[i+1];
-				(*vector)->elements[i+1] = aux;
+				aux = vector->elements[i];
+				vector->elements[i] = vector->elements[i+1];
+				vector->elements[i+1] = aux;
 				j++;
 			}
 		}
 	}
 
 	return OK;
+}
+
+status_t ADT_Vector_export_as_csv (ADT_Vector_t * v, const void * context, FILE * file) {
+	status_t st;
+	size_t i;
+
+	for (i = 0; i < v->size; i++)
+	{
+		if ((st = (v->printer)(v->elements[i], context, file)) != OK)
+			return st;
+	}
+	return OK;
+}
+
+status_t ADT_Vector_export_as_xml (ADT_Vector_t * v, const void * context, FILE * file) {
+	char ** xml_contexts = NULL;
+	status_t st;
+	size_t i;
+
+	xml_contexts = (char **)context;
+
+	if(fprintf(file, "%s\n", xml_contexts[XML_PROCESSING_INSTRUCTOR_INDEX]) < 0)
+		return ERROR_WRITING_TO_FILE;
+
+	if(fprintf(file, "%s\n", xml_contexts[XML_TRACKS_TAG_INDEX]) < 0)
+		return ERROR_WRITING_TO_FILE;
+
+	for (i = 0; i < v->size; i++)
+	{
+		if ((st = (v->printer)(v->elements[i], context, file)) != OK)
+			return st;
+	}
+	
+	if(fprintf(file, "%s\n", xml_contexts[XML_TRACKS_END_TAG_INDEX]) < 0)
+		return ERROR_WRITING_TO_FILE;
+
+	return OK;
+}
+
+status_t ADT_Vector_export_as_html (ADT_Vector_t * v, const void * context, FILE * file) {
+	return ERROR_NOT_IMPLEMENTED;
 }

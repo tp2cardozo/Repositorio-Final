@@ -9,9 +9,6 @@
 #define MIN_ARGUMENTS 8
 #define FIRST_MP3_FILE_INDEX 7
 
-#define MAX_DOC_FORMATS 3
-#define MAX_SORTING_FORMATS 3
-
 #define CSV_FORMAT_STR "csv"
 #define XML_FORMAT_STR "xml"
 #define HTML_FORMAT_STR "html"

@@ -4,17 +4,19 @@
 
 /*Variables que contienen el contexto para la exportacion*/
 
-char * context_csv = CSV_DELIMITER;
+char * context_csv = CSV_DELIMITER; /*Se requiere su uso como cadena de caracteres*/
 
 char * context_xml[MAX_XML_CONTEXTS] =
 {
-	XML_DECLARATION,
-	XML_OPEN_INITIAL_TAG,
-	XML_OPEN_FINISHER_TAG,
-	XML_CLOSE_TAG,
-	XML_TRACKS_FLAG,
-	XML_TRACK_FLAG,
-	XML_NAME_FLAG,
-	XML_ARTIST_FLAG,
-	XML_GENRE_FLAG
+	XML_PROCESSING_INSTRUCTOR,
+	XML_TRACKS_TAG,
+	XML_TRACKS_END_TAG,
+	XML_TRACK_TAG,
+	XML_TRACK_END_TAG,
+	XML_NAME_TAG,
+	XML_NAME_END_TAG,
+	XML_ARTIST_TAG,
+	XML_ARTIST_END_TAG,
+	XML_GENRE_TAG,
+	XML_GENRE_END_TAG
 };

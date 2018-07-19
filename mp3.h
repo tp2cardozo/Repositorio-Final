@@ -32,5 +32,7 @@
 #define LEXEM_SPAN_GENRE 1
 
 status_t get_mp3_header(FILE * fi, char header[]);
+status_t parse_mp3_header(char header[], char * tag, char * title, char * artist, char * album, char * year, char * comment, unsigned char * genre);
+char * get_genre_name(unsigned char genre);
 
 #endif

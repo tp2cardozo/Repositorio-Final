@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 
+#define MAX_DOC_TYPES 3
+#define MAX_SORTING_CRITERIA 3
+
 /*Define el tipo status_t*/
 typedef enum
 {
@@ -39,10 +42,10 @@ typedef enum
 /*Define el tipo sort_t*/
 typedef enum
 {
-	SORT_NAME,
-	SORT_ARTIST,
-	SORT_GENRE
-} sorting_criteria_t;
+	SORT_BY_NAME,
+	SORT_BY_ARTIST,
+	SORT_BY_GENRE
+} sorting_criterium_t;
 
 typedef status_t (*destructor_t) (void *);
 typedef int (*comparator_t) (void *, void *);

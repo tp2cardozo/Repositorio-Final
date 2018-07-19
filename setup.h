@@ -7,8 +7,8 @@
 typedef struct
 {
 	doc_type_t doc_type;
-	sorting_criteria_t sorting_criteria;
-	char * output_file_path;
+	sorting_criterium_t sorting_criteria;
+	char * output_file;
 }setup_t;
 
 #endif

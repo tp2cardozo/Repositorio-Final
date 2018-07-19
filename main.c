@@ -11,14 +11,14 @@
 extern setup_t setup;
 
 /*Diccionario de formatos*/
-char * doc_formats[MAX_DOC_FORMATS] = {
+char * doc_formats[MAX_DOC_TYPES] = {
 	CSV_FORMAT_STR,
 	XML_FORMAT_STR,
 	HTML_FORMAT_STR
 };
 
 /*Diccionario de ordenamientos*/
-char * sorting_formats[MAX_SORTING_FORMATS] = {
+char * sorting_formats[MAX_SORTING_CRITERIA] = {
 	SORT_BY_NAME_STR,
 	SORT_BY_ARTIST_STR,
 	SORT_BY_GENRE_STR
@@ -75,7 +75,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	if(!fmt_flag || !sort_flag || !out_flag)
 		return ERROR_MISSING_ARGUMENTS;
 
-	for(i=0 ; i < MAX_DOC_FORMATS; i++)
+	for(i=0 ; i < MAX_DOC_TYPES; i++)
 	{
 		if (!(strcmp(argv[fmt_flag + 1], doc_formats[i]))) 
 		{
@@ -85,10 +85,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	}
 
 
-	if(i == MAX_DOC_FORMATS)
+	if(i == MAX_DOC_TYPES)
 		return ERROR_INAVLID_DOC_FORMAT;
 
-	for(i=0 ; i < MAX_SORTING_FORMATS ; i++)
+	for(i=0 ; i < MAX_SORTING_CRITERIA ; i++)
 	{
 		if(!(strcmp(argv[sort_flag + 1], sorting_formats[i])))
 		{
@@ -97,10 +97,10 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 		}
 	}
 
-	if(i == MAX_SORTING_FORMATS)
+	if(i == MAX_SORTING_CRITERIA)
 		return ERROR_INVALID_SORTING_TYPE;
 
-	setup -> output_file_path = argv[out_flag + 1];
+	setup -> output_file1 = argv[out_flag + 1];
 
 	return OK;
 }
