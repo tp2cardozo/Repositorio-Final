@@ -15,6 +15,9 @@
 #define MSG_ERROR_OUT_OF_MEMORY "Memoria insuficiente."
 #define MSG_ERROR_OUT_OF_RANGE "Fuera de rango."
 #define MSG_ERROR_NOT_IMPLEMENTED "Funcionalidad no implementada."
+#define MSG_ERROR_INAVLID_DOC_FORMAT "Formato de salida inválido."
+#define MSG_ERROR_INVALID_SORTING_TYPE "Type de ordenamiento inválido."
+#define MSG_ERROR_MISSING_ARGUMENTS "Argumentos insuficientes."
 
 status_t print_error(status_t st);
 

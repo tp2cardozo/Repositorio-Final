@@ -15,7 +15,10 @@ typedef enum
 	ERROR_NULL_POINTER,
 	ERROR_OUT_OF_MEMORY,
 	ERROR_OUT_OF_RANGE,
-	ERROR_NOT_IMPLEMENTED
+	ERROR_NOT_IMPLEMENTED,
+	ERROR_INAVLID_DOC_FORMAT,	
+	ERROR_INVALID_SORTING_TYPE,
+	ERROR_MISSING_ARGUMENTS
 } status_t;
 
 /*Define el tipo bool_t*/
@@ -28,9 +31,9 @@ typedef enum
 /*Define el tipo format_t*/
 typedef enum
 {
-	FMT_CSV,
-	FMT_XML,
-	FMT_HTML
+	DOC_TYPE_CSV,
+	DOC_TYPE_XML,
+	DOC_TYPE_HTML
 } doc_type_t;
 
 /*Define el tipo sort_t*/

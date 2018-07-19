@@ -4,9 +4,7 @@
 #include <stdio.h>
 
 #include "types.h"
-#include "errors.h"
 #include "setup.h"
-#include "mp3_processor.h"
 
 #define MIN_ARGUMENTS 8
 #define FIRST_MP3_FILE_INDEX 7

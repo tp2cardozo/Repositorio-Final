@@ -3,9 +3,11 @@
 #include <string.h>
 
 #include "main.h"
+#include "types.h"
+#include "setup.h"
+#include "mp3_processor.h"
 
-
-/**********Externs**********/
+/**variable de setup**/
 extern setup_t setup;
 
 /*Diccionario de formatos*/
@@ -71,7 +73,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 
 
 	if(!fmt_flag || !sort_flag || !out_flag)
-		return ERROR_INVOCATION;
+		return ERROR_MISSING_ARGUMENTS;
 
 	for(i=0 ; i < MAX_DOC_FORMATS; i++)
 	{
@@ -84,7 +86,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 
 
 	if(i == MAX_DOC_FORMATS)
-		return ERROR_INVOCATION;
+		return ERROR_INAVLID_DOC_FORMAT;
 
 	for(i=0 ; i < MAX_SORTING_FORMATS ; i++)
 	{
@@ -96,7 +98,7 @@ status_t validate_arguments(int argc, char * argv[], setup_t * setup)
 	}
 
 	if(i == MAX_SORTING_FORMATS)
-		return ERROR_INVOCATION;
+		return ERROR_INVALID_SORTING_TYPE;
 
 	setup -> output_file_path = argv[out_flag + 1];
 
